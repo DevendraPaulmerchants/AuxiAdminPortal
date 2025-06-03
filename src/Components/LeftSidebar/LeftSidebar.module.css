@@ -1,0 +1,106 @@
+.leftsidebar_parent_container {
+    background: #f5f0d4;
+    width: 250px;
+    height: 100vh;
+    padding-bottom: 4rem;
+}
+.leftsidebar_parent_container_close {
+    width: 70px;
+    height: 100vh;
+    overflow: hidden;
+    background: #f5f0d4;
+}
+.leftsidebar_parent_container_close .list_title {
+    display: none;
+}
+.leftsidebar_parent_container_close .list_icon {
+   text-align: center;
+}
+.leftsidebar_active {
+    /* background:rgba(77, 67, 50, 0.6) !important; */
+}
+.leftsidebar_container {
+    background: rgba(38,38,38,0.1);
+    /* padding: 2px 10px; */
+    margin-bottom: 10px;
+    position: relative;
+}
+.nav_item {
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    /* padding: 0 1rem; */
+}
+.dropdown_icon {
+    color: #8B4513;
+    font-size: 20px;
+}
+.subnav_item {
+    background: rgba(38,38,38,0.2);
+    margin-bottom: 10px;
+    /* padding-left: 10px; */
+    border-radius: 1px;
+}
+.subnav_item a {
+    width: unset !important;
+    padding-left: 35px !important;
+}
+.leftsidebar_container a {
+    text-decoration: none;
+    color: #1f1e19;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding-left:1rem;
+}
+.leftsidebar_container a span {
+    height: fit-content;
+}
+.list_title {
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+.sub_list_title {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.list_icon {
+    font-size: 25px;
+}
+.sub_list_icon {
+ font-size: 20px;
+}
+.list_title_on_hover {
+    display: none;
+}
+.display_none {
+    display: none;
+}
+.leftsidebar_container:hover .list_title_on_hover {
+    position: absolute;
+    top: 20px;
+    background: #fff;
+    padding: 0 5px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+.sub_title_menu {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-left:1rem;
+}
+.sub_title_menu span {
+    color: #1f1e19;
+    font-weight: 500;
+    align-items: center;
+}
+.sub_title_menu .list_title {
+    margin-bottom: 7px;
+}
+
+/* --------------------------------------- */

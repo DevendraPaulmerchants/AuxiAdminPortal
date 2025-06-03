@@ -1,0 +1,53 @@
+.header_parent {
+    padding: 1rem 4rem 1rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    /* background: rgb(38, 38, 38, 0.1); */
+}
+.header_logo_and_container {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+.logo_container {
+    height: 35px;
+    width: 150px;
+}
+.logo_container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.header_logo_and_close img {
+    display: none;
+}
+.forward_and_backward_icon {
+    cursor: pointer;
+}
+.forward_and_backward_icon span {
+    color: #8B4513;
+}
+.header_notification_and_user_icon {
+    display: flex;
+    gap: 2rem;
+}
+.header_notification_and_user_icon h2 {
+    cursor: pointer;
+    color: rgb(38, 38, 38, 0.6);
+}
+.header_notification_and_user_icon h3 {
+    color: rgb(38, 38, 38, 0.6);
+}
+.user_menu_list li {
+    list-style: none;
+    cursor: pointer;
+    margin: 5px 0;
+}
+.user_menu_list li a {
+    text-decoration: none;
+    color: #646464;
+}
+.ReactModal__Overlay .ReactModal__Overlay--after-open {
+    background-color:unset !important;
+}

@@ -1,0 +1,69 @@
+.file_mini_view {
+    width: 100%;
+    height: 100px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid rgba(38, 38, 38, 0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+.max_view {
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    color: #000;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.mini_file {
+    height: 100px;
+}
+
+.preview_uploaded_file {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(38, 38, 38, 0.3);
+}
+
+.open_file_dimension {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-height: 90%;
+    max-width: 60%;
+    transform: translate(-50%, -50%);
+    background: #FFF;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.open_file_dimension {
+    width: 60%;
+    height: 100%;
+    position: relative;
+}
+
+.pdf_close_icon {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    padding-bottom: 1rem;
+    font-size: 20px;
+}
+
+.preview_pdf_file {
+    width: 100%;
+    height: 100%;
+}
+
+.open_file {
+    width: 100%;
+    height: 100%;
+    border: none;
+}

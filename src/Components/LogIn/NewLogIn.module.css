@@ -1,0 +1,114 @@
+.login_container {
+    display: flex;
+    height: 100vh;
+}
+
+.login_left_side {
+    width: 50%;
+    height: 100vh;
+}
+
+.login_left_side img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.login_rigth_side {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 4rem;
+    background: rgba(72, 193, 181, 0.08);
+    /* height: 100vh; */
+}
+
+.form_conatainer {
+    background: #FFF;
+    padding: 4rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(122, 122, 122, 0.14);
+}
+.form_conatainer h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #262626;
+    text-align: center;
+}
+.form_conatainer p {
+    font-size: 14px;
+    color: #636578;
+    font-weight: 400;
+    margin: 0.3rem 0 1.2rem;
+    text-align: center;
+}
+.label_and_input_field {
+    display: flex;
+    align-items: center;
+    border: 1px solid #B6BBC6;
+    border-radius: 5px;
+    padding:5px 10px ;
+    margin: 0.8rem 0
+}
+.form_conatainer form input[type="text"],
+.form_conatainer form input[type="email"],
+.form_conatainer form input[type="password"] {
+    width: 100%;
+    /* padding:10px 1rem ; */
+    /* margin: 0.8rem 0; */
+    /* border: 1px solid #B6BBC6; */
+    /* border-radius: 5px; */
+    display: block;
+    outline: none;
+    border: none;
+}
+.label_and_input_field:focus {
+    outline: 1.5px solid #043838;
+}
+.label_and_input_field span {
+    cursor: pointer;
+}
+.remember_me_and_forgot_password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -5px;
+}
+.remember_me {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.remember_me input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    outline: none;
+}
+.remember_me input[type="checkbox"]:focus {
+    outline: none;
+}
+.forgot_password {
+    color: #043848 !important;
+    cursor: pointer;
+}
+.form_conatainer button {
+    width: 100%;
+    padding: 10px 1rem;
+    background: #1F342F;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 1.2rem;
+}
+.back_to_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    color: #636578;
+    margin-top: 1.2rem;
+}

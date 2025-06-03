@@ -1,0 +1,233 @@
+.merchants_parent {
+    /* width: 100%; */
+    height: 100%;
+    background: rgba(72, 193, 181, 0.08);
+    border-radius: 5px;
+    padding:1rem;
+}
+
+.merchants_parent_subheader {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.search_input_field {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(38, 38, 38, 0.3);
+    background: #FFF;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px;
+    border-radius: 5px;
+    gap: 10px;
+}
+
+.add_merchants_and_filter {
+    display: flex;
+    gap: 10px;
+}
+
+.add_merchants_and_filter button {
+    padding: 5px 10px;
+    cursor: pointer;
+    width: fit-content;
+    font-weight: 500;
+}
+
+.search_input_field input {
+    border: none;
+    outline: none;
+}
+.table_wrapper1 {
+    min-width: 500px;
+    /* max-width: calc(100% - 8rem); */
+    max-width: 100%;
+    /* overflow-x: scroll; */
+}
+.table_wrapper2 {
+    min-width: 500px;
+    /* max-width: calc(100% - 200px); */
+    max-width: 100%;
+    overflow-x: scroll;
+}
+.merchants_list_container {
+    text-align: center;
+    border-spacing: 0;
+    width: 100%;
+    background: #FFF;
+    table-layout: auto;
+    /* white-space: nowrap; */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px rgba(38, 38, 38, 0.5);
+}
+
+.description_column {
+    width: 100px;
+}
+
+.merchants_list_container th {
+    /* background: rgba(38, 38, 38, 0.5); */
+   background:#1F342F;
+    padding: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #f2f1e9;
+}
+
+.merchants_list_container tbody tr td {
+    border-bottom: 1.5px solid rgba(38, 38, 38, 0.3);
+    color: rgba(38, 38, 38, 0.9);
+    padding: 5px;
+    font-size: 12px;
+}
+
+.merchants_list_container tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pagination_parent {
+    margin: 2rem 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination_parent button {
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.pagination_parent_pageno {
+    border: 1px solid #928407;
+    border-radius: 50%;
+    padding: 1px 10px;
+}
+
+.user_menu_list li {
+    list-style: none;
+    cursor: pointer;
+    margin: 4px 0;
+}
+
+.credit_details_and_chat {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.credit_details_container {
+    width: 50%;
+}
+
+.credit_chat_detail {
+    width: 50%;
+    max-height: 500px;
+    overflow: hidden;
+}
+
+/* ---------------------------- Chat with Merchant Css */
+.chat_details_container {
+    border: 1px solid rgba(38, 38, 38, 0.3);
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(38, 38, 38, 0.5);
+    padding: 10px;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.comment_input {
+    /* max-height: 50%; */
+    /* overflow-y: scroll; */
+}
+
+.credit_comment_container h3 {
+    padding: 10px;
+    border-radius: 10px;
+    color: rgba(38, 38, 38, 0.9);
+    border: 1px solid rgba(38, 38, 38, 0.5);
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.commented_by_admin {
+    font-weight: 700;
+}
+
+.credit_comment_container sub {
+    color: rgba(38, 38, 38, 0.8);
+    display: flex;
+    justify-content: end;
+    margin-bottom: 1rem;
+}
+
+.replied_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.comment_input {
+    padding: 1rem;
+}
+
+.uploaded_image {
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.uploaded_image img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}
+
+/* ---------------------------------- document showing --------- */
+
+.back_arrow {
+    cursor: pointer;
+}
+
+.agent_document_image {
+    height: 450px;
+    width: 500px;
+    justify-self: center;
+}
+
+.agent_document_image img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+/* Select element ----------- */
+.merchants_select {
+    outline: none;
+    padding: 2px 5px;
+    border: 1px solid rgba(38, 38, 38, 0.3);
+    border-radius: 5px;
+    padding: 5px;
+}
+/* -----------------------  */
+.date_filter_container input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+.date_filter_container select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+}

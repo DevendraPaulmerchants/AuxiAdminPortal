@@ -1,0 +1,16 @@
+* {
+  font-family: "Poppins", serif;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+}
+.App {
+  height: 100vh;
+}
+.app_layout {
+  display: flex;
+  gap: 1rem;
+}
+.app_content {
+  width: 100%;
+}

@@ -1,0 +1,8 @@
+/* .active {
+    background:rgba(77, 67, 50, 0.6) !important;
+} */
+.active {
+    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.02));
+    color: #FFF;
+  }

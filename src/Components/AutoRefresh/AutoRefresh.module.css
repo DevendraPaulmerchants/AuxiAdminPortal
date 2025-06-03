@@ -1,0 +1,8 @@
+.input_and_label_for_new_refresh {
+    display: flex;
+    gap: 1rem;
+    /* border: 1px solid rgba(38, 38, 38, 0.5); */
+}
+.input_and_label_for_new_refresh input {
+    width: 60%;
+}

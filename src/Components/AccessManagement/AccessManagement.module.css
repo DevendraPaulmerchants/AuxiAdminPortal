@@ -1,0 +1,20 @@
+.on_hover {
+  display: none;
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.current_value {
+  position: relative; /* Needed for absolute positioning of .on_hover */
+  display: inline-block;
+  cursor: pointer;
+}
+
+.current_value:hover .on_hover {
+  display: block;
+}

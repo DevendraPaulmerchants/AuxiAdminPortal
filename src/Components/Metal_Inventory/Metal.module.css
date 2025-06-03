@@ -1,0 +1,41 @@
+.metal_container {
+    margin: 1rem 0;
+
+    display: flex;
+    gap: 2rem;
+    /* border: 1px solid rgba(38, 38, 38, 0.6); */
+}
+.metal_gold_card {
+    border-radius: 10px;
+    border: 1px solid rgba(38, 38, 38, 0.2);
+    padding:0 1rem 1rem ;
+    box-shadow: 5px 5px 5px rgba(38, 38, 38, 0.2);
+}
+.metal_gold_card h2 {
+    text-align: center;
+    color: #646464;
+    font-size: 16px;
+    font-weight: 500;
+}
+.metal_list {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(38, 38, 38, 0.2);
+    padding: 5px;
+}
+.metal_list_row_one {
+    /* min-width: 200px; */
+}
+.metal_list p {
+    color: #646464;
+    font-size: 14px;
+}
+.action_type {
+    display: flex;
+    justify-content: space-between;
+}
+.action_type h2 {
+    margin-bottom: 0;
+}

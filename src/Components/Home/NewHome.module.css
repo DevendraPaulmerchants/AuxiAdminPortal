@@ -1,0 +1,73 @@
+.container {
+  padding: 20px;
+  background: rgba(72, 193, 181, 0.08);
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  align-items: center;
+}
+
+.filters p {
+  font-weight: 600;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(38, 38, 38, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(38, 38, 38, 0.5);
+}
+
+.label {
+  font-size: 18px;
+  color: rgba(38, 38, 38, 1);
+  text-align: center;
+  border-bottom: 1.5px solid rgba(38, 38, 38, 0.3);
+}
+
+.value_container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+.value_container:hover{
+  text-decoration: underline;
+}
+.value {
+  font-size: 16px;
+  color: rgba(38, 38, 38, 0.8);
+  font-weight: 500;
+}
+.card table {
+  width: 100%;
+}
+.card table tr td:last-child {
+  text-align: end;
+}
