@@ -10,8 +10,12 @@ import { CgMaximizeAlt } from 'react-icons/cg';
 
 function AddMerchants({ close, updatelist,selectedMerchant }) {
   const { token } = useContextData();
-  document.body.style.overflow = "hidden";
-  console.log(selectedMerchant);
+  useEffect(() => {
+  document.body.style.overflow = 'hidden';
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, []);
   const [organizatioNname, setOrganizationName] = useState(selectedMerchant?.merchant_name || '');
   const [preferredName, setPreferredName] = useState(selectedMerchant?.merchant_brand_name || '')
   const [primaryContactName, setPrimaryContactName] = useState(selectedMerchant?.primary_person_name || '');
@@ -167,7 +171,6 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
     fetch(`${APIPATH}/api/v1/admin/merchants`, {
       headers: {
         'Authorization': `Bearer ${token}`,
-        // "Content-Type": "application/json"
       },
       method: 'POST',
       body: formData,
@@ -189,6 +192,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
       })
       .finally(() => setIsLoading(false))
   }
+
 
   return <>
     <div className={style.add_merchants_parent}>
@@ -504,4 +508,4 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
   </>
 }
 
-export default memo(AddMerchants);
+export default AddMerchants;

@@ -220,13 +220,13 @@
 }
 /* -----------------------  */
 .date_filter_container input {
-    padding: 8px 12px;
+    padding: 3px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     outline: none;
 }
 .date_filter_container select {
-    padding: 8px 12px;
+    padding: 3px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     outline: none;

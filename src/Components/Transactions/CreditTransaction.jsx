@@ -2,23 +2,20 @@ import React, { useEffect, useState } from 'react';
 import style from "../Admin/Admin.module.css";
 import style1 from "./Transaction.module.css";
 import styles from "../MerchantManagement/Merchants.module.css";
-import { IoEye, IoSearch } from "react-icons/io5";
-import "react-datepicker/dist/react-datepicker.css";
+import { IoSearch } from "react-icons/io5";
 import { APIPATH } from '../apiPath/apipath';
 import MetalDetails from './MetalDetails';
-import { memo } from 'react';
 import { useContextData } from '../Context/Context';
 import { MdContentCopy } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
-import { FcCancel, FcClock, FcFlashOn, FcOk } from 'react-icons/fc';
+import { FcCancel, FcClock, FcOk } from 'react-icons/fc';
 
 function CreditTransaction() {
   const { token } = useContextData();
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
   const [isloading, setIsLoading] = useState(false);
   const [selectedMetal, setSelectedMetal] = useState(null);
   const [openMetalPage, setOpenMetalPage] = useState(false);
@@ -87,18 +84,43 @@ function CreditTransaction() {
   const closeDetailsPage = () => {
     setOpenMetalPage(false);
     setSelectedMetal(null);
-    document.body.style.overflow = "auto";
   }
 
-  const handleCopy = (text) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        alert("ID copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-      });
-  };
+ const handleCopy = async (text) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      // Modern approach using Clipboard API
+      await navigator.clipboard.writeText(text);
+      alert('Text copied to clipboard successfully.');
+    } else {
+      // Fallback for insecure contexts or older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+
+      // Avoid scrolling to bottom
+      textArea.style.position = 'fixed';
+      textArea.style.top = 0;
+      textArea.style.left = 0;
+      textArea.style.opacity = 0;
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      const successful = document.execCommand('copy');
+      if (successful) {
+        alert('Text copied to clipboard successfully');
+      } else {
+        throw new Error('Fallback copy command was unsuccessful.');
+      }
+
+      document.body.removeChild(textArea);
+    }
+  } catch (err) {
+    console.error('Error copying text: ', err);
+  }
+};
+
   const downloadRecords = async () => {
     if (paginatedList?.length === 0) {
       alert("No records to download");
@@ -235,4 +257,4 @@ function CreditTransaction() {
   </>
 }
 
-export default memo(CreditTransaction);
+export default CreditTransaction;

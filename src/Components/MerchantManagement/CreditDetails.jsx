@@ -11,7 +11,6 @@ import { useContextData } from '../Context/Context';
 function CreditDetails() {
     const {token} =useContextData();
     const { id } = useParams();
-    console.log(id);
     const [creditDetails, setCreditDetails] = useState(null);
     const [isloading, setIsLoading] = useState(false);
     const [isApprovebtnClick, setIsApprovebtnClick] = useState(false)

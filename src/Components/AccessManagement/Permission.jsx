@@ -59,7 +59,6 @@ const Permission = () => {
     const closeNewPermission = () => {
         setIsNewPermissionClick(false);
         setSelectedPermission(null);
-        document.body.style.overflow = "auto";
     }
 
     return <>

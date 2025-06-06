@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import { IoMdClose } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewPermission({ close, selectedPermission, updateList }) {
-    document.body.style.overflow = "hidden";
-    const {token}=useContextData();
+    const { token } = useContextData();
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
     const [name, setName] = useState(selectedPermission?.name || "")
     const [description, setDescription] = useState(selectedPermission?.description || "");
     const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +23,7 @@ function AddNewPermission({ close, selectedPermission, updateList }) {
     const addPermission = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const url =selectedPermission ? `${APIPATH}/api/v1/admin/permissions/${selectedPermission.id}`:`${APIPATH}/api/v1/admin/permissions`;
+        const url = selectedPermission ? `${APIPATH}/api/v1/admin/permissions/${selectedPermission.id}` : `${APIPATH}/api/v1/admin/permissions`;
         const method = selectedPermission ? 'PATCH' : 'POST';
         fetch(url, {
             headers: {

@@ -2,21 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { IoEye, IoSearch } from "react-icons/io5";
 import style from "../Admin/Admin.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
-import style2 from "../Transactions/Transaction.module.css"
+import style2 from "../Transactions/Transaction.module.css";
+import styles from './Metal.module.css'
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import MetalLogsDetails from './MetalLogsDetails';
-
+import { useLocation } from 'react-router-dom';
+import { capitalizeWord } from '../InputValidation/InputValidation';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 function MetalLogs() {
     const { token } = useContextData();
+    const { state } = useLocation();
+    console.log(state)
     const [metalList, setmetalList] = useState(null);
     const [selectedMetal, setSelectedMetal] = useState(null);
     const [searchText, setSearchText] = useState("");
     const [metalType, setMetalType] = useState("");
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [transactionType, setTransactionType] = useState("");
+    const [transactionType, setTransactionType] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 8;
@@ -47,7 +53,7 @@ function MetalLogs() {
 
     useEffect(() => {
         getmetalLogs();
-    }, [transactionType,startDate, endDate, metalType]);
+    }, [transactionType, startDate, endDate, metalType]);
 
     const filteredList = metalList?.filter((list) => list.order_id?.toLowerCase().includes(searchText.toLowerCase()));
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
@@ -75,31 +81,27 @@ function MetalLogs() {
                         onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                     <IoSearch />
                 </div>
-                <div className={style.date_filter_container}>
-                    <label>
-                        Start Date:{" "}
-                        <input
-                            type="date"
-                            value={startDate}
-                            max={endDate || new Date().toISOString().split("T")[0]}
-                            onChange={(e) => {
-                                setStartDate(e.target.value);
+                <div className={style2.start_date_and_end_date}>
+                    <div>
+                        <DatePicker className={style2.date_input}
+                            placeholderText='Select start date'
+                            maxDate={new Date()}
+                            selected={startDate}
+                            onChange={(date) => {
+                                setStartDate(date?.toISOString()?.split("T")[0]);
                             }}
                         />
-                    </label>
-                    <label style={{ marginLeft: "1rem" }}>
-                        End Date:{" "}
-                        <input
-                            type="date"
-                            value={endDate}
-                            disabled={startDate === ""}
-                            min={startDate}
-                            max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) => {
-                                setEndDate(e.target.value);
-                            }}
+                    </div>
+                    <div>
+                        <DatePicker className={style2.date_input}
+                            disabled={!startDate}
+                            minDate={startDate}
+                            maxDate={new Date()}
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                            placeholderText='Select end date'
                         />
-                    </label>
+                    </div>
                 </div>
                 <div className={style2.transaction_type_input}>
                     <select value={metalType}
@@ -114,8 +116,8 @@ function MetalLogs() {
                 <div className={style2.transaction_type_input}>
                     <select value={transactionType}
                         onChange={(e) => setTransactionType(e.target.value)} >
-                        <option value="" disabled>Select Transaction Type</option>
-                        <option value="ALL">All</option>
+                        <option value="all" disabled>Select Transaction Type</option>
+                        <option value="">All</option>
                         <option value="BUY">Buy</option>
                         <option value="SELL">Sell</option>
                         <option value="TRANSFER">Transfer</option>
@@ -137,10 +139,10 @@ function MetalLogs() {
                                 <th>Agent Id</th>
                                 <th>Customer Id</th>
                                 <th>Metal Type</th>
-                                <th>Trans. Type</th>
                                 <th>Weight(g)</th>
-                                <th>Final Amount</th>
-                                <th>Transaction status</th>
+                                <th>Amount</th>
+                                <th>Trans. Type</th>
+                                <th>Trans. status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -161,13 +163,15 @@ function MetalLogs() {
                                             {val.customer_id ? `XXXX${val.customer_id.slice(-4)}` : ""}
                                         </td>
                                         <td>{val?.source_metal_type}</td>
-                                        <td>
-                                            {val.action_type}
-                                        </td>
+
                                         <td>
                                             {val.source_weight}
                                         </td>
-                                        <td>{val.total_amount}</td>
+                                        <td>{val.amount}</td>
+                                        <td>
+                                            {/* {val.action_type} */}
+                                            {capitalizeWord(val.transaction_type)}
+                                        </td>
                                         <td>{val?.transaction_status}</td>
                                         <td>
                                             <p style={{ cursor: "pointer", fontSize: "24px" }}

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import style from "../Admin/Admin.module.css";
-import style1 from './Merchants.module.css'
+import style1 from './Merchants.module.css';
+import style2 from '../Transactions/Transaction.module.css'
 import { IoIosSearch, IoMdEye } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import CustomerDetails from './CustomerDetails';
+import { Switch } from '@mui/material';
+import { useLocation } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 
 function CustomerList() {
     const { token } = useContextData();
+    const {state}=useLocation();
+    console.log(state);
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +24,7 @@ function CustomerList() {
     const [endDate, setEndDate] = useState('');
     const [merchantList, setMerchantList] = useState(null);
     const [selectedMerchant, setSelectedMerchant] = useState("");
-    const [accountStatus, setAccountStatus] = useState("");
+    const [accountStatus, setAccountStatus] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
 
     const rowsPerPage = 8;
@@ -99,7 +107,6 @@ function CustomerList() {
     const closeDPage = () => {
         setOpenDetailPage(false);
         setSelectedCustomer(null);
-        document.body.style.overflow = 'auto';
     }
 
     return (
@@ -118,32 +125,27 @@ function CustomerList() {
                     />
                     <IoSearch />
                 </div>
-
-                <div className={style.date_filter_container}>
-                    <label>
-                        Start Date:{" "}
-                        <input
-                            type="date"
-                            value={startDate}
-                            max={endDate || new Date().toISOString().split("T")[0]}
-                            onChange={(e) => {
-                                setStartDate(e.target.value);
+                 <div className={style2.start_date_and_end_date}>
+                    <div>
+                        <DatePicker className={style2.date_input}
+                            placeholderText='Select start date'
+                            maxDate={new Date()}
+                            selected={startDate}
+                            onChange={(date) => {
+                                setStartDate(date?.toISOString()?.split("T")[0]);
                             }}
                         />
-                    </label>
-                    <label style={{ marginLeft: "1rem" }}>
-                        End Date:{" "}
-                        <input
-                            type="date"
-                            value={endDate}
-                            disabled={startDate === ""}
-                            min={startDate}
-                            max={new Date().toISOString().split("T")[0]}
-                            onChange={(e) => {
-                                setEndDate(e.target.value);
-                            }}
+                    </div>
+                    <div>
+                        <DatePicker className={style2.date_input}
+                            disabled={!startDate}
+                            minDate={startDate}
+                            maxDate={new Date()}
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                            placeholderText='Select end date'
                         />
-                    </label>
+                    </div>
                 </div>
                 <div className={style.date_filter_container}>
                     <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
@@ -158,13 +160,12 @@ function CustomerList() {
                 </div>
                 <div className={style.date_filter_container}>
                     <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)} className={style.select_input}>
-                        <option value="" disabled>Select A/C Status</option>
-                        <option value="All">ALL</option>
+                        <option value="all" disabled>Select A/C Status</option>
+                        <option value="">All</option>
                         <option value="ACTIVE">Active</option>
                         <option value="INACTIVE">Inactive</option>
                     </select>
                 </div>
-
             </div>
             {isLoading ? <div className={style1.loader_container}>
                 <div className={style1.loader_item}></div></div> :
@@ -178,7 +179,8 @@ function CustomerList() {
                                 <th>Gold</th>
                                 <th>Silver</th>
                                 <th>Fund Balance</th>
-                                <th>Action</th>
+                                <th>A/C Status</th>
+                                <th>More</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,6 +193,9 @@ function CustomerList() {
                                         <td>{val.gold}</td>
                                         <td>{val.silver}</td>
                                         <td>{val.balance}</td>
+                                        <td>
+                                            <Switch checked={val.account_status === 'ACTIVE'}/>
+                                        </td>
                                         <td>
                                             <p style={{ cursor: "pointer" }}
                                                 onClick={() => {

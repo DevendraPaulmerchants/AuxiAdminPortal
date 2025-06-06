@@ -3,30 +3,28 @@ import style from "../Admin/Admin.module.css";
 import style1 from "./Transaction.module.css";
 import styles from "../MerchantManagement/Merchants.module.css";
 import { IoEye, IoSearch } from "react-icons/io5";
-import "react-datepicker/dist/react-datepicker.css";
 import { APIPATH } from '../apiPath/apipath';
 import MetalDetails from './MetalDetails';
-import { memo } from 'react';
 import { useContextData } from '../Context/Context';
 import { MdContentCopy } from 'react-icons/md';
 import { FcCancel, FcFlashOn, FcOk } from "react-icons/fc";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
+import { useLocation } from 'react-router-dom';
 
 function GoldTransaction() {
   const { token } = useContextData();
+  const { state } = useLocation();
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
   const [isloading, setIsLoading] = useState(false);
-  const [goldList, setGoldLIst] = useState(null);
   const [selectedMetal, setSelectedMetal] = useState(null);
   const [openMetalPage, setOpenMetalPage] = useState();
   const [pagesData, setPagesData] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [transactionType, setTransactionType] = useState("");
+  const [transactionType, setTransactionType] = useState(state || "");
   const [direction, setDirection] = useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
@@ -71,7 +69,7 @@ function GoldTransaction() {
       setCurrentPage(prev => prev + 1);
     }
   };
-  
+
   const handlePrev = () => {
     if (prevCursor) {
       setCursors(prevCursor);
@@ -82,29 +80,54 @@ function GoldTransaction() {
 
   const paginatedList = pagesData?.filter((list) => {
     const name = list?.customer_name?.toLowerCase() || '';
-    const id = String(list?.customer_id || '').toLowerCase(); 
+    const id = String(list?.customer_id || '').toLowerCase();
     return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
   }) || [];
-  
-    
+
+
   const closeDetailsPage = () => {
     setOpenMetalPage(false);
     setSelectedMetal(null);
     document.body.style.overflow = "auto";
   }
 
-  const handleCopy = (text) => {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        alert("ID copied to clipboard!");
-      })
-      .catch((err) => {
-        console.error("Failed to copy: ", err);
-      });
-  };
+ const handleCopy = async (text) => {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      alert('Text copied to clipboard successfully.');
+    } else {
+      // Fallback for insecure contexts or older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+
+      // Avoid scrolling to bottom
+      textArea.style.position = 'fixed';
+      textArea.style.top = 0;
+      textArea.style.left = 0;
+      textArea.style.opacity = 0;
+
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      const successful = document.execCommand('copy');
+      if (successful) {
+        alert('Text copied to clipboard successfully.');
+      } else {
+        throw new Error('Fallback copy command was unsuccessful.');
+      }
+
+      document.body.removeChild(textArea);
+    }
+  } catch (err) {
+    console.error('Error copying text: ', err);
+  }
+};
+
 
   const downloadRecords = async () => {
-    if(paginatedList?.length === 0) {
+    if (paginatedList?.length === 0) {
       alert("No records to download");
       return;
     }
@@ -173,7 +196,7 @@ function GoldTransaction() {
             <div className={style1.transaction_type_input}>
               <label htmlFor="Order Type">Order Type: </label>
               <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
-                <option value="" disabled>Select Order Type</option>
+                <option value="all" disabled>Select Order Type</option>
                 <option value="">All</option>
                 <option value="BUY">Buy</option>
                 <option value="SELL">Sell</option>
@@ -244,4 +267,4 @@ function GoldTransaction() {
   </>
 }
 
-export default memo(GoldTransaction);
+export default GoldTransaction;

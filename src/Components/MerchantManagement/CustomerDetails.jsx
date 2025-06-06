@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "../Transactions/Transaction.module.css";
 import { IoMdClose } from "react-icons/io";
+import { format } from 'date-fns';
 
 function CustomerDetails({ close, selectedCustomer }) {
-   document.body.style.overflow='hidden';
-   
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
+
+    const formattedDate = selectedCustomer?.created_at
+        ? format(new Date(selectedCustomer.created_at), 'dd-MM-yyyy HH:mm:ss')
+        : '-';
+
+
     return <div className={style.add_merchants_parent}>
         <div className={style.add_merchants_form_container} style={{ width: "80%" }}>
             <div className={style.add_merchants_header}>
@@ -56,7 +68,7 @@ function CustomerDetails({ close, selectedCustomer }) {
                             <td>
                                 <h4 className={style.merchant_name}>Created At:
                                     <span>
-                                        {selectedCustomer?.created_at?.split("T")[0]}
+                                        {formattedDate}
                                     </span>
                                 </h4>
                             </td>
@@ -128,44 +140,6 @@ function CustomerDetails({ close, selectedCustomer }) {
                     </tbody>
                 </table>
             </div>
-            {/* ------------- Platform Details --------- */}
-            {/* <div className={style1.customer_detail_container}>
-                <h2>Services Charges:</h2>
-                <table className={style.merchant_details_page_table}>
-                    <tbody>
-                        <tr className={style.merchant_details_page_row}>
-                            <td>
-                                <h4 className={style.merchant_name}>Platform fee:
-                                    <span>
-                                        {parseFloat(selectedCustomer?.platform_charge_fee).toFixed(2)}
-                                    </span>
-                                </h4>
-                            </td>
-                            <td>
-                                <h4 className={style.merchant_name}>GST(%):
-                                    <span>
-                                        {parseFloat(selectedCustomer?.gst).toFixed(2)}
-                                    </span>
-                                </h4>
-                            </td>
-                            <td>
-                                <h4 className={style.merchant_name}>Margin(%):
-                                    <span>
-                                        {parseFloat(selectedCustomer?.platform_margin).toFixed(2)}
-                                    </span>
-                                </h4>
-                            </td>
-                            <td>
-                                <h4 className={style.merchant_name}>Profit:
-                                    <span>
-                                        {parseFloat(selectedCustomer?.platform_profit).toFixed(2)}
-                                    </span>
-                                </h4>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div> */}
         </div>
     </div>
 }

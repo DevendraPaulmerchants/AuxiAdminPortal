@@ -71,3 +71,6 @@
 .card table tr td:last-child {
   text-align: end;
 }
+.row_hover:hover {
+  text-decoration: underline;
+}

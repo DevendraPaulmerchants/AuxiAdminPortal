@@ -75,7 +75,6 @@ function Credits() {
     setAddCreditForm(false);
     // fetchCrditList();
     setSelectedMerchant(null)
-    document.body.style.overflow = "auto";
   };
 
   const openCreditMenu = (e) => {
@@ -106,11 +105,6 @@ function Credits() {
           </div>
           <div>
           </div>
-          {/* <div className={style.add_merchants_and_filter}>
-            <button className={style1.primary_login_btn} onClick={openAddCreditForm}>
-              Add Credits
-            </button>
-          </div> */}
         </div>
         {isLoading ? (
           <div className={style1.loader_container}>

@@ -19,7 +19,7 @@ function APIKey() {
 
   const fetchAPILIst = () => {
     setIsLoading(true);
-    fetch(`${APIPATH}/api/v1/admin/merchant/api-key`, {
+    fetch(`${APIPATH}/api/v1/admin/merchants/api-keys`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         "Content-Type": "application/json"
@@ -57,18 +57,7 @@ function APIKey() {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  // const handleCopy = (key, id) => {
-  //   console.log("copied click", key,id)
-  //   console.log(navigator.clipboard);
-  //   navigator.clipboard.writeText(key).then(() => {
-  //     setCopiedKey(id);
-  //     setTimeout(() => setCopiedKey(null), 2000); 
-  //   });
-  // };
-
   const handleCopy = (key, id) => {
-    console.log("copied click", key, id);
-
     if (navigator.clipboard) {
       navigator.clipboard.writeText(key).then(() => {
         setCopiedKey(id);
@@ -181,7 +170,7 @@ function APIKey() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                    <td colSpan="4">No Data Found</td>
                   </tr>
                 )}
               </tbody>

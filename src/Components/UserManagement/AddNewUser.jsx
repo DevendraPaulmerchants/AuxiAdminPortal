@@ -8,9 +8,13 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddUser({ close, updateList, selecteduser }) {
-    document.body.style.overflow = "hidden";
     const { token } = useContextData();
-    console.log(selecteduser)
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
     const [name, setName] = useState(selecteduser?.name || "");
     const [userEmail, setUserEmail] = useState(selecteduser?.email || "");
     const [isValidEmail, setIsValidEmail] = useState(true);
@@ -98,11 +102,11 @@ function AddUser({ close, updateList, selecteduser }) {
     }
     const handleFormData = (e) => {
         e.preventDefault();
-        if(!isValidEmail){
+        if (!isValidEmail) {
             alert("Please enter valid email")
             return;
         }
-        if(!isValidMobile){
+        if (!isValidMobile) {
             alert("Please enter valid mobile");
             return;
         }

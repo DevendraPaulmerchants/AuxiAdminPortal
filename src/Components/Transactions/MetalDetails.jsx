@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "./Transaction.module.css";
 import { IoMdClose } from "react-icons/io";
 
 function MetalDetails({ close, selectedMetal }) {
-    document.body.style.overflow = "hidden";
-    console.log(selectedMetal);
+
+useEffect(() => {
+  document.body.style.overflow = 'hidden';
+  return () => {
+    document.body.style.overflow = 'auto';
+  };
+}, []);
 
     return <>
         <div className={style.add_merchants_parent}>

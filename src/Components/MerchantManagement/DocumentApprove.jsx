@@ -6,7 +6,6 @@ import { data, useNavigate } from 'react-router-dom';
 import { APIPATH } from '../apiPath/apipath';
 
 function ApproveThisDocument({ close,docId,merchantId,updateList}) {
-    console.log(docId);
     const {token} =useContextData()
     const [approvalDescription, setApprovalDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false);

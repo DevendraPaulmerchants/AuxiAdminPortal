@@ -8,8 +8,12 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewRole({ close, selectedRole, updateList }) {
-    document.body.style.overflow = "hidden";
-    console.log(selectedRole)
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
     const { token } = useContextData();
     const [name, setName] = useState(selectedRole?.name || "")
     const [description, setDescription] = useState(selectedRole?.description || "");

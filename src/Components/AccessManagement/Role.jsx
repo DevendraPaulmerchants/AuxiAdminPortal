@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { IoSearch } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import style from "../Admin/Admin.module.css";
-// import style1 from "../Merchants/Merchants.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import styles from "./AccessManagement.module.css"
-import AddNewPermission from './AddNewPermission';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import AddNewRole from './AddNewRole';
@@ -62,7 +60,6 @@ function Role() {
     const closeNewRolePage = () => {
         setIsNewRoleClick(false);
         setSelectedRole(null);
-        document.body.style.overflow = "auto";
     }
 
     return <>

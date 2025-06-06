@@ -61,7 +61,6 @@ const Users = () => {
     const closeNewuser = () => {
         setIsNewuserClick(false);
         selecteduser && setSelecteduser(null);
-        document.body.style.overflow = "auto";
     }
 
     return <>

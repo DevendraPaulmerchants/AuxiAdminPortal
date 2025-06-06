@@ -62,14 +62,12 @@ function MerchantsList({open}) {
     }
     const closeAddMerchantsForm = () => {
         setIsMerchantsClick(false);
-        document.body.style.overflow = "auto";
     }
     const openFilteredForm = () => {
         setIsFilterClick(true);
     }
     const closeFilteredForm = () => {
         setIsFilterClick(false);
-        document.body.style.overflow = "auto";
     }
 
     const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())) : [];

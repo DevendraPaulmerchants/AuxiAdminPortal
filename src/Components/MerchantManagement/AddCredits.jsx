@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from "./Merchants.module.css";
 import { IoMdClose } from "react-icons/io";
 import { handleInputChangeWithAlphabetOnly, handleInputChangeWithNumericValueOnly } from '../InputValidation/InputValidation';
 import { useContextData } from '../Context/Context';
 import { APIPATH } from '../apiPath/apipath';
 
-function AddCredits({ close, selectedMerchant,updateList }) {
-    const {token}=useContextData();
-    console.log(selectedMerchant);
-    document.body.style.overflow="hidden";
+function AddCredits({ close, selectedMerchant, updateList }) {
+    const { token } = useContextData();
     const [creditsPoint, setCreditsPoints] = useState();
     const [description, setDescription] = useState("");
     const [transactionType, setTransactionType] = useState("");
@@ -17,7 +15,7 @@ function AddCredits({ close, selectedMerchant,updateList }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const creditData = {
-        merchant_id:selectedMerchant,
+        merchant_id: selectedMerchant,
         amount: parseInt(creditsPoint),
         description: description,
         transaction_type: transactionType,
@@ -29,7 +27,7 @@ function AddCredits({ close, selectedMerchant,updateList }) {
         setIsLoading(true);
         fetch(`${APIPATH}/api/v1/admin/merchants/credits/requests`, {
             headers: {
-                "Authorization":`Bearer ${token}`,
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             method: 'POST',
@@ -42,7 +40,7 @@ function AddCredits({ close, selectedMerchant,updateList }) {
                     alert(data.message);
                     setIsLoading(false);
                     return;
-                } 
+                }
                 console.log(data.data);
                 setIsLoading(false);
                 close();
@@ -53,6 +51,12 @@ function AddCredits({ close, selectedMerchant,updateList }) {
                 setIsLoading(false);
             });
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
     return <>
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
@@ -78,7 +82,7 @@ function AddCredits({ close, selectedMerchant,updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Transaction Type* </label>
-                            <select required value={transactionType} onChange={(e) => setTransactionType(e.target.value)} style={{width:"106%"}} >
+                            <select required value={transactionType} onChange={(e) => setTransactionType(e.target.value)} style={{ width: "106%" }} >
                                 <option value="" disabled>Select Transaction Type</option>
                                 <option value="manual_credit">Manual Credit</option>
                                 <option value="Cash">Cash</option>

@@ -10,6 +10,10 @@ export const CamelCase = (str) => {
     return finalString.join(" ");
 }
 
+export const  capitalizeWord=(word)=> {
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+}
+
 export const handleInputChangeWithAlphabetOnly = (e, setValue) => {
     const input = e.target.value;
     const isAlphabetic = /^[a-zA-Z\s]*$/.test(input);

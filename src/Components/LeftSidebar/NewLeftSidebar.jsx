@@ -25,12 +25,12 @@ import { GiMetalBar } from 'react-icons/gi';
 const sidebarItems = [
     { name: "Dashboard", path: '/', icon: <RxDashboard /> },
     {
-        name: "Merchant management", path: '--', icon: <BiSolidUserDetail title='Merchant Management' />,
+        name: "Merchant Services", path: '--', icon: <BiSolidUserDetail title='Merchant Management' />,
         subItems: [
-            { name: "Merchant List", path: '/approved-merchants', icon: <HiOutlineUserGroup title="Merchant List" /> },
-            { name: "Merchant KYC Approval", path: '/pending-merchants', icon: <BsShieldCheck title="KYC Approval" /> },
-            { name: "Credit", path: '/approved_credits', icon: <MdOutlineAccountBalanceWallet title="Credit" /> },
-            { name: "Credit Approval", path: '/requested_credits', icon: <FaCheckDouble title="Credit Approval" /> },
+            { name: "Approved Merchant List", path: '/approved-merchants', icon: <HiOutlineUserGroup title="Merchant List" /> },
+            { name: "Pending Merchant List", path: '/pending-merchants', icon: <BsShieldCheck title="KYC Approval" /> },
+            { name: "Merchant`s Credit", path: '/approved_credits', icon: <MdOutlineAccountBalanceWallet title="Credit" /> },
+            { name: "Pending Credit Request", path: '/requested_credits', icon: <FaCheckDouble title="Credit Approval" /> },
             { name: "Customers", path: "/customer_list", icon: <FiUserCheck /> },
             { name: "API Key", path: '/merchant_api', icon: <VscKey title="API Key" /> },
         ]
