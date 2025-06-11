@@ -61,7 +61,7 @@ function MerchantMargin() {
         setSelectedmerchantMargin(null);
         document.body.style.overflow = "auto";
     }
-  
+
     return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
@@ -85,60 +85,62 @@ function MerchantMargin() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Scheme Name</th>
-                                <th>Gold Margin(%)</th>
-                                <th>Silver Margin(%)</th>
-                                <th>Platinum Margin(%)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.name}</td>
-                                        {val.metal_margins?.filter(metal => metal.metal_type === "GOLD").map((metal, id) => (
-                                            <td key={id}>
-                                                <p>Buy:- {metal?.buy_margin}</p>
-                                                <p>Sell:- {metal?.sell_margin}</p>
-                                                <p>Transfer:- {metal?.transfer_margin}</p>
-                                                <p>Conversion:- {metal?.conversion_margin}</p>
-                                            </td>
-                                        ))}
-                                         {val.metal_margins?.filter(metal => metal.metal_type === "SILVER").map((metal, id) => (
-                                            <td key={id}>
-                                                <p>Buy:- {metal?.buy_margin}</p>
-                                                <p>Sell:- {metal?.sell_margin}</p>
-                                                <p>Transfer:- {metal?.transfer_margin}</p>
-                                                <p>Conversion:- {metal?.conversion_margin}</p>
-                                            </td>
-                                        ))}
-                                        {val.metal_margins?.filter(metal => metal.metal_type === "PLATINUM").map((metal, id) => (
-                                            <td key={id}>
-                                                <p>Buy:- {metal?.buy_margin}</p>
-                                                <p>Sell:- {metal?.sell_margin}</p>
-                                                <p>Transfer:- {metal?.transfer_margin}</p>
-                                                <p>Conversion:- {metal?.conversion_margin}</p>
-                                            </td>
-                                        ))}
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Scheme Name</th>
+                                    <th>Gold Margin(%)</th>
+                                    <th>Silver Margin(%)</th>
+                                    <th>Platinum Margin(%)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.name}</td>
+                                            {val.metal_margins?.filter(metal => metal.metal_type === "GOLD").map((metal, id) => (
+                                                <td key={id}>
+                                                    <p>Buy:- {metal?.buy_margin}</p>
+                                                    <p>Sell:- {metal?.sell_margin}</p>
+                                                    <p>Transfer:- {metal?.transfer_margin}</p>
+                                                    <p>Conversion:- {metal?.conversion_margin}</p>
+                                                </td>
+                                            ))}
+                                            {val.metal_margins?.filter(metal => metal.metal_type === "SILVER").map((metal, id) => (
+                                                <td key={id}>
+                                                    <p>Buy:- {metal?.buy_margin}</p>
+                                                    <p>Sell:- {metal?.sell_margin}</p>
+                                                    <p>Transfer:- {metal?.transfer_margin}</p>
+                                                    <p>Conversion:- {metal?.conversion_margin}</p>
+                                                </td>
+                                            ))}
+                                            {val.metal_margins?.filter(metal => metal.metal_type === "PLATINUM").map((metal, id) => (
+                                                <td key={id}>
+                                                    <p>Buy:- {metal?.buy_margin}</p>
+                                                    <p>Sell:- {metal?.sell_margin}</p>
+                                                    <p>Transfer:- {metal?.transfer_margin}</p>
+                                                    <p>Conversion:- {metal?.conversion_margin}</p>
+                                                </td>
+                                            ))}
 
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                setSelectedmerchantMargin(val);
-                                                setIsNewmerchantMarginClick(true);
-                                            }}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    setSelectedmerchantMargin(val);
+                                                    setIsNewmerchantMarginClick(true);
+                                                }}
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {merchantMarginList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

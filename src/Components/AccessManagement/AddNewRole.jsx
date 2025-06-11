@@ -8,6 +8,8 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewRole({ close, selectedRole, updateList }) {
+    console.log("selectedRole", selectedRole);
+    
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         return () => {

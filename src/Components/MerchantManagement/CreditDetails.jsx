@@ -126,9 +126,9 @@ function CreditDetails() {
                     }
 
                 </div>
-                <div className={style1.credit_chat_detail}>
+                {/* <div className={style1.credit_chat_detail}>
                     <ChatWithMerchant />
-                </div>
+                </div> */}
             </div>
         </div>
         {isApprovebtnClick && <ApprovalForm

@@ -13,6 +13,10 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 function MetalLogs() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const { token } = useContextData();
     const { state } = useLocation();
     console.log(state)
@@ -83,12 +87,15 @@ function MetalLogs() {
                 </div>
                 <div className={style2.start_date_and_end_date}>
                     <div>
+                        <p>Filter:</p>
+                    </div>
+                    <div>
                         <DatePicker className={style2.date_input}
                             placeholderText='Select start date'
                             maxDate={new Date()}
                             selected={startDate}
                             onChange={(date) => {
-                                setStartDate(date?.toISOString()?.split("T")[0]);
+                                setStartDate(date?.toLocaleString()?.split("T")[0]);
                             }}
                         />
                     </div>
@@ -98,7 +105,7 @@ function MetalLogs() {
                             minDate={startDate}
                             maxDate={new Date()}
                             selected={endDate}
-                            onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                            onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
                             placeholderText='Select end date'
                         />
                     </div>
@@ -131,65 +138,67 @@ function MetalLogs() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Order Id</th>
-                                <th>Merchant Id</th>
-                                <th>Agent Id</th>
-                                <th>Customer Id</th>
-                                <th>Metal Type</th>
-                                <th>Weight(g)</th>
-                                <th>Amount</th>
-                                <th>Trans. Type</th>
-                                <th>Trans. status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>
-                                            {val.order_id ? `XXXX${val.order_id.slice(-4)}` : ""}
-                                        </td>
-                                        <td>
-                                            {val.merchant_id ? `XXXX${val.merchant_id.slice(-4)}` : ""}
-                                        </td>
-                                        <td>
-                                            {val.merchant_agent_id ? `XXXX${val.merchant_agent_id.slice(-4)}` : ""}
-                                        </td>
-                                        <td>
-                                            {val.customer_id ? `XXXX${val.customer_id.slice(-4)}` : ""}
-                                        </td>
-                                        <td>{val?.source_metal_type}</td>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Order Id</th>
+                                    <th>Merchant Id</th>
+                                    <th>Agent Id</th>
+                                    <th>Customer Id</th>
+                                    <th>Metal Type</th>
+                                    <th>Weight(g)</th>
+                                    <th>Amount</th>
+                                    <th>Trans. Type</th>
+                                    <th>Trans. status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>
+                                                {val.order_id ? `XXXX${val.order_id.slice(-4)}` : ""}
+                                            </td>
+                                            <td>
+                                                {val.merchant_id ? `XXXX${val.merchant_id.slice(-4)}` : ""}
+                                            </td>
+                                            <td>
+                                                {val.merchant_agent_id ? `XXXX${val.merchant_agent_id.slice(-4)}` : ""}
+                                            </td>
+                                            <td>
+                                                {val.customer_id ? `XXXX${val.customer_id.slice(-4)}` : ""}
+                                            </td>
+                                            <td>{val?.source_metal_type}</td>
 
-                                        <td>
-                                            {val.source_weight}
-                                        </td>
-                                        <td>{val.amount}</td>
-                                        <td>
-                                            {/* {val.action_type} */}
-                                            {capitalizeWord(val.transaction_type)}
-                                        </td>
-                                        <td>{val?.transaction_status}</td>
-                                        <td>
-                                            <p style={{ cursor: "pointer", fontSize: "24px" }}
-                                                onClick={(e) => {
-                                                    setSelectedMetal(val);
-                                                }}
-                                            >
-                                                <IoEye />
-                                            </p>
-                                        </td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="10" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            <td>
+                                                {val.source_weight}
+                                            </td>
+                                            <td>{val.amount}</td>
+                                            <td>
+                                                {/* {val.action_type} */}
+                                                {capitalizeWord(val.transaction_type)}
+                                            </td>
+                                            <td>{val?.transaction_status}</td>
+                                            <td>
+                                                <p style={{ cursor: "pointer", fontSize: "24px" }}
+                                                    onClick={(e) => {
+                                                        setSelectedMetal(val);
+                                                    }}
+                                                >
+                                                    <IoEye />
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="10" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {metalList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

@@ -8,7 +8,13 @@ import { Switch } from '@mui/material';
 import AddNewBank from './AddNewBank';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateFormat } from '../../helperFunction/helper';
+
 function Bank() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const { token } = useContextData();
     const [bankList, setBankList] = useState(null);
     const [selectedBank, setSelectedBank] = useState(null);
@@ -118,49 +124,53 @@ function Bank() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Holder Name</th>
-                                {/* <th>Type</th> */}
-                                <th>Bank</th>
-                                <th>Branch</th>
-                                <th>A/c Number</th>
-                                <th>IFSC</th>
-                                <th>Primary</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.account_holder_name}</td>
-                                        <td>{val.bank_name}</td>
-                                        <td>{val.branch_name}</td>
-                                        <td>{val.account_number}</td>
-                                        <td>{val.ifsc_code}</td>
-                                        <td>
-                                            <Switch checked={val?.is_primary}
-                                                onChange={(e) => {
-                                                    handlePrimaryAccount(val.id, val.is_primary)
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Holder Name</th>
+                                    {/* <th>Type</th> */}
+                                    <th>Bank</th>
+                                    <th>Branch</th>
+                                    <th>A/c Number</th>
+                                    <th>IFSC</th>
+                                    <th>Created At</th>
+                                    <th>Primary</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.account_holder_name}</td>
+                                            <td>{val.bank_name}</td>
+                                            <td>{val.branch_name}</td>
+                                            <td>{val.account_number}</td>
+                                            <td>{val.ifsc_code}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>
+                                                <Switch checked={val?.is_primary}
+                                                    onChange={(e) => {
+                                                        handlePrimaryAccount(val.id, val.is_primary)
+                                                    }}
+                                                />
+                                            </td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    setSelectedBank(val);
+                                                    setIsNewBankClick(true);
                                                 }}
-                                            />
-                                        </td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                setSelectedBank(val);
-                                                setIsNewBankClick(true);
-                                            }}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {bankList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

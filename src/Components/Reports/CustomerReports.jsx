@@ -1,44 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import style from "../Admin/Admin.module.css";
-import style1 from "./Transaction.module.css";
+import style1 from '../Transactions/Transaction.module.css';
 import styles from "../MerchantManagement/Merchants.module.css";
 import { IoEye, IoSearch } from "react-icons/io5";
-import { APIPATH } from '../apiPath/apipath';
-import MetalDetails from './MetalDetails';
+import DatePicker from 'react-datepicker';
+import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
-import { MdContentCopy } from 'react-icons/md';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { IoMdDownload } from "react-icons/io";
-import { useLocation } from 'react-router-dom';
-import { dateAndTimeFormat } from '../../helperFunction/helper';
+import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
+import { APIPATH } from '../apiPath/apipath';
+import { useNavigate } from 'react-router-dom';
 
-function SilverTransaction() {
+function CustomerReports() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [])
 
   const { token } = useContextData();
-  const { state } = useLocation();
+  const [creditsData, setCreditsData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [merchantList, setMerchantList] = useState([]);
+  const [selectedMerchant, setSelectedMerchant] = useState("");
   const [isloading, setIsLoading] = useState(false);
-  const [selectedMetal, setSelectedMetal] = useState(null);
-  const [openMetalPage, setOpenMetalPage] = useState();
-  const [pagesData, setPagesData] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [transactionType, setTransactionType] = useState(state || "");
-  const [direction, setDirection] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [direction, setDirection] = useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
 
+  // Merchant TDS Reports List ------------------------------------
   useEffect(() => {
-    setIsLoading(true);
+    if (!token) return;
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const url = `${APIPATH}/api/v1/admin/transactions/metal?order_type=${transactionType}&metal_type=SILVER&start_date=${startDate ? startDate : ''}&end_date=${endDate ? endDate : ''}&direction=${direction ? direction : ''}&cursor=${cursors ? cursors : ''}&download=false`;
+        const url = `${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}`;
         const res = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -48,10 +45,9 @@ function SilverTransaction() {
           mode: 'cors'
         });
         const data = await res.json();
-        setPagesData(data.data || []);
+        setCreditsData(data.data || []);
         setNextCursor(data.hasNextPage ? data.nextCursor : '');
         setPrevCursor(data.hasPrevPage ? data.prevCursor : '');
-
       } catch (err) {
         console.error(err);
       } finally {
@@ -59,14 +55,43 @@ function SilverTransaction() {
       }
     };
     fetchData();
-  }, [token, transactionType, startDate, endDate, direction, cursors]);
-
+  }, [token, selectedMerchant, startDate, endDate, cursors, direction]);
+  // ------------------ Merchant List ------------------
   useEffect(() => {
-    setCursors('');
-    setDirection('');
-    setCurrentPage(1);
-  }, [transactionType, startDate, endDate]);
+    const fetchMerchant = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${APIPATH}/api/v1/admin/merchants/list`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log(result)
+        setMerchantList(result.data);
+      } catch (err) {
+        console.error(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMerchant();
+  }, [token])
+  // ---------- Search Logic -------------------------------------
+  const paginatedList = creditsData?.filter((list) => {
+    const name = list?.customer_name?.toLowerCase() || '';
+    const id = String(list?.order_id || '').toLowerCase();
+    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+  }) || [];
+
+  // Pagination Logic Next button ------------------------------------
   const handleNext = () => {
     if (nextCursor) {
       setCursors(nextCursor);
@@ -74,7 +99,7 @@ function SilverTransaction() {
       setCurrentPage(prev => prev + 1);
     }
   };
-
+  // Pagination Logic Previous button ------------------------------------
   const handlePrev = () => {
     if (prevCursor) {
       setCursors(prevCursor);
@@ -82,34 +107,27 @@ function SilverTransaction() {
       setCurrentPage(prev => prev - 1);
     }
   };
-
-  const paginatedList = pagesData?.filter((list) => {
-    const name = list?.customer_name?.toLowerCase() || '';
-    const id = String(list?.customer_id || '').toLowerCase();
-    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
-  }) || [];
-
+  //------------- Downaload MerchantTDS Reports ------------------------------------
   const downloadRecords = async () => {
-    if (paginatedList?.length === 0) {
-      alert("No records to download");
+    if (creditsData?.length === 0) {
+      alert("No records found to download");
       return;
     }
     try {
-      const response = await fetch(`${APIPATH}/api/v1/admin/transactions/metal?order_type=${transactionType}&metal_type=SILVER&start_date=${startDate ? startDate : ''}&end_date=${endDate ? endDate : ''}&download=true`, {
+      const response = await fetch(`${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate}&end_date=${endDate}&download=true&merchant_id=${selectedMerchant}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
-        method: 'GET',
-        mode: 'cors'
+        method: "GET",
+        mode: "cors"
       });
-
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'metal-transactions.xlsx';
+      a.download = 'Customer-Report.xlsx';
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -117,48 +135,13 @@ function SilverTransaction() {
     } catch (error) {
       console.error("Error downloading records:", error);
     }
-  };
-
-  const closeDetailsPage = () => {
-    setOpenMetalPage(false);
-    setSelectedMetal(null);
-    document.body.style.overflow = "auto";
+  }
+  // ------------- More Details Logic ------------------------------------
+  const navigate = useNavigate();
+  const handleMoreDetails = (order) => {
+    navigate(`/customer-reports/details`, { state: order });
   }
 
-  const handleCopy = async (text) => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        // Modern approach using Clipboard API
-        await navigator.clipboard.writeText(text);
-        alert('Text copied to clipboard successfully.');
-      } else {
-        // Fallback for insecure contexts or older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-
-        // Avoid scrolling to bottom
-        textArea.style.position = 'fixed';
-        textArea.style.top = 0;
-        textArea.style.left = 0;
-        textArea.style.opacity = 0;
-
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        const successful = document.execCommand('copy');
-        if (successful) {
-          alert('Text copied to clipboard successfully');
-        } else {
-          throw new Error('Fallback copy command was unsuccessful.');
-        }
-
-        document.body.removeChild(textArea);
-      }
-    } catch (err) {
-      console.error('Error copying text: ', err);
-    }
-  };
   return <>
     <div className={style.merchants_parent}>
       {isloading ? <div className={styles.loader_container}><div className={styles.loader_item}></div></div> :
@@ -171,7 +154,7 @@ function SilverTransaction() {
             </div>
             <div className={style1.start_date_and_end_date}>
               <div>
-                <p>Filter by date:</p>
+                <p>Filter:</p>
               </div>
               <div>
                 <DatePicker className={style1.date_input}
@@ -192,17 +175,14 @@ function SilverTransaction() {
                   onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
                   placeholderText='Select end date' />
               </div>
-
             </div>
             <div className={style1.transaction_type_input}>
-              {/* <label htmlFor="Transaction Type">Order Type: </label> */}
-              <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
-                <option value="all" disabled>Select Order Type</option>
-                <option value="">All</option>
-                <option value="BUY">Buy</option>
-                <option value="SELL">Sell</option>
-                <option value="TRANSFER">Transfer</option>
-                <option value="CONVERSION">Conversion</option>
+              <label htmlFor="Merchant"> </label>
+              <select value={selectedMerchant} onChange={(e) => setSelectedMerchant(e.target.value)}>
+                <option value="all" disabled>Select Merchant</option>
+                <option value=''>All</option>
+                {merchantList?.map((merchant, index) => (
+                  <option key={merchant.id} value={merchant.id}>{merchant.merchant_name}</option>))}
               </select>
             </div>
             <div className={style1.transaction_record_download}>
@@ -213,44 +193,46 @@ function SilverTransaction() {
             <table className={style.merchants_list_container}>
               <thead>
                 <tr>
-                  <th>Order Id</th>
-                  <th>Customer Id</th>
+                  <th>Txn. Id</th>
+                  <th>Date & Time</th>
                   <th>Customer Name</th>
-                  <th>Metal Quantity(gm)</th>
-                  <th>Order Type</th>
-                  <th>Created at</th>
-                  <th>Total Price</th>
-                  <th>Order Status</th>
-                  <th>Action</th>
+                  <th>Merchant Name</th>
+                  <th>Txn. Type</th>
+                  <th>Metal</th>
+                  <th>Metal Qnt.</th>
+                  <th>Rate(/gm)</th>
+                  <th>Total Amount</th>
+                  <th>Payment Status</th>
+                  <th>Status</th>
+                  <th>more</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedList?.length > 0 ? (
                   paginatedList?.map((val, id) => {
                     return <tr key={id}>
-                      <td>XXXX{val.id?.slice(-4)}<MdContentCopy
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleCopy(val.id)}
-                        title="Copy ID"
-                      /></td>
-                      <td>XXXX{val.customer_id?.slice(-4)}</td>
+                      <td>XXXX{val.order_id?.slice(-4)}</td>
+                      <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
                       <td>{val.customer_name}</td>
-                      <td>{parseFloat(val.metal_quantity_grams)}</td>
+                      <td>{val.merchant_name}</td>
                       <td>{val.order_type}</td>
-                      <td>{dateAndTimeFormat(val.created_at)}</td>
+                      <td>{val.metal_type}</td>
+                      <td>{val.metal_quantity_grams}</td>
+                      <td>{val.metal_price_per_gram}</td>
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
+                      <td>{val.customer_payment_status}</td>
                       <td>
-                        {val.order_status === "COMPLETED" && '✅'}
-                        {val.order_status === "PENDING" && '⏳'}
-                        {val.order_status === "FAILED" && '❌'}
+                        {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
+                        {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
+                        {val.order_status === "FAILED" && <FcCancel title='Failed' />}
                       </td>
                       <td><p style={{ cursor: "pointer" }}>
-                        <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />
+                        <IoEye onClick={() => handleMoreDetails(val)} />
                       </p></td>
                     </tr>
                   })
                 ) : <tr>
-                  <td colSpan="9" style={{ textAlign: "center" }}>No Data Found</td>
+                  <td colSpan="12" style={{ textAlign: "center" }}>No Data Found</td>
                 </tr>
                 }
               </tbody>
@@ -265,9 +247,7 @@ function SilverTransaction() {
         </>
       }
     </div>
-
-    {openMetalPage && <MetalDetails selectedMetal={selectedMetal} close={closeDetailsPage} />}
   </>
 }
 
-export default SilverTransaction;
+export default CustomerReports;

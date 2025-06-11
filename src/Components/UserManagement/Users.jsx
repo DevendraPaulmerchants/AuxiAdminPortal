@@ -8,6 +8,7 @@ import Switch from '@mui/material/Switch';
 import AddUser from "./AddNewUser";
 import { APIPATH } from "../apiPath/apipath";
 import { useContextData } from "../Context/Context";
+import { dateFormat } from "../../helperFunction/helper";
 // import AddNewuser from "./Newuser";
 
 const Users = () => {
@@ -86,6 +87,7 @@ const Users = () => {
                 </div>
             </div> :
                 <>
+                <div className={style.table_wrapper}>
                     <table className={style.merchants_list_container}>
                         <thead>
                             <tr>
@@ -94,9 +96,9 @@ const Users = () => {
                                 <th>Phone</th>
                                 <th>Department</th>
                                 <th>Role Name</th>
+                                <th>Created At</th>
                                 <th>Status</th>
                                 {/* <th>Last LogIn At</th> */}
-                                {/* <th>Created At</th> */}
                                 {/* <th>Updated At</th> */}
                                 <th>Action</th>
                             </tr>
@@ -110,6 +112,7 @@ const Users = () => {
                                         <td>{val.phone?.includes("-") ? val.phone.split("-")[1] : val.phone}</td>
                                         <td>{val.role_name}</td>
                                         <td>{val?.designation}</td>
+                                        <td>{dateFormat(val.created_at)}</td>
                                         <td>
                                             <Switch checked={val.status.toLowerCase() === "active"}
                                                 onChange={() => {
@@ -130,6 +133,7 @@ const Users = () => {
                             }
                         </tbody>
                     </table>
+                </div>
                     {userList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

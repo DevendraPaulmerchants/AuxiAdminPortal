@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "../Transactions/Transaction.module.css";
 import { IoMdClose } from "react-icons/io";
-import { format } from 'date-fns';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CustomerDetails({ close, selectedCustomer }) {
 
@@ -12,10 +12,6 @@ function CustomerDetails({ close, selectedCustomer }) {
             document.body.style.overflow = 'auto';
         };
     }, []);
-
-    const formattedDate = selectedCustomer?.created_at
-        ? format(new Date(selectedCustomer.created_at), 'dd-MM-yyyy HH:mm:ss')
-        : '-';
 
 
     return <div className={style.add_merchants_parent}>
@@ -68,7 +64,7 @@ function CustomerDetails({ close, selectedCustomer }) {
                             <td>
                                 <h4 className={style.merchant_name}>Created At:
                                     <span>
-                                        {formattedDate}
+                                        {dateAndTimeFormat(selectedCustomer?.created_at)}
                                     </span>
                                 </h4>
                             </td>
@@ -107,35 +103,40 @@ function CustomerDetails({ close, selectedCustomer }) {
                 <table className={style.merchant_details_page_table}>
                     <tbody>
                         <tr className={style.merchant_details_page_row}>
-                            <td>
-                                <h4 className={style.merchant_name}>Avl. Gold:
-                                    <span>
-                                        {selectedCustomer?.payment_mode}
-                                    </span>
-                                </h4>
-                            </td>
-                            <td>
+                            {selectedCustomer?.wallets?.map((wallet_type, id) => (
+                                <td key={wallet_type.id}>
+                                    <h4 className={style.merchant_name}>Avl. {wallet_type.wallet_type}:
+                                        {wallet_type.wallet_type !== 'FUND' &&
+                                            <span>{wallet_type.metal_quantity || 0} gm </span>
+                                        }
+                                        {wallet_type.wallet_type === 'FUND' &&
+                                            <span>{wallet_type.metal_quantity}</span>
+                                        }
+                                    </h4>
+                                </td>
+                            ))}
+                            {/* <td>
                                 <h4 className={style.merchant_name}>Avl. Silver:
                                     <span>
                                         {selectedCustomer?.customer_payment_status}
                                     </span>
                                 </h4>
-                            </td>
+                            </td> */}
 
-                            <td>
+                            {/* <td>
                                 <h4 className={style.merchant_name}>Avl. Platinum:
                                     <span>
                                         {selectedCustomer?.customer_payment_reference}
                                     </span>
                                 </h4>
-                            </td>
-                            <td>
+                            </td> */}
+                            {/* <td>
                                 <h4 className={style.merchant_name}>Fund Balance:
                                     <span>
                                         {selectedCustomer?.customer_payment_reference}
                                     </span>
                                 </h4>
-                            </td>
+                            </td> */}
                         </tr>
                     </tbody>
                 </table>

@@ -12,7 +12,6 @@ import AddMerchants from './AddMerchants';
 function MerchantDetails() {
     const { token } = useContextData();
     const { merchantId } = useParams();
-    console.log(merchantId);
     const [selectedMerchant, setSelectedMerchant] = useState(null);
     const [isloading, setIsLoading] = useState(false);
     const [showImage, setShowImage] = useState(false);
@@ -52,7 +51,6 @@ function MerchantDetails() {
     //     setIsVerified(false);
     // }
     const closeUpdatePage = () => {
-        document.body.style.overflow = 'auto';
         setIsUpdateClicked(false);
     }
     return <>
@@ -206,7 +204,7 @@ function MerchantDetails() {
                 </div>
             </div>
         </div>}
-        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updatelist={getSelectedMerchantDetails} />}
+        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}
 
         {/* {isveryfied && <ApproveKYC close={closeverifyandrejectKycpage}
             merchantId={merchantId} updateList={getSelectedMerchantDetails} />} */}

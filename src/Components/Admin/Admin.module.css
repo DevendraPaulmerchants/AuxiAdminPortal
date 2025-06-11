@@ -9,6 +9,8 @@
 .merchants_parent_subheader {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
     padding: 1rem 0;
 }
 
@@ -40,28 +42,20 @@
     border: none;
     outline: none;
 }
-.table_wrapper1 {
-    min-width: 500px;
-    /* max-width: calc(100% - 8rem); */
-    max-width: 100%;
-    /* overflow-x: scroll; */
-}
-.table_wrapper2 {
-    min-width: 500px;
-    /* max-width: calc(100% - 200px); */
-    max-width: 100%;
-    overflow-x: scroll;
-}
 .merchants_list_container {
     text-align: center;
     border-spacing: 0;
     width: 100%;
     background: #FFF;
     table-layout: auto;
-    /* white-space: nowrap; */
+    white-space: nowrap;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 5px 5px 5px rgba(38, 38, 38, 0.5);
+}
+.table_wrapper {
+    width: calc(100% - 2px);
+    overflow-x: scroll;
 }
 
 .description_column {
@@ -71,7 +65,7 @@
 .merchants_list_container th {
     /* background: rgba(38, 38, 38, 0.5); */
    background:#1F342F;
-    padding: 5px;
+    padding: 5px 10px;
     font-weight: 500;
     font-size: 14px;
     color: #f2f1e9;
@@ -80,7 +74,7 @@
 .merchants_list_container tbody tr td {
     border-bottom: 1.5px solid rgba(38, 38, 38, 0.3);
     color: rgba(38, 38, 38, 0.9);
-    padding: 5px;
+    padding: 5px 10px;
     font-size: 12px;
 }
 

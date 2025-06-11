@@ -37,7 +37,7 @@ function ApprovalForm({ close,creditId,merchantId}) {
             console.log(data);
             alert(data.message);
             close();
-            navigate("/credits");
+            navigate("/approved_credits");
         })
         .catch((err)=>{
             console.error(err);

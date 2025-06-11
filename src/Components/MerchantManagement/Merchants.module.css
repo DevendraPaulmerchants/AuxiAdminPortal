@@ -4,7 +4,8 @@
     width: 100%;
     top: 0;
     left: 0;
-    background: rgba(38, 38, 38, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(1px);
 }
 
 .add_merchants_form_container {
@@ -111,7 +112,7 @@
 }
 
 .add_merchats_btn_container {
-    padding-top: 1.5rem;
+    padding: 1.5rem 0;
     display: flex;
     gap: 2rem;
 }
@@ -119,9 +120,11 @@
 .primary_login_btn {
     /* background: rgb(255, 215, 0); */
     /* background: rgba(38, 38, 38, 0.3); */
-    background: linear-gradient(to right, rgba(38, 38, 38, 0.4), rgba(38, 38, 38, 0.2));
+    /* background: linear-gradient(to right, rgba(38, 38, 38, 0.4), rgba(38, 38, 38, 0.2)); */
     /* color: rgb(139, 69, 19); */
-    color: #1f1e19;
+    /* color: #1f1e19; */
+    background: #1F342F;
+    color: #FFF;
     outline: none;
     border-radius: 5px;
     border: none;

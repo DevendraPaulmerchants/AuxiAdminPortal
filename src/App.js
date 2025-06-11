@@ -37,6 +37,12 @@ import MetalLogs from './Components/Metal_Inventory/Metal_Logs';
 import SideBar from './Components/LeftSidebar/NewLeftSidebar';
 import NewHeader from './Components/Header/NewHeader';
 import NewLogIn from './Components/LogIn/NewLogIn';
+import TDSReports from './Components/Reports/MerchantTDSReports';
+import MerchantsReports from './Components/Reports/MerchantsReports';
+import CustomerReports from './Components/Reports/CustomerReports';
+import CreditsReports from './Components/Reports/CreditsReports';
+import MerchantsTDSReports from './Components/Reports/MerchantTDSReports';
+import ReportsDetails from './Components/Reports/ReportsDetails';
 
 function App() {
   const [open, setOpen] = useState(true);
@@ -72,64 +78,69 @@ function App() {
           {/* {isAuthenticated && <Header open={open} handleOpen={handleOpen} handleLogOut={handleLogOut} />} */}
           <div className="app_layout">
             {/* {isAuthenticated && <LeftSidebar open={open} />} */}
-            {isAuthenticated && <SideBar open={open} handleLogOut={handleLogOut}/>}
+            {isAuthenticated && <SideBar open={open} handleLogOut={handleLogOut} />}
             <div className='app_content'>
-            {isAuthenticated && <NewHeader open={open} handleOpen={handleOpen} handleLogOut={handleLogOut} />}
-            <Routes>
-              {!isAuthenticated ? (
-                <>
-                  <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
-                </>
-              ) : (
-                <>
-                  {/* <Route path="/" element={<Home />} /> */}
-                  <Route path="/" element={<NewHome />} />
-                  <Route path="/login" element={<Navigate to="/" />} />
-                  {/* ------------------------- Merchants Request-------------------------------- */}
-                  <Route path='/approved-merchants' element={<MerchantsList open={open}/>} />
-                  <Route path="/merchant/Status/:status" element={<MerchantsList />} />
-                  <Route path="/merchant/:merchantId" element={<MerchantDetails />} />
-                  <Route path='/pending-merchants' element={<PendingMerchants/>}/>
-                  <Route path='/pending_merchants/:Id' element={<PendingMerchantDetails/>}/>
-                  
-                  <Route path='/customer_list' element={<CustomerList />} />
-                  <Route path='/approved_credits' element={<Credits />} />
-                  <Route path='/requested_credits' element={<Approval />} />
-                  <Route path='/credit/:id' element={<CreditDetails />} />
-                  <Route path='/merchant_api' element={<APIKey />} />
-                  {/* ------------------------- Transaction ---------------------------- */}
-                  <Route path='/transaction' element={<Transaction />} />
-                  <Route path='/gold_transactions' element={<GoldTransaction />} />
-                  <Route path='/silver_transactions' element={<SilverTransaction />} />
-                  <Route path='/credits_transactions' element={<CreditTransaction />} />
-                  {/* ----------------------------Access Management ------------------------ */}
-                  <Route path='/permissions_list' element={<Permission />} />
-                  <Route path='/departments_list' element={<Role />} />
-                  {/* ---------------------------User Management ------------------------- */}
-                  <Route path='/user_list' element={<Users />} />
-                  {/* -------------------- Bank management ------------------------- */}
-                  <Route path='/bank_list' element={<Bank />} />
-                  <Route path='/upi_list' element={<UPI />} />
-                  {/* ------------------------- Margin Management ----------------- */}
-                  {/* <Route path='/margin' element={<Global />}> */}
-                  <Route path='/global_scheme' element={<Global />} />
-                  <Route path='/scheme_list' element={<MerchantMargin />} />
-                  {/* </Route> */}
-                  {/* ---------------------Rate Management ------------ */}
-                  <Route path='/exchange' element={<Exchange />} />
-                  <Route path='/auxi_rates' element={<AuxiRate />} />
-                  {/* ---------- Metal Inventory --------------- */}
-                  <Route path='/metal' element={<Metal/>}/>
-                  <Route path='/metal_logs' element={<MetalLogs/>}/>
-                  {/* ----------- Refreh Rate--------- */}
-                  <Route path='/refresh_rate' element={<AutoRefreshList/>}/>
-                  {/* -------------- Support Management ----------------- */}
-                  <Route path='/raised_tickets' element={<Support/>}/>
-                  <Route path='/support/:id' element={<SupportDetails/>}/>
-                  <Route path="*" element={<Navigate replace to="/" />} />
-                </>
-              )}
-            </Routes>
+              {isAuthenticated && <NewHeader open={open} handleOpen={handleOpen} handleLogOut={handleLogOut} />}
+              <Routes>
+                {!isAuthenticated ? (
+                  <>
+                    <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
+                  </>
+                ) : (
+                  <>
+                    {/* <Route path="/" element={<Home />} /> */}
+                    <Route path="/" element={<NewHome />} />
+                    <Route path="/login" element={<Navigate to="/" />} />
+                    {/* ------------------------- Merchants Services-------------------------------- */}
+                    <Route path="/approved-merchants" element={<MerchantsList />} />
+                    <Route path="/approved-merchants/:merchantId" element={<MerchantDetails />} />
+                    <Route path='/pending_merchants' element={<PendingMerchants />} />
+                    <Route path='/pending_merchants/:Id' element={<PendingMerchantDetails />} />
+
+                    <Route path='/customer_list' element={<CustomerList />} />
+                    <Route path='/approved_credits' element={<Credits />} />
+                    <Route path='/requested_credits' element={<Approval />} />
+                    <Route path='/credit/:id' element={<CreditDetails />} />
+                    <Route path='/merchant_api' element={<APIKey />} />
+                    {/* ------------------------- Transactions ---------------------------- */}
+                    <Route path='/transaction' element={<Transaction />} />
+                    <Route path='/gold_transactions' element={<GoldTransaction />} />
+                    <Route path='/silver_transactions' element={<SilverTransaction />} />
+                    <Route path='/credits_transactions' element={<CreditTransaction />} />
+                    {/* --------------- Reports --------------------------  */}
+                    <Route path='/credits-report' element={<CreditsReports />} />
+                    <Route path='/merchant-tds-reports' element={<MerchantsTDSReports />} />
+                    <Route path='/merchant-reports' element={< MerchantsReports />} />
+                    <Route path='/customer-reports' element={<CustomerReports />} />
+                    <Route path='/customer-reports/details' element={<ReportsDetails />} />
+                    {/* ---------------------------- Merchant Management ------------------------ */}
+                    {/* ----------------------------Access Management ------------------------ */}
+                    <Route path='/permissions_list' element={<Permission />} />
+                    <Route path='/departments_list' element={<Role />} />
+                    {/* ---------------------------User Management ------------------------- */}
+                    <Route path='/user_list' element={<Users />} />
+                    {/* -------------------- Bank management ------------------------- */}
+                    <Route path='/bank_list' element={<Bank />} />
+                    <Route path='/upi_list' element={<UPI />} />
+                    {/* ------------------------- Margin Management ----------------- */}
+                    {/* <Route path='/margin' element={<Global />}> */}
+                    <Route path='/global_scheme' element={<Global />} />
+                    <Route path='/scheme_list' element={<MerchantMargin />} />
+                    {/* ---------------------Rate Management ------------ */}
+                    <Route path='/exchange' element={<Exchange />} />
+                    <Route path='/auxi_rates' element={<AuxiRate />} />
+                    {/* ---------- Metal Inventory --------------- */}
+                    <Route path='/metal' element={<Metal />} />
+                    <Route path='/metal_logs' element={<MetalLogs />} />
+                    {/* ----------- Refreh Rate--------- */}
+                    <Route path='/refresh_rate' element={<AutoRefreshList />} />
+                    {/* -------------- Support Management ----------------- */}
+                    <Route path='/raised_tickets' element={<Support />} />
+                    <Route path='/support/:id' element={<SupportDetails />} />
+                    <Route path="*" element={<Navigate replace to="/" />} />
+                  </>
+                )}
+              </Routes>
             </div>
           </div>
         </Router>

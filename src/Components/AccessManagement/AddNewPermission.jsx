@@ -5,6 +5,7 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewPermission({ close, selectedPermission, updateList }) {
+    console.log("selectedPermission", selectedPermission);
     const { token } = useContextData();
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -52,8 +53,9 @@ function AddNewPermission({ close, selectedPermission, updateList }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
-                    <h2>Add New Permission</h2>
-                    {selectedPermission && <h2>Update Permission</h2>}
+                    <h2>
+                        {selectedPermission ? 'Update Permission' : 'Add New Permission'}
+                    </h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
@@ -76,7 +78,8 @@ function AddNewPermission({ close, selectedPermission, updateList }) {
                         <img src='/gold-coin.png' alt='Gold loading...' />
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
-                            <button className={style.primary_login_btn}>Add</button>
+                            <button className={style.primary_login_btn}>
+                                {selectedPermission ? 'Update':'Add'}</button>
                         </div>
                     }
                 </form>

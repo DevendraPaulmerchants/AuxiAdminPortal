@@ -42,6 +42,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
                     return;
                 }
                 console.log(data.data);
+                alert(data.message);
                 setIsLoading(false);
                 close();
                 updateList();

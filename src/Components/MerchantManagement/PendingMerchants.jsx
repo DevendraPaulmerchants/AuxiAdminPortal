@@ -9,9 +9,13 @@ import AddMerchants from './AddMerchants';
 import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateFormat } from '../../helperFunction/helper';
 
 function PendingMerchants() {
-    const {token}=useContextData();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+    const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -50,17 +54,17 @@ function PendingMerchants() {
     }
     const closeAddMerchantsForm = () => {
         setIsMerchantsClick(false);
-        document.body.style.overflow="auto"; 
+        document.body.style.overflow = "auto";
     }
     const openFilteredForm = () => {
         setIsFilterClick(true);
     }
     const closeFilteredForm = () => {
         setIsFilterClick(false);
-        document.body.style.overflow="auto"; 
+        document.body.style.overflow = "auto";
     }
 
-    const filteredList =Array.isArray(merchantList)? merchantList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())):[];
+    const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())) : [];
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
@@ -74,7 +78,7 @@ function PendingMerchants() {
     };
 
     const navigate = useNavigate();
-    const selectedMerchant = (merchantId,status) => {
+    const selectedMerchant = (merchantId, status) => {
         navigate(`/pending_merchants/${merchantId}?verification_status=${status}`);
     }
 
@@ -88,7 +92,7 @@ function PendingMerchants() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of pending merchants</p>
+                    <p>Review and verify the following merchants.</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}>Add Merchant</button>
@@ -101,42 +105,46 @@ function PendingMerchants() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                {/* <th>Avl. Credits</th> */}
-                                <th>KYC Status</th>
-                                <th>Active/Inactive</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.merchant_name}</td>
-                                        <td>{val.primary_person_email}</td>
-                                        <td>{val.primary_person_mobile}</td>
-                                        {/* <td>{val.available_credit}</td> */}
-                                        {/* <td>{val?.kyc_status !== Object ? "Approved":"Pending"}</td> */}
-                                        <td>{val.verification_status}</td>
-                                        <td>
-                                            <Switch checked={val.status === "active"} />
-                                        </td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => selectedMerchant(val.merchant_id,val.verification_status)}
-                                        ><GoEye /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    {/* <th>Avl. Credits</th> */}
+                                    <th>KYC Status</th>
+                                    <th>Created At</th>
+                                    <th>Active/Inactive</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.merchant_name}</td>
+                                            <td>{val.primary_person_email}</td>
+                                            <td>{val.primary_person_mobile}</td>
+                                            {/* <td>{val.available_credit}</td> */}
+                                            {/* <td>{val?.kyc_status !== Object ? "Approved":"Pending"}</td> */}
+                                            <td>{val.verification_status}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>
+                                                <Switch checked={val.status === "active"} />
+                                            </td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => selectedMerchant(val.merchant_id, val.verification_status)}
+                                            ><GoEye /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {merchantList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

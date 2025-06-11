@@ -12,8 +12,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
 import { useLocation } from 'react-router-dom';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function GoldTransaction() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const { token } = useContextData();
   const { state } = useLocation();
   const [searchText, setSearchText] = useState("");
@@ -31,8 +36,8 @@ function GoldTransaction() {
   const [prevCursor, setPrevCursor] = useState('');
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const url = `${APIPATH}/api/v1/admin/transactions/metal?order_type=${transactionType}&metal_type=GOLD&start_date=${startDate}&end_date=${endDate}&direction=${direction}&cursor=${cursors}&download=false`;
         const res = await fetch(url, {
@@ -91,39 +96,37 @@ function GoldTransaction() {
     document.body.style.overflow = "auto";
   }
 
- const handleCopy = async (text) => {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      alert('Text copied to clipboard successfully.');
-    } else {
-      // Fallback for insecure contexts or older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-
-      // Avoid scrolling to bottom
-      textArea.style.position = 'fixed';
-      textArea.style.top = 0;
-      textArea.style.left = 0;
-      textArea.style.opacity = 0;
-
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      const successful = document.execCommand('copy');
-      if (successful) {
+  const handleCopy = async (text) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
         alert('Text copied to clipboard successfully.');
       } else {
-        throw new Error('Fallback copy command was unsuccessful.');
-      }
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
 
-      document.body.removeChild(textArea);
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+        textArea.style.opacity = 0;
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        const successful = document.execCommand('copy');
+        if (successful) {
+          alert('Text copied to clipboard successfully.');
+        } else {
+          throw new Error('Fallback copy command was unsuccessful.');
+        }
+
+        document.body.removeChild(textArea);
+      }
+    } catch (err) {
+      console.error('Error copying text: ', err);
     }
-  } catch (err) {
-    console.error('Error copying text: ', err);
-  }
-};
+  };
 
 
   const downloadRecords = async () => {
@@ -179,7 +182,7 @@ function GoldTransaction() {
                   maxDate={new Date()}
                   selected={startDate}
                   onChange={(date) => {
-                    setStartDate(date?.toISOString()?.split("T")[0]);
+                    setStartDate(date?.toLocaleString()?.split("T")[0]);
                   }}
                 />
               </div>
@@ -189,12 +192,12 @@ function GoldTransaction() {
                   minDate={startDate}
                   maxDate={new Date()}
                   selected={endDate}
-                  onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                  onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
                   placeholderText='Select end date' />
               </div>
             </div>
             <div className={style1.transaction_type_input}>
-              <label htmlFor="Order Type">Order Type: </label>
+              {/* <label htmlFor="Order Type">Order Type: </label> */}
               <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
                 <option value="all" disabled>Select Order Type</option>
                 <option value="">All</option>
@@ -208,51 +211,53 @@ function GoldTransaction() {
               <IoMdDownload title='Download Records' onClick={downloadRecords} />
             </div>
           </div>
-          <table className={style.merchants_list_container}>
-            <thead>
-              <tr>
-                <th>Order Id</th>
-                <th>Customer Id</th>
-                <th>Customer Name</th>
-                <th>Metal Quantity(gm)</th>
-                <th>Order Type</th>
-                <th>Created at</th>
-                <th>Total Price</th>
-                <th>Order Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedList?.length > 0 ? (
-                paginatedList?.map((val, id) => {
-                  return <tr key={id}>
-                    <td>XXXX{val.id?.slice(-4)}<MdContentCopy
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleCopy(val.id)}
-                      title="Copy ID"
-                    /></td>
-                    <td>XXXX{val.customer_id?.slice(-4)}</td>
-                    <td>{val.customer_name}</td>
-                    <td>{parseFloat(val.metal_quantity_grams)}</td>
-                    <td>{val.order_type}</td>
-                    <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
-                    <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
-                    <td>
-                      {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
-                      {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
-                      {val.order_status === "FAILED" && <FcCancel title='Failed' />}
-                    </td>
-                    <td><p style={{ cursor: "pointer" }}>
-                      <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />
-                    </p></td>
-                  </tr>
-                })
-              ) : <tr>
-                <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
-              </tr>
-              }
-            </tbody>
-          </table>
+          <div className={style.table_wrapper}>
+            <table className={style.merchants_list_container}>
+              <thead>
+                <tr>
+                  <th>Order Id</th>
+                  <th>Customer Id</th>
+                  <th>Customer Name</th>
+                  <th>Metal Quantity(gm)</th>
+                  <th>Order Type</th>
+                  <th>Created at</th>
+                  <th>Total Price</th>
+                  <th>Order Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedList?.length > 0 ? (
+                  paginatedList?.map((val, id) => {
+                    return <tr key={id}>
+                      <td>XXXX{val.id?.slice(-4)}<MdContentCopy
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleCopy(val.id)}
+                        title="Copy ID"
+                      /></td>
+                      <td>XXXX{val.customer_id?.slice(-4)}</td>
+                      <td>{val.customer_name}</td>
+                      <td>{parseFloat(val.metal_quantity_grams)}</td>
+                      <td>{val.order_type}</td>
+                      <td>{dateAndTimeFormat(val.created_at)}</td>
+                      <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
+                      <td>
+                        {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
+                        {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
+                        {val.order_status === "FAILED" && <FcCancel title='Failed' />}
+                      </td>
+                      <td><p style={{ cursor: "pointer" }}>
+                        <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />
+                      </p></td>
+                    </tr>
+                  })
+                ) : <tr>
+                  <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
           <div className={style.pagination_parent}>
             <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
             <span className={style.pagination_parent_pageno}>{currentPage}</span>

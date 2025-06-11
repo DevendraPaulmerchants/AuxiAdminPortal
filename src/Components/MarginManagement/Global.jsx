@@ -6,9 +6,10 @@ import style1 from "../MerchantManagement/Merchants.module.css";
 import AddNewGlobalMargin from './AddNewGlobalMargin';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateFormat } from '../../helperFunction/helper';
 
 function Global() {
-    const {token}=useContextData();
+    const { token } = useContextData();
     const [globalList, setGlobalList] = useState(null);
     const [selectedGlobal, setSelectedGlobal] = useState(null);
     const [isNewGlobalClick, setIsNewGlobalClick] = useState(false);
@@ -21,8 +22,8 @@ function Global() {
         setIsLoading(true);
         fetch(`${APIPATH}/api/v1/admin/margins/globals`, {
             headers: {
-               'Authorization':`Bearer ${token}`,
-               'Content-Type':'Application/json'
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'Application/json'
             },
             method: "GET",
             mode: "cors"
@@ -88,53 +89,57 @@ function Global() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Metal Type</th>
-                                <th>Platform Charge(INR)</th>
-                                <th>Margin(%)</th>
-                                <th>GST(%)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val?.metal_type}</td>
-                                        <td>
-                                            <p>Buy:- {val?.buy_platform_charge_fee}</p>
-                                            <p>Sell:- {val?.sell_platform_charge_fee}</p>
-                                            <p>Transfer:- {val?.transfer_platform_charge_fee}</p>
-                                            <p>Conversion:- {val?.conversion_platform_charge_fee}</p>
-                                        </td>
-                                        <td>
-                                            <p>Buy:- {val?.buy_margin}</p>
-                                            <p>Sell:- {val?.sell_margin}</p>
-                                            <p>Transfer:- {val?.transfer_margin}</p>
-                                            <p>Conversion:- {val?.conversion_margin}</p>
-                                        </td>
-                                        <td>
-                                            <p>Buy:- {val?.buy_gst}</p>
-                                            <p>Sell:- {val?.sell_gst}</p>
-                                            <p>Transfer:- {val?.transfer_gst}</p>
-                                            <p>Conversion:- {val?.conversion_gst}</p>
-                                        </td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                setSelectedGlobal(val);
-                                                setIsNewGlobalClick(true);
-                                            }}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Metal Type</th>
+                                    <th>Platform Charge(INR)</th>
+                                    <th>Margin(%)</th>
+                                    <th>GST(%)</th>
+                                    <th>Created At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val?.metal_type}</td>
+                                            <td>
+                                                <p>Buy:- {val?.buy_platform_charge_fee}</p>
+                                                <p>Sell:- {val?.sell_platform_charge_fee}</p>
+                                                <p>Transfer:- {val?.transfer_platform_charge_fee}</p>
+                                                <p>Conversion:- {val?.conversion_platform_charge_fee}</p>
+                                            </td>
+                                            <td>
+                                                <p>Buy:- {val?.buy_margin}</p>
+                                                <p>Sell:- {val?.sell_margin}</p>
+                                                <p>Transfer:- {val?.transfer_margin}</p>
+                                                <p>Conversion:- {val?.conversion_margin}</p>
+                                            </td>
+                                            <td>
+                                                <p>Buy:- {val?.buy_gst}</p>
+                                                <p>Sell:- {val?.sell_gst}</p>
+                                                <p>Transfer:- {val?.transfer_gst}</p>
+                                                <p>Conversion:- {val?.conversion_gst}</p>
+                                            </td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    setSelectedGlobal(val);
+                                                    setIsNewGlobalClick(true);
+                                                }}
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {globalList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

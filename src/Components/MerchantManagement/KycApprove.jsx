@@ -55,7 +55,7 @@ function ApproveKYC({ close,merchantId,updateList,docId}) {
             alert(data.message);
             updateList();
             close();
-            navigate('/pending_merchants');
+            navigate('/pending-merchants');
         })
         .catch((err)=>{
             console.error(err);

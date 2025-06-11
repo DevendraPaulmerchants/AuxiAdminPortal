@@ -7,8 +7,13 @@ import { Switch } from '@mui/material';
 import AddNewUPI from './AddNewUPI';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateFormat } from '../../helperFunction/helper';
 
 function UPI() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const { token } = useContextData();
     const [UPIList, setUPIList] = useState(null);
     const [selectedUPI, setSelectedUPI] = useState(null);
@@ -117,44 +122,48 @@ function UPI() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Holder Type</th>
-                                <th>UPI Id</th>
-                                <th>Mobile</th>
-                                <th>Primary</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.account_holder_type}</td>
-                                        <td>{val.upi_id}</td>
-                                        <td>{val.linked_mobile_number}</td>
-                                        <td>
-                                            <Switch checked={val?.is_primary}
-                                                onChange={() => {
-                                                    handlePrimaryAccount(val.id, val.is_primary)
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Holder Type</th>
+                                    <th>UPI Id</th>
+                                    <th>Mobile</th>
+                                    <th>Created At</th>
+                                    <th>Primary</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.account_holder_type}</td>
+                                            <td>{val.upi_id}</td>
+                                            <td>{val.linked_mobile_number}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>
+                                                <Switch checked={val?.is_primary}
+                                                    onChange={() => {
+                                                        handlePrimaryAccount(val.id, val.is_primary)
+                                                    }}
+                                                />
+                                            </td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    setSelectedUPI(val);
+                                                    setIsNewUPIClick(true);
                                                 }}
-                                            />
-                                        </td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                setSelectedUPI(val);
-                                                setIsNewUPIClick(true);
-                                            }}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {UPIList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

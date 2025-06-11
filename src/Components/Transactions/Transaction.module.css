@@ -61,6 +61,7 @@
   .start_date_and_end_date {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .date_input {

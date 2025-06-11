@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from "../Admin/Admin.module.css";
 import style1 from './Merchants.module.css';
 import style2 from '../Transactions/Transaction.module.css'
-import { IoIosSearch, IoMdEye } from "react-icons/io";
+import { IoMdEye } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
@@ -11,11 +11,16 @@ import { Switch } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { dateFormat } from '../../helperFunction/helper';
 
 
 function CustomerList() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
     const { token } = useContextData();
-    const {state}=useLocation();
+    const { state } = useLocation();
     console.log(state);
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -125,7 +130,7 @@ function CustomerList() {
                     />
                     <IoSearch />
                 </div>
-                 <div className={style2.start_date_and_end_date}>
+                <div className={style2.start_date_and_end_date}>
                     <div>
                         <DatePicker className={style2.date_input}
                             placeholderText='Select start date'
@@ -170,52 +175,60 @@ function CustomerList() {
             {isLoading ? <div className={style1.loader_container}>
                 <div className={style1.loader_item}></div></div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Customer Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Gold</th>
-                                <th>Silver</th>
-                                <th>Fund Balance</th>
-                                <th>A/C Status</th>
-                                <th>More</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList.length > 0 ? (
-                                paginatedList.map((val, id) => (
-                                    <tr key={id}>
-                                        <td>{val.full_name || val.first_name}</td>
-                                        <td>{val.email}</td>
-                                        <td>{val.phone}</td>
-                                        <td>{val.gold}</td>
-                                        <td>{val.silver}</td>
-                                        <td>{val.balance}</td>
-                                        <td>
-                                            <Switch checked={val.account_status === 'ACTIVE'}/>
-                                        </td>
-                                        <td>
-                                            <p style={{ cursor: "pointer" }}
-                                                onClick={() => {
-                                                    openDPage(val);
-                                                }}
-                                            >
-                                                <IoMdEye />
-                                            </p>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Merchant Name</th>
+                                    <th>Create At</th>
+                                    {/* <th>Gold</th> */}
+                                    {/* <th>Silver</th> */}
+                                    {/* <th>Fund Balance</th> */}
+                                    <th>KYC Status</th>
+                                    <th>A/C Status</th>
+                                    <th>More</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList.length > 0 ? (
+                                    paginatedList.map((val, id) => (
+                                        <tr key={id}>
+                                            <td>{val.full_name || val.first_name}</td>
+                                            <td>{val.email}</td>
+                                            <td>{val.phone}</td>
+                                            <td>{val.merchant_name}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            {/* <td>{val.gold}</td> */}
+                                            {/* <td>{val.silver}</td> */}
+                                            {/* <td>{val.balance}</td> */}
+                                            <td>{val.kyc_status}</td>
+                                            <td>
+                                                <Switch checked={val.account_status === 'ACTIVE'} />
+                                            </td>
+                                            <td>
+                                                <p style={{ cursor: "pointer" }}
+                                                    onClick={() => {
+                                                        openDPage(val);
+                                                    }}
+                                                >
+                                                    <IoMdEye />
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="7" style={{ textAlign: "center" }}>
+                                            No Data Found
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>
-                                        No Data Found
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                     {paginatedList.length > 0 &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>

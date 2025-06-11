@@ -11,8 +11,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { FcCancel, FcClock, FcOk } from 'react-icons/fc';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CreditTransaction() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const { token } = useContextData();
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,40 +91,40 @@ function CreditTransaction() {
     setSelectedMetal(null);
   }
 
- const handleCopy = async (text) => {
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      // Modern approach using Clipboard API
-      await navigator.clipboard.writeText(text);
-      alert('Text copied to clipboard successfully.');
-    } else {
-      // Fallback for insecure contexts or older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-
-      // Avoid scrolling to bottom
-      textArea.style.position = 'fixed';
-      textArea.style.top = 0;
-      textArea.style.left = 0;
-      textArea.style.opacity = 0;
-
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      const successful = document.execCommand('copy');
-      if (successful) {
-        alert('Text copied to clipboard successfully');
+  const handleCopy = async (text) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        // Modern approach using Clipboard API
+        await navigator.clipboard.writeText(text);
+        alert('Text copied to clipboard successfully.');
       } else {
-        throw new Error('Fallback copy command was unsuccessful.');
-      }
+        // Fallback for insecure contexts or older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
 
-      document.body.removeChild(textArea);
+        // Avoid scrolling to bottom
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+        textArea.style.opacity = 0;
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        const successful = document.execCommand('copy');
+        if (successful) {
+          alert('Text copied to clipboard successfully');
+        } else {
+          throw new Error('Fallback copy command was unsuccessful.');
+        }
+
+        document.body.removeChild(textArea);
+      }
+    } catch (err) {
+      console.error('Error copying text: ', err);
     }
-  } catch (err) {
-    console.error('Error copying text: ', err);
-  }
-};
+  };
 
   const downloadRecords = async () => {
     if (paginatedList?.length === 0) {
@@ -171,7 +176,7 @@ function CreditTransaction() {
                   maxDate={new Date()}
                   selected={startDate}
                   onChange={(date) => {
-                    setStartDate(date?.toISOString()?.split("T")[0]);
+                    setStartDate(date?.toLocaleString()?.split("T")[0]);
                   }}
                 />
               </div>
@@ -181,15 +186,15 @@ function CreditTransaction() {
                   minDate={startDate}
                   maxDate={new Date()}
                   selected={endDate}
-                  onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                  onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
                   placeholderText='Select end date' />
               </div>
             </div>
             <div className={style1.transaction_type_input}>
-              <label htmlFor="Transaction Type">Order Type: </label>
+              {/* <label htmlFor="Transaction Type">Order Type: </label> */}
               <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
-                <option value="" disabled>Select Order Type</option>
-                <option value="ALL">All</option>
+                <option value="all" disabled>Select Order Type</option>
+                <option value="">All</option>
                 <option value="DEBIT">Debit</option>
                 <option value="CREDIT">Credit</option>
               </select>
@@ -198,51 +203,51 @@ function CreditTransaction() {
               <IoMdDownload title='Download Records' onClick={downloadRecords} />
             </div>
           </div>
-          <table className={style.merchants_list_container}>
-            <thead>
-              <tr>
-                <th>Order Id</th>
-                <th>Merchnat Name</th>
-                <th>Amount</th>
-                <th>Remaining Credits</th>
-                <th>Description</th>
-                <th>Order type</th>
-                <th>Created at</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedList?.length > 0 ? (
-                paginatedList?.map((val, id) => {
-                  return <tr key={id}>
-                    <td>XXXX{val.id?.slice(-4)}
-                      {/* <p> */}
-                      <MdContentCopy
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleCopy(val.id)}
-                        title="Copy ID"
-                      />
-                      {/* </p> */}
-                    </td>
-                    <td>{val.merchant_name}</td>
-                    <td>{parseFloat(val.amount)}</td>
-                    <td>{parseFloat(val.remaining_credits)}</td>
-                    <td>{val.description}</td>
-                    <td>{val.transaction_type}</td>
-                    <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
-                    <td>
-                      {val.status === "COMPLETED" && <FcOk title='Completed' />}
-                      {val.status === "PENDING" && <FcClock title='Pending' />}
-                      {val.status === "FAILED" && <FcCancel title='Failed' />}
-                    </td>
-                  </tr>
-                })
-              ) : <tr>
-                <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
-              </tr>
-              }
-            </tbody>
-          </table>
+          <div className={style.table_wrapper}>
+            <table className={style.merchants_list_container}>
+              <thead>
+                <tr>
+                  <th>Order Id</th>
+                  <th>Merchnat Name</th>
+                  <th>Amount</th>
+                  <th>Remaining Credits</th>
+                  <th>Description</th>
+                  <th>Order type</th>
+                  <th>Created at</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedList?.length > 0 ? (
+                  paginatedList?.map((val, id) => {
+                    return <tr key={id}>
+                      <td>XXXX{val.id?.slice(-4)}
+                        <MdContentCopy
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleCopy(val.id)}
+                          title="Copy ID"
+                        />
+                      </td>
+                      <td>{val.merchant_name}</td>
+                      <td>{parseFloat(val.amount)}</td>
+                      <td>{parseFloat(val.remaining_credits)}</td>
+                      <td>{val.description}</td>
+                      <td>{val.transaction_type}</td>
+                      <td>{dateAndTimeFormat(val.created_at)}</td>
+                      <td>
+                        {val.status === "COMPLETED" && <FcOk title='Completed' />}
+                        {val.status === "PENDING" && <FcClock title='Pending' />}
+                        {val.status === "FAILED" && <FcCancel title='Failed' />}
+                      </td>
+                    </tr>
+                  })
+                ) : <tr>
+                  <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
           <div className={style.pagination_parent}>
             <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
             <span className={style.pagination_parent_pageno}>{currentPage}</span>

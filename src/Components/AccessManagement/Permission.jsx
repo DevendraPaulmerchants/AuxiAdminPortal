@@ -9,7 +9,7 @@ import { APIPATH } from "../apiPath/apipath";
 import { useContextData } from "../Context/Context";
 
 const Permission = () => {
-    const {token} =useContextData();
+    const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [permissionList, setPermissionList] = useState(null);
     const [selectedPermission, setSelectedPermission] = useState(null);
@@ -82,35 +82,37 @@ const Permission = () => {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Permission`s Name</th>
-                                <th>Description</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.name}</td>
-                                        <td>{val.description}</td>
-                                        <td>{val.created_at.split("T")[0]}</td>
-                                        <td>{val.updated_at.split("T")[0]}</td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => setSelectedPermission(val)}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Permission`s Name</th>
+                                    <th>Description</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.name}</td>
+                                            <td>{val.description}</td>
+                                            <td>{val.created_at.split("T")[0]}</td>
+                                            <td>{val.updated_at.split("T")[0]}</td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => setSelectedPermission(val)}
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {permissionList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
@@ -121,7 +123,7 @@ const Permission = () => {
                 </>
             }
         </div>
-        {(isNewPerMissionClick || selectedPermission ) && <AddNewPermission
+        {(isNewPerMissionClick || selectedPermission) && <AddNewPermission
             selectedPermission={selectedPermission}
             close={closeNewPermission}
             updateList={getPermissionList}

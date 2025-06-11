@@ -28,7 +28,7 @@ function PendingMerchantDetails() {
     const [isveryfied, setIsVerified] = useState(false);
     const [isUpdateClicked,setIsUpdateClicked]=useState(false);
 
-    const getSelectedMerchantDetails = useCallback(() => {
+    const getSelectedMerchantDetails = () => {
         setIsLoading(true);
         fetch(`${APIPATH}/api/v1/admin/merchants?id=${Id}&verification_status=${status}`, {
             headers: {
@@ -47,11 +47,11 @@ function PendingMerchantDetails() {
                 console.log(err);
             })
             .finally(() => setIsLoading(false));
-    }, [Id, token,status]); // Add dependencies that affect the function
+    };
 
     useEffect(() => {
         getSelectedMerchantDetails();
-    }, [getSelectedMerchantDetails]);
+    }, []);
 
     const navigate = useNavigate();
 
@@ -89,6 +89,14 @@ function PendingMerchantDetails() {
         setShowImage(null)
     }
     const openverifyandrejectKycpage = () => {
+        if (selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING' || selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING') {
+            alert("Please verify or reject the Uploaded documents before proceeding.");
+            return;
+        }
+        if( selectedMerchant?.kyc_documents[0].kyc_status === 'REJECTED' || selectedMerchant?.kyc_documents[1].kyc_status === 'REJECTED'){ 
+            alert("Please verify the rejected documents before proceeding.");
+            return;
+        }
         setIsVerified(true);
     }
     const closeverifyandrejectKycpage = () => {
@@ -96,7 +104,6 @@ function PendingMerchantDetails() {
         // navigate('/pending_merchants');
     }
     const closeUpdatePage=()=>{
-        document.body.style.overflow='auto';
         setIsUpdateClicked(false);
     }
     return <>
@@ -186,15 +193,6 @@ function PendingMerchantDetails() {
                                             {doc?.kyc_status === "PENDING" && "🕓"}
                                         </p>
                                     </div>
-                                    {/* <div className={style.add_merchats_btn_container}>
-                                        <button className={style.primary_login_btn}
-                                            onClick={() => ApproveDocument(doc.id, doc.kyc_status)}
-                                        >Approve</button>
-                                        <button className={style.primary_login_btn}
-                                            disabled={doc.kyc_status === "VERIFIED"}
-                                            onClick={() => { setIsKYCRejectClicked(true); setSelectedDocId(doc.id) }}
-                                        >Reject</button>
-                                    </div> */}
                                 </h4>
                             ))}
                         </div>
@@ -206,6 +204,9 @@ function PendingMerchantDetails() {
                             </button>
                             <button className={style.primary_login_btn}
                                 onClick={() => { openverifyandrejectKycpage() }}
+                                // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
+                                //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
+                                // } 
                             >
                                 {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
                         </div>
@@ -247,7 +248,7 @@ function PendingMerchantDetails() {
         {isKYCRejectClicked && <ApproveThisDocument close={closeKYCReject} merchantId={Id} docId={selectedDocId} updateList={getSelectedMerchantDetails} />}
         {isveryfied && <ApproveKYC close={closeverifyandrejectKycpage}
             merchantId={Id} updateList={getSelectedMerchantDetails} />}
-        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updatelist={getSelectedMerchantDetails} />}    
+        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}    
     </>
 }
 

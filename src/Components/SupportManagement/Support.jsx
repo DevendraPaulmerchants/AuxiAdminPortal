@@ -12,14 +12,14 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function Support() {
   const { token } = useContextData();
-  const {state}=useLocation();
+  const { state } = useLocation();
   console.log(state);
   const [supportList, setSupportList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [ticketStatus,setTicketStatus]=useState(state || '')
+  const [ticketStatus, setTicketStatus] = useState(state || '')
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 8;
 
@@ -42,7 +42,7 @@ function Support() {
       .finally(() => {
         setIsLoading(false);
       })
-  }, [token,startDate,endDate])
+  }, [token, startDate, endDate])
   useEffect(() => {
     getSupportRequest();
   }, [getSupportRequest])
@@ -72,7 +72,7 @@ function Support() {
         <div className={style.search_input_field}>
           <input
             type='text'
-            placeholder='Search by name or email..'
+            placeholder='Search by Merchant`s name'
             maxLength={12}
             value={searchText}
             onChange={(e) => {
@@ -83,29 +83,32 @@ function Support() {
           <IoSearch />
         </div>
         <div className={style2.start_date_and_end_date}>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            placeholderText='Select start date'
-                            maxDate={new Date()}
-                            selected={startDate}
-                            onChange={(date) => {
-                                setStartDate(date?.toISOString()?.split("T")[0]);
-                            }}
-                        />
-                    </div>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            disabled={!startDate}
-                            minDate={startDate}
-                            maxDate={new Date()}
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
-                            placeholderText='Select end date'
-                        />
-                    </div>
-                </div>
+          <div>
+            <p>Filter:</p>
+          </div>
+          <div>
+            <DatePicker className={style2.date_input}
+              placeholderText='Select start date'
+              maxDate={new Date()}
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date?.toLocaleString()?.split("T")[0]);
+              }}
+            />
+          </div>
+          <div>
+            <DatePicker className={style2.date_input}
+              disabled={!startDate}
+              minDate={startDate}
+              maxDate={new Date()}
+              selected={endDate}
+              onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+              placeholderText='Select end date'
+            />
+          </div>
+        </div>
         <div className={style.date_filter_container}>
-          <select value={ticketStatus} onChange={(e)=>setTicketStatus(e.target.value)}>
+          <select value={ticketStatus} onChange={(e) => setTicketStatus(e.target.value)}>
             <option value="" disabled>Select Status</option>
             <option value="ALL">All</option>
             <option value="PENDING">Pending</option>

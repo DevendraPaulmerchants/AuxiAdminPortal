@@ -28,7 +28,7 @@ const sidebarItems = [
         name: "Merchant Services", path: '--', icon: <BiSolidUserDetail title='Merchant Management' />,
         subItems: [
             { name: "Approved Merchant List", path: '/approved-merchants', icon: <HiOutlineUserGroup title="Merchant List" /> },
-            { name: "Pending Merchant List", path: '/pending-merchants', icon: <BsShieldCheck title="KYC Approval" /> },
+            { name: "Pending Merchant List", path: '/pending_merchants', icon: <BsShieldCheck title="KYC Approval" /> },
             { name: "Merchant`s Credit", path: '/approved_credits', icon: <MdOutlineAccountBalanceWallet title="Credit" /> },
             { name: "Pending Credit Request", path: '/requested_credits', icon: <FaCheckDouble title="Credit Approval" /> },
             { name: "Customers", path: "/customer_list", icon: <FiUserCheck /> },
@@ -55,7 +55,7 @@ const sidebarItems = [
         ]
     },
     {
-        name: "Accounts", path: '--', icon: <BiSolidBank title='Accounts' />,
+        name: "Beneficiary Accounts", path: '--', icon: <BiSolidBank title='Accounts' />,
         subItems: [
             { name: "Bank", path: "/bank_list", icon: <FaRegCreditCard title='Bank List' /> },
             { name: "UPI", path: "/upi_list", icon: <MdPayment title='UPI List' /> }
@@ -81,6 +81,14 @@ const sidebarItems = [
         path: "/refresh_rate",
         icon: <MdOutlineSettingsSystemDaydream title='Environment Setting' />,
     },
+    {name:"Reports", path: '--', icon: <HiOutlineDocumentReport title='Reports' />,
+        subItems:[
+            { name: " Merchants TDS Reports", path: '/merchant-tds-reports', icon: <HiOutlineDocumentReport title='TDS Report' /> },
+            // { name: "Merchant TDS Reports", path: '/merchant-reports', icon: <HiOutlineDocumentReport title='Merchant Profit Report' /> },
+            { name: "Customer Reports", path: '/customer-reports', icon: <HiOutlineDocumentReport title='Customer Report' /> },
+            { name: "Credits Report", path: '/credits-report', icon: <HiOutlineDocumentReport title='Credits Report' /> },
+        ]
+    },
     { name: "Settings", path: '/settings', icon: <IoSettingsOutline title='Settings' /> },
     { name: "Raised Ticket", path: '/raised_tickets', icon: <BsQuestionCircle title='Raised Ticket' /> },
 ];
@@ -100,11 +108,7 @@ const SideBar = ({ open, handleLogOut }) => {
     const handleDropdownClick = (index) => {
         setOpenDropdown(openDropdown === index ? null : index);
     };
-    // const IsSidebarCollapse = useSidebarCollapseStore((state) => state.isSidebarCollapsed);
-    // const handleLogOut = () => {
-    //     useLogInStore.getState().logout();
-    // }
-
+ 
     return (
         <div className={open ? style.sidebar_container : style.sidebar_container_collapsed}>
             <div className={style.logo_container}>

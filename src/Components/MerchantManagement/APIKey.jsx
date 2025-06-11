@@ -9,6 +9,10 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function APIKey() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const { token } = useContextData();
   const [searchText, setSearchText] = useState("");
   const [apiList, setAPILIst] = useState(null);

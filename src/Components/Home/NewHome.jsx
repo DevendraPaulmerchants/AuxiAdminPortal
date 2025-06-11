@@ -118,7 +118,7 @@ const NewHome = () => {
                         onChange={(e) => setEndDate(e.target.value)} />
                 </div>
                 <select onChange={(e) => setSelectedMerchant(e.target.value)} className={styles.select}>
-                    <option value="" disabled>Select Merchant</option>
+                    <option value="" disabled>---: Merchant :---</option>
                     <option value="">All</option>
                     {merchant?.map((merchant) => (
                         <option key={merchant.id} value={merchant.id}>
@@ -135,8 +135,7 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ALL";
-                                navigate(`/merchant/Status/${active}`)
-
+                                navigate(`/merchant`,{ state: active})
                             }}
                         >
                             <h2 className={styles.value}>Total</h2>
@@ -145,7 +144,7 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ACTIVE";
-                                navigate(`/merchant/Status/${active}`)
+                               navigate(`/merchant`,{ state: active})
                             }}
                         >
                             <h2 className={styles.value}>Active</h2>
@@ -154,11 +153,19 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "INACTIVE";
-                                navigate(`/merchant/Status/${active}`)
+                                navigate(`/merchant`,{ state: active})
                             }}
                         >
                             <h2 className={styles.value}>InActive</h2>
                             <h2 className={styles.value}>{report?.merchant_widget?.inactive || 0}🔴</h2>
+                        </div>
+                        <div className={styles.value_container}
+                            onClick={(e) => {
+                                navigate(`/pending-merchants`)
+                            }}
+                        >
+                            <h2 className={styles.value}>Pending</h2>
+                            <h2 className={styles.value}>{report?.merchant_widget?.pending || 0}🕐</h2>
                         </div>
                     </div>
                     <div className={styles.card}>

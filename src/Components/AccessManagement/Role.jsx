@@ -71,7 +71,7 @@ function Role() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of all departments along with their descriptions</p>
+                    <p>Below is the complete list of all departments.</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
@@ -85,40 +85,41 @@ function Role() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Department</th>
-                                <th>Description</th>
-                                <th>Permission</th>
-                                <th>Created</th>
-                                <th>Updated</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.name}</td>
-                                        <td><p style={{ width: '300px' }}>
-                                            {val.description}
-                                        </p>
-                                        </td>
-                                        <td>
-                                            {val.permissions_names &&
-                                                <div className={styles.current_value}>
-                                                    {val.permissions_names?.slice(0, 1).map((perm, id) => (
-                                                        <p key={id}>{perm}{" "}...</p>
-                                                    ))}
-                                                    <div className={styles.on_hover}>
-                                                        {val.permissions_names?.map((perm, id) => (
-                                                            <p key={id}>{perm}</p>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>Description</th>
+                                    <th>Permission</th>
+                                    <th>Created</th>
+                                    <th>Updated</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.name}</td>
+                                            <td><p style={{ width: '300px', whiteSpace: 'break-spaces', margin: 'auto' }}>
+                                                {val.description}
+                                            </p>
+                                            </td>
+                                            <td>
+                                                {val.permissions_names &&
+                                                    <div className={styles.current_value}>
+                                                        {val.permissions_names?.slice(0, 1).map((perm, id) => (
+                                                            <p key={id}>{perm}{" "}...</p>
                                                         ))}
+                                                        <div className={styles.on_hover}>
+                                                            {val.permissions_names?.map((perm, id) => (
+                                                                <p key={id}>{perm}</p>
+                                                            ))}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            }
-                                            {/* {val.permissions_names ? val.permissions_names :
+                                                }
+                                                {/* {val.permissions_names ? val.permissions_names :
                                                     <>
                                                         {val.permissions_names?.slice(0, 1).map((perm, id) => (
                                                             <p key={id}>{perm}{" "}...</p>
@@ -131,21 +132,22 @@ function Role() {
                                                     </>
                                                 } */}
 
-                                        </td>
+                                            </td>
 
-                                        <td>{val.created_at?.split("T")[0]}</td>
-                                        <td>{val.updated_at?.split("T")[0]}</td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => setSelectedRole(val)}
-                                        ><MdEdit /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                                            <td>{val.created_at?.split("T")[0]}</td>
+                                            <td>{val.updated_at?.split("T")[0]}</td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => setSelectedRole(val)}
+                                            ><MdEdit /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {roleList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

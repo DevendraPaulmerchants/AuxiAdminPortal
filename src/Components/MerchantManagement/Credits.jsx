@@ -12,6 +12,10 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function Credits() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
   const { token } = useContextData();
   const [creditList, setCreditList] = useState(null);
   const [selectedMerchant, setSelectedMerchant] = useState(null);
@@ -41,11 +45,9 @@ function Credits() {
       .then((data) => {
         console.log(data.data);
         setCreditList(data.data);
-        // setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        // setIsLoading(false);
       }).finally(() => setIsLoading(false))
   };
 

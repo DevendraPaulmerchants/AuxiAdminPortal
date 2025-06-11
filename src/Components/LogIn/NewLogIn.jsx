@@ -55,7 +55,7 @@ const NewLogIn = ({ handleLogIn }) => {
     return (
         <div className={style.login_container}>
             <div className={style.login_left_side}>
-                <img src="./LogInLeftImage.png" alt="Logo" />
+                <img src="/LogInLeftImage.png" alt="Logo" />
             </div>
             <div className={style.login_rigth_side}>
                 <div className={style.form_conatainer}>
@@ -91,9 +91,13 @@ const NewLogIn = ({ handleLogIn }) => {
                         </div>
                         {/* )} */}
                         <button type="submit" disabled={isloading}>
-                            {isloading ? <div className={style1.loader_container}><div className={style1.loader_item}>
+                            {isloading ? 
+                            <div style={{display:'flex',justifyContent:'center'}} >
+                                <div className={style1.loader_item}>
                                 <img src='/gold-coin.png' alt='Gold loading...' />
-                            </div></div> : "Log In"}
+                            </div>
+                            </div> 
+                            : "Log In"}
                         </button>
                     </form>
                 </div>

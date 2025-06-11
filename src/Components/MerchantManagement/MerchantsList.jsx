@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, } from 'react-router-dom';
 import style from "../Admin/Admin.module.css";
 import style1 from "./Merchants.module.css";
 import { GoEye } from "react-icons/go";
@@ -9,10 +9,14 @@ import AddMerchants from './AddMerchants';
 import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateFormat } from '../../helperFunction/helper';
 
-function MerchantsList({open}) {
-    const { status } = useParams();
+function MerchantsList({ open }) {
+    useEffect(()=>{
+       window.scrollTo(0, 0);
+    },[])
     const { token } = useContextData();
+    const { state } = useLocation();
 
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
@@ -21,7 +25,7 @@ function MerchantsList({open}) {
     const rowsPerPage = 8;
     const [isAddMerchnatsClick, setIsMerchantsClick] = useState(false);
     const [isFilterClick, setIsFilterClick] = useState(false);
-    const [merchantStatus, setMerchantStatus] = useState(status || "");
+    const [merchantStatus, setMerchantStatus] = useState(state || "");
 
     const fetchMerchantList = () => {
         setIsLoading(true)
@@ -85,7 +89,7 @@ function MerchantsList({open}) {
 
     const navigate = useNavigate();
     const selectedMerchant = (merchantId) => {
-        navigate(`/merchant/${merchantId}`);
+        navigate(`/approved-merchants/${merchantId}`);
     }
     const changeStatusOfSelectedMerchant = (merchantId, currentStatus) => {
         const confirm = window.confirm("Do you really want to change the status of this merchant?");
@@ -160,50 +164,53 @@ function MerchantsList({open}) {
                 </div>
             </div> :
                 <>
-                <div className={open ? style.table_wrapper1 :style.table_wrapper2}>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile</th>
-                                <th>Avl. Credits</th>
-                                <th>KYC Status</th>
-                                <th>Active/Inactive</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val.merchant_name}</td>
-                                        <td>{val.primary_person_email}</td>
-                                        <td>
-                                            {val.primary_person_mobile?.includes('-')
-                                                ? val.primary_person_mobile.split('-')[1]
-                                                : val.primary_person_mobile}
-                                        </td>
-                                        <td>{val.available_credit}</td>
-                                        <td>{val?.kyc_status ? "Approved" : "Pending"}</td>
-                                        <td>
-                                            <Switch
-                                                checked={val.status === "ACTIVE"}
-                                                onChange={() => changeStatusOfSelectedMerchant(val.merchant_id, val.status)}
-                                            />
-                                        </td>
-                                        <td><p style={{ cursor: "pointer" }}
-                                            onClick={() => selectedMerchant(val.merchant_id)}
-                                        ><GoEye /></p></td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Avl. Credits</th>
+                                    <th>KYC Status</th>
+                                    <th>Created At</th>
+                                    <th>Active/Inactive</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val.merchant_name}</td>
+                                            <td>{val.primary_person_email}</td>
+                                    
+                                            <td>
+                                                {val.primary_person_mobile?.includes('-')
+                                                    ? val.primary_person_mobile.split('-')[1]
+                                                    : val.primary_person_mobile}
+                                            </td>
+                                            <td>{val.available_credit}</td>
+                                            <td>{val?.kyc_status ? "Approved" : "Pending"}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>
+                                                <Switch
+                                                    checked={val.status === "ACTIVE"}
+                                                    onChange={() => changeStatusOfSelectedMerchant(val.merchant_id, val.status)}
+                                                />
+                                            </td>
+                                            <td><p style={{ cursor: "pointer" }}
+                                                onClick={() => selectedMerchant(val.merchant_id)}
+                                            ><GoEye /></p></td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {merchantList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

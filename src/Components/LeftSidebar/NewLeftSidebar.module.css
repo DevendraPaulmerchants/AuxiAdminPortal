@@ -23,10 +23,10 @@
     padding-bottom: 4rem;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    transition: 300ms ease-in-out;
 }
 
 .sidebar_container_collapsed {
-    /* background: #1F342F; */
     background: linear-gradient(-135deg,
             #1F342F 0%,
             #1F342F 10%,
@@ -45,12 +45,12 @@
             #1F342F 90%,
             #1F342F 100%);
     width: 90px;
-    /* height: calc(120% + 4rem); */
     height: fit-content;
     padding-bottom: 4rem;
     overflow: hidden;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    transition: 300ms ease-in-out;
 }
 
 .logo_container {

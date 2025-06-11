@@ -13,4 +13,5 @@
 }
 .app_content {
   width: 100%;
+  overflow: hidden;
 }

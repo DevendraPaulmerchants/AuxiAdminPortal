@@ -8,14 +8,14 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { CgMaximizeAlt } from 'react-icons/cg';
 
-function AddMerchants({ close, updatelist,selectedMerchant }) {
+function AddMerchants({ close, updateList, selectedMerchant }) {
   const { token } = useContextData();
   useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, []);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
   const [organizatioNname, setOrganizationName] = useState(selectedMerchant?.merchant_name || '');
   const [preferredName, setPreferredName] = useState(selectedMerchant?.merchant_brand_name || '')
   const [primaryContactName, setPrimaryContactName] = useState(selectedMerchant?.primary_person_name || '');
@@ -29,10 +29,10 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
   const [stateName, setStateName] = useState(selectedMerchant?.address_state || '');
   const [districtName, setDistrictName] = useState(selectedMerchant?.address_district || '');
   const [pinCode, setPinCode] = useState(selectedMerchant?.address_pincode || '');
-  const [panNumber, setPANnumber] = useState( selectedMerchant?.kyc_documents?.[1]?.document_number || '');
+  const [panNumber, setPANnumber] = useState(selectedMerchant?.kyc_documents?.[1]?.document_number || '');
   const [isValidPAN, setIsValidPAN] = useState(true);
   const [gstNumber, setGSTNumber] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number || '');
-  const [isvalidGst,setIsvalidGst]=useState(true);
+  const [isvalidGst, setIsvalidGst] = useState(true);
   const [bussinessType, setBussinessType] = useState("");
   const [businessNature, setBusinessNature] = useState("");
   const [schemeList, setSchemeList] = useState(null);
@@ -40,7 +40,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
   const [panDocument, setPanDocument] = useState();
   const [previewPAN, setPreviewPAN] = useState(selectedMerchant?.kyc_documents?.[1]?.document_url || '')
   const [bussinessDocument, setBussinessDocument] = useState();
-  const [previewBuDoc, setPreviewBUDoc] = useState(selectedMerchant?.kyc_documents?.[0]?.document_url ||'');
+  const [previewBuDoc, setPreviewBUDoc] = useState(selectedMerchant?.kyc_documents?.[0]?.document_url || '');
   const [ownerImage, setOwnerImage] = useState();
   const [businessImage, setBusinessImage] = useState();
   const [selectedUrl, setSelectedUrl] = useState('');
@@ -56,7 +56,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
     mask: "+91-__________",
     replacement: { _: /\d/ },
   });
-// new Merchnat object ------------------
+  // new Merchnat object ------------------
   const newMerchants = {
     merchant_name: organizatioNname,
     merchant_brand_name: preferredName,
@@ -94,7 +94,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
   }
   // Getting ShemeList
   useEffect(() => {
-    if(!!schemeList) return;
+    if (!!schemeList) return;
     fetch(`${APIPATH}/api/v1/admin/schemes`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -115,7 +115,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
 
   const [stateList, setStateList] = useState(null);
   useEffect(() => {
-    if(!!stateList) return
+    if (!!stateList) return
     fetch("https://countriesnow.space/api/v0.1/countries/states", {
       method: "POST",
       headers: {
@@ -150,7 +150,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
 
   const handleFormData = (e) => {
     e.preventDefault();
-    if(!isValidPMobile && !isValidAltPMobile){
+    if (!isValidPMobile && !isValidAltPMobile) {
       alert("Please enter valid mobile number");
       return;
     }
@@ -168,24 +168,28 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
     formData.append("pan_document", panDocument);
     formData.append("business_document", bussinessDocument);
 
-    fetch(`${APIPATH}/api/v1/admin/merchants`, {
+    const url = selectedMerchant ? `${APIPATH}/api/v1/admin/merchants?id=${selectedMerchant.merchant_id}` : `${APIPATH}/api/v1/admin/merchants`
+    fetch(url, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
-      method: 'POST',
+      method: selectedMerchant ? 'PATCH' : 'POST',
       body: formData,
       mode: "cors"
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.statusCode !== 201) {
+        if (data.statusCode === 200 || data.statusCode === 201) {
           alert(data.message);
-          return
+          console.log(data.message);
+          updateList();
+          close();
+        } else {
+          alert(data.message);
+          console.log(data.message);
+          return;
         }
-        alert(data.message);
-        updatelist();
-        close();
       })
       .catch((err) => {
         console.error(err);
@@ -271,7 +275,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
             </div>
           </div>
           <div className={style.add_merchants_bussiness_address}>
-            <h3>Business Address</h3>
+            <h3>Business Details</h3>
             <div className={style.name_email_parent_container}>
               <div className={style.name_label_input_contaner}>
                 <label>Business Type* </label>
@@ -380,7 +384,7 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
             <div className={style.name_label_input_contaner}>
               <label>GST Number* </label>
               <input type='text' required placeholder='Enter GST number' maxLength={15} minLength={15} value={gstNumber}
-                onChange={(e) => handleGSTNumber(e,setGSTNumber,setIsvalidGst)}
+                onChange={(e) => handleGSTNumber(e, setGSTNumber, setIsvalidGst)}
               />
               {!isvalidGst && <p className={style.not_valid_text}>please type valid GST number</p>}
             </div>
@@ -401,7 +405,8 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
               <div className={style.name_label_input_contaner}>
                 <label>Upload PAN* </label>
                 <input style={{ width: "97%" }}
-                  type='file' required
+                  type='file'
+                  required={!selectedMerchant}
                   accept='application/pdf*'
                   onChange={handlePanDocument}
                 />
@@ -428,9 +433,10 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
                 }
               </div>
               <div className={style.name_label_input_contaner}>
-                <label>Upload Bussiness Certificate* </label>
+                <label>Upload GST Certificate* </label>
                 <input style={{ width: "97%" }}
-                  type='file' required
+                  type='file'
+                  required={!selectedMerchant}
                   accept='application/pdf*'
                   onChange={handleBussinessDocument}
                 />
@@ -483,7 +489,9 @@ function AddMerchants({ close, updatelist,selectedMerchant }) {
             <img src='/gold-coin.png' alt='Gold loading...' />
           </div></div> :
             <div className={style.add_merchats_btn_container}>
-              <button className={style.primary_login_btn}>Create Merchant</button>
+              <button className={style.primary_login_btn}>
+                {selectedMerchant ? 'Update Merchant' : 'Create Merchant'}
+              </button>
             </div>
           }
         </form>
