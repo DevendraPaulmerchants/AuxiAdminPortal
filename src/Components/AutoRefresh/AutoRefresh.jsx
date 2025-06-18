@@ -8,6 +8,13 @@ import { MdEdit } from 'react-icons/md';
 import AddNewRefreshKey from './AddNewRefreshKey';
 
 function AutoRefreshList() {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, [])
     const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
@@ -49,7 +56,6 @@ function AutoRefreshList() {
     const closeAddMerchantsForm = () => {
         setIsMerchantsClick(false);
         setSelectedRow(null)
-        document.body.style.overflow = "auto";
     }
 
     const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => list.type?.toLowerCase().includes(searchText.toLowerCase())) : [];
@@ -83,7 +89,7 @@ function AutoRefreshList() {
                         <IoSearch />
                     </div>
                     <div>
-                        <p>List of all previously added environment settings</p>
+                        <p>Added environment settings</p>
                     </div>
                     <div className={style.add_merchants_and_filter}>
                         <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}>Add New Scheduler</button>
@@ -98,55 +104,57 @@ function AutoRefreshList() {
                     </div>
                 ) : (
                     <>
-                        <table className={style.merchants_list_container}>
-                            <thead>
-                                <tr>
-                                    <th>Setting Name</th>
-                                    <th>Interval Value</th>
-                                    <th>Time Unit</th>
-                                    <th>Description</th>
-                                    <th>Last Updated</th>
-                                    <th>Updated By</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody className={style1.full_width_tbody}>
-                                {paginatedList?.length > 0 ? (
-                                    paginatedList.map((val, id) => (
-                                        <tr key={id} className={style1.full_width_row}>
-                                            <td>{val.key}</td>
-                                            <td>
-                                                <p style={{ width: '200px',wordBreak:'break-word' }}>
-                                                    {val?.value}
-                                                </p>
-                                            </td>
-                                            <td><p style={{ width: '100px' }}>
-                                                {val?.time_unit}
-                                            </p>
-                                            </td>
-                                            <td><p style={{ width: '200px' }}>
-                                                {val?.description}
-                                            </p>
-                                            </td>
-                                            <td>{val?.updated_at?.split("T")[0]}</td>
-                                            <td>{val?.updated_by}</td>
-                                            <td>
-                                                <p
-                                                    className={style1.edit_icon}
-                                                    onClick={() => setSelectedRow(val)}
-                                                >
-                                                    <MdEdit />
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : (
+                        <div className={style.table_wrapper}>
+                            <table className={style.merchants_list_container}>
+                                <thead>
                                     <tr>
-                                        <td colSpan="7" className={style1.no_data_text}>No Data Found</td>
+                                        <th>Setting Name</th>
+                                        <th>Interval Value</th>
+                                        <th>Time Unit</th>
+                                        <th>Description</th>
+                                        <th>Last Updated</th>
+                                        <th>Updated By</th>
+                                        <th>Action</th>
                                     </tr>
-                                )}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className={style1.full_width_tbody}>
+                                    {paginatedList?.length > 0 ? (
+                                        paginatedList.map((val, id) => (
+                                            <tr key={id} className={style1.full_width_row}>
+                                                <td>{val.key}</td>
+                                                <td>
+                                                    <p style={{ width: '200px', wordBreak: 'break-word' }}>
+                                                        {val?.value}
+                                                    </p>
+                                                </td>
+                                                <td><p style={{ width: '100px' }}>
+                                                    {val?.time_unit}
+                                                </p>
+                                                </td>
+                                                <td><p style={{ width: '200px' }}>
+                                                    {val?.description}
+                                                </p>
+                                                </td>
+                                                <td>{val?.updated_at?.split("T")[0]}</td>
+                                                <td>{val?.updated_by}</td>
+                                                <td>
+                                                    <p
+                                                        className={style1.edit_icon}
+                                                        onClick={() => setSelectedRow(val)}
+                                                    >
+                                                        <MdEdit />
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="7" className={style1.no_data_text}>No Data Found</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
 
                         {merchantList?.length > rowsPerPage && (
                             <div className={style.pagination_parent}>

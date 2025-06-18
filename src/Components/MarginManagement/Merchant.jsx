@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { IoSearch } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdKeyboardBackspace } from "react-icons/md";
 import style from "../Admin/Admin.module.css";
 // import style1 from "../Merchants/Merchants.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import AddMarchantMargin from './AddMarchantMargin';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function MerchantMargin() {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, [])
     const { token } = useContextData();
+    const location=useLocation();
+    const schemeName=location.state?.schemeName;
+    const navigate=useNavigate();
+
     const [merchantMarginList, setmerchantMarginList] = useState(null);
     const [selectedmerchantMargin, setSelectedmerchantMargin] = useState(null);
     const [isNewmerchantMarginClick, setIsNewmerchantMarginClick] = useState(false);
-    const [searchText, setSearchText] = useState("");
+    const [searchText, setSearchText] = useState(schemeName || "");
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 8;
@@ -59,19 +71,25 @@ function MerchantMargin() {
     const closeNewmerchantMarginPage = () => {
         setIsNewmerchantMarginClick(false);
         setSelectedmerchantMargin(null);
-        document.body.style.overflow = "auto";
     }
 
     return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
+                {schemeName &&
+                <div>
+                    <MdKeyboardBackspace title='Back to Detail Page' style={{cursor:'pointer'}}
+                    onClick={()=>navigate(-1)}
+                    />
+                </div>
+                }
                 <div className={style.search_input_field}>
-                    <input type='text' placeholder='Search by metal name...' maxLength={12} value={searchText}
+                    <input type='text' placeholder='Search by scheme name...' maxLength={12} value={searchText}
                         onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Here is the complete breakdown of metal charges for each merchant</p>
+                    <p>Merchant wise Schemes</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}

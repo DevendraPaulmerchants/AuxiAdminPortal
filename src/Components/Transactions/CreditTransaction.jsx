@@ -12,13 +12,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { FcCancel, FcClock, FcOk } from 'react-icons/fc';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
+import { useLocation } from 'react-router-dom';
 
 function CreditTransaction() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }, [])
 
   const { token } = useContextData();
+  const {state}=useLocation();
+  console.log(state);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isloading, setIsLoading] = useState(false);
@@ -28,7 +35,7 @@ function CreditTransaction() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [direction, setDirection] = useState("");
-  const [transactionType, setTransactionType] = useState("");
+  const [transactionType, setTransactionType] = useState(state || "");
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
@@ -82,7 +89,8 @@ function CreditTransaction() {
   };
 
   const paginatedList = pagesData?.filter((list) =>
-    list?.merchant_name?.toLowerCase().includes(searchText.toLowerCase())
+    list?.merchant_name?.toLowerCase().includes(searchText.toLowerCase()) &&
+  (transactionType === "" || list?.transaction_type === transactionType)
   ) || [];
 
 
@@ -158,51 +166,52 @@ function CreditTransaction() {
 
   return <>
     <div className={style.merchants_parent}>
+
+      <div className={style.merchants_parent_subheader}>
+        <div className={style.search_input_field}>
+          <input type='text' placeholder='Search by merchant name' maxLength={12} value={searchText}
+            onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
+          <IoSearch />
+        </div>
+        <div className={style1.start_date_and_end_date}>
+          <div>
+            <p>Filter :</p>
+          </div>
+          <div>
+            <DatePicker className={style1.date_input}
+              placeholderText='Select start date'
+              maxDate={new Date()}
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date?.toLocaleDateString());
+              }}
+            />
+          </div>
+          <div>
+            <DatePicker className={style1.date_input}
+              disabled={!startDate}
+              minDate={startDate}
+              maxDate={new Date()}
+              selected={endDate}
+              onChange={(date) => setEndDate(date?.toLocaleDateString())}
+              placeholderText='Select end date' />
+          </div>
+        </div>
+        <div className={style1.transaction_type_input}>
+          {/* <label htmlFor="Transaction Type">Order Type: </label> */}
+          <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
+            <option value="all" disabled>Select Order Type</option>
+            <option value="">All</option>
+            <option value="DEBIT">Debit</option>
+            <option value="CREDIT">Credit</option>
+          </select>
+        </div>
+        <div className={style1.transaction_record_download}>
+          <IoMdDownload title='Download Records' onClick={downloadRecords} />
+        </div>
+      </div>
       {isloading ? <div className={styles.loader_container}><div className={styles.loader_item}></div></div> :
         <>
-          <div className={style.merchants_parent_subheader}>
-            <div className={style.search_input_field}>
-              <input type='text' placeholder='Search by merchant name' maxLength={12} value={searchText}
-                onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
-              <IoSearch />
-            </div>
-            <div className={style1.start_date_and_end_date}>
-              <div>
-                <p>Filter by date:</p>
-              </div>
-              <div>
-                <DatePicker className={style1.date_input}
-                  placeholderText='Select start date'
-                  maxDate={new Date()}
-                  selected={startDate}
-                  onChange={(date) => {
-                    setStartDate(date?.toLocaleString()?.split("T")[0]);
-                  }}
-                />
-              </div>
-              <div>
-                <DatePicker className={style1.date_input}
-                  disabled={!startDate}
-                  minDate={startDate}
-                  maxDate={new Date()}
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
-                  placeholderText='Select end date' />
-              </div>
-            </div>
-            <div className={style1.transaction_type_input}>
-              {/* <label htmlFor="Transaction Type">Order Type: </label> */}
-              <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
-                <option value="all" disabled>Select Order Type</option>
-                <option value="">All</option>
-                <option value="DEBIT">Debit</option>
-                <option value="CREDIT">Credit</option>
-              </select>
-            </div>
-            <div className={style1.transaction_record_download}>
-              <IoMdDownload title='Download Records' onClick={downloadRecords} />
-            </div>
-          </div>
           <div className={style.table_wrapper}>
             <table className={style.merchants_list_container}>
               <thead>
@@ -249,7 +258,7 @@ function CreditTransaction() {
             </table>
           </div>
           <div className={style.pagination_parent}>
-            <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
+            <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
             <span className={style.pagination_parent_pageno}>{currentPage}</span>
             <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
           </div>

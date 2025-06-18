@@ -7,8 +7,16 @@ import styles from "./AccessManagement.module.css"
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import AddNewRole from './AddNewRole';
+import { dateFormat } from '../../helperFunction/helper';
 
 function Role() {
+      useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [])
     const { token } = useContextData();
     const [roleList, setRoleList] = useState(null);
     const [selectedRole, setSelectedRole] = useState(null);
@@ -71,7 +79,7 @@ function Role() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of all departments.</p>
+                    <p>Departments added previously</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
@@ -134,15 +142,15 @@ function Role() {
 
                                             </td>
 
-                                            <td>{val.created_at?.split("T")[0]}</td>
-                                            <td>{val.updated_at?.split("T")[0]}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{dateFormat(val.updated_at)}</td>
                                             <td><p style={{ cursor: "pointer" }}
                                                 onClick={() => setSelectedRole(val)}
                                             ><MdEdit /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="6">No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

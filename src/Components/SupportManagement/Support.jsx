@@ -11,9 +11,15 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 function Support() {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [])
   const { token } = useContextData();
   const { state } = useLocation();
-  console.log(state);
   const [supportList, setSupportList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
@@ -92,7 +98,7 @@ function Support() {
               maxDate={new Date()}
               selected={startDate}
               onChange={(date) => {
-                setStartDate(date?.toLocaleString()?.split("T")[0]);
+                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
               }}
             />
           </div>
@@ -102,7 +108,7 @@ function Support() {
               minDate={startDate}
               maxDate={new Date()}
               selected={endDate}
-              onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+              onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
               placeholderText='Select end date'
             />
           </div>
@@ -124,6 +130,7 @@ function Support() {
         </div>
       ) : (
         <>
+        <div className={style.table_wrapper}>
           <table className={style.merchants_list_container}>
             <thead>
               <tr>
@@ -160,6 +167,7 @@ function Support() {
               )}
             </tbody>
           </table>
+        </div>
           {supportList?.length > rowsPerPage &&
             <div className={style.pagination_parent}>
               <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

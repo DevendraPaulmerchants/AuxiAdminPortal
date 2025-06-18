@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "./Merchants.module.css";
 import style1 from "../Admin/Admin.module.css"
 import { IoMdClose } from "react-icons/io";
@@ -14,9 +14,9 @@ import ApproveThisDocument from './DocumentApprove';
 function PendingMerchantDetails() {
     const { token } = useContextData();
     const { Id } = useParams();
-    const location=useLocation();
-    const queryParam=new URLSearchParams(location.search);
-    const status=queryParam.get('verification_status');
+    const location = useLocation();
+    const queryParam = new URLSearchParams(location.search);
+    const status = queryParam.get('verification_status');
     // console.log(Id,status);
 
     const [selectedMerchant, setSelectedMerchant] = useState(null);
@@ -26,7 +26,7 @@ function PendingMerchantDetails() {
     const [showImage, setShowImage] = useState(false);
     const [showImageUrl, setShowImageUrl] = useState("");
     const [isveryfied, setIsVerified] = useState(false);
-    const [isUpdateClicked,setIsUpdateClicked]=useState(false);
+    const [isUpdateClicked, setIsUpdateClicked] = useState(false);
 
     const getSelectedMerchantDetails = () => {
         setIsLoading(true);
@@ -93,7 +93,7 @@ function PendingMerchantDetails() {
             alert("Please verify or reject the Uploaded documents before proceeding.");
             return;
         }
-        if( selectedMerchant?.kyc_documents[0].kyc_status === 'REJECTED' || selectedMerchant?.kyc_documents[1].kyc_status === 'REJECTED'){ 
+        if (selectedMerchant?.kyc_documents[0].kyc_status === 'REJECTED' || selectedMerchant?.kyc_documents[1].kyc_status === 'REJECTED') {
             alert("Please verify the rejected documents before proceeding.");
             return;
         }
@@ -103,7 +103,7 @@ function PendingMerchantDetails() {
         setIsVerified(false);
         // navigate('/pending_merchants');
     }
-    const closeUpdatePage=()=>{
+    const closeUpdatePage = () => {
         setIsUpdateClicked(false);
     }
     return <>
@@ -149,20 +149,16 @@ function PendingMerchantDetails() {
                                     </td>
                                 </tr>
                                 <tr className={style.merchant_details_page_row}>
-                                    {/* <td>
-                                        <h4 className={style.merchant_name}>PAN no.:
+                                    <td>
+                                        <h4 className={style.merchant_name}>Scheme Name:
                                             <span>
-                                                {selectedMerchant?.pan_no}
+                                                <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
+                                                    {selectedMerchant?.scheme_name}
+                                                </Link>
                                             </span>
                                         </h4>
-                                    </td> */}
-                                    {/* <td>
-                                        <h4 className={style.merchant_name}>GST:
-                                            <span>
-                                                {selectedMerchant?.gst_no}
-                                            </span>
-                                        </h4>
-                                    </td>*/}
+                                    </td>
+
                                     <td>
                                         <h4 className={style.merchant_name}>Address:
                                             <span>
@@ -198,15 +194,15 @@ function PendingMerchantDetails() {
                         </div>
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}
-                            onClick={()=>setIsUpdateClicked(true)}
+                                onClick={() => setIsUpdateClicked(true)}
                             >
                                 Update Details
                             </button>
                             <button className={style.primary_login_btn}
                                 onClick={() => { openverifyandrejectKycpage() }}
-                                // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
-                                //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
-                                // } 
+                            // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
+                            //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
+                            // } 
                             >
                                 {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
                         </div>
@@ -248,7 +244,7 @@ function PendingMerchantDetails() {
         {isKYCRejectClicked && <ApproveThisDocument close={closeKYCReject} merchantId={Id} docId={selectedDocId} updateList={getSelectedMerchantDetails} />}
         {isveryfied && <ApproveKYC close={closeverifyandrejectKycpage}
             merchantId={Id} updateList={getSelectedMerchantDetails} />}
-        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}    
+        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}
     </>
 }
 

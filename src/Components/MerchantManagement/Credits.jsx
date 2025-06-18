@@ -13,8 +13,13 @@ import { useContextData } from '../Context/Context';
 
 function Credits() {
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }, [])
+
 
   const { token } = useContextData();
   const [creditList, setCreditList] = useState(null);
@@ -92,7 +97,7 @@ function Credits() {
           <div className={style.search_input_field}>
             <input
               type='text'
-              placeholder='Search by requested'
+              placeholder='Search by merchant'
               maxLength={12}
               value={searchText}
               onChange={(e) => {
@@ -103,7 +108,7 @@ function Credits() {
             <IoSearch />
           </div>
           <div>
-            <p>Below is the complete list of approved credits requests</p>
+            <p>Approved credits requests</p>
           </div>
           <div>
           </div>
@@ -119,7 +124,7 @@ function Credits() {
             <table className={style.merchants_list_container}>
               <thead>
                 <tr>
-                  <th>Requested By</th>
+                  <th>Merchant Name</th>
                   <th>Total Credits</th>
                   <th>Available Credits</th>
                   <th>Used Credits</th>

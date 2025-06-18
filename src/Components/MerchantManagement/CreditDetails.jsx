@@ -9,7 +9,7 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function CreditDetails() {
-    const {token} =useContextData();
+    const { token } = useContextData();
     const { id } = useParams();
     const [creditDetails, setCreditDetails] = useState(null);
     const [isloading, setIsLoading] = useState(false);
@@ -47,6 +47,32 @@ function CreditDetails() {
     }
     const closeApproveForm = () => {
         setIsApprovebtnClick(false)
+    }
+    const [paymentClick, setPaymentClick] = useState(false);
+    const data = {
+        status: "SUCCESSFUL",
+        comment: "Payment verified in HDFC bank statement on 2025-04-30."
+    }
+    const handlePaymentRequest = () => {
+        setPaymentClick(true)
+        const url = `https://uat.magicalvacation.com/api/v1/admin/merchants/credits/requests/${creditDetails.id}/verify-payment`;
+        fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-type': 'Application/json'
+            },
+            method: 'PATCH',
+            body:JSON.stringify(data),
+            mode: 'cors'
+        }).then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                getCreditDetails();
+            })
+            .catch((err) => {
+                alert(err)
+            })
+            .finally(() => setPaymentClick(false))
     }
 
     return <>
@@ -116,10 +142,22 @@ function CreditDetails() {
                                 </tbody>
                             </table>
                             <div className={style.add_merchats_btn_container}>
+                                {paymentClick ? <div className={style.loader_container}><div className={style.loader_item}>
+                                    <img src='/gold-coin.png' alt='Loading' />
+                                </div></div> :
+                                    <button className={style.primary_login_btn}
+                                        onClick={handlePaymentRequest}
+                                    >
+                                        {creditDetails?.payment_status === 'SUCCESSFUL' && ' ✅Verified'}
+                                        {creditDetails?.payment_status === 'FAILED' && '❌Rejected'}
+                                        {creditDetails?.payment_status === 'PENDING' && 'Verify Payment'}
+                                    </button>
+                                }
                                 <button className={style.primary_login_btn}
                                     disabled={creditDetails?.approval_status.toLowerCase() !== "pending"}
                                     onClick={openApproveForm}
                                 >{creditDetails?.approval_status.toLowerCase() === "pending" ? "Approve" : "Approved"}</button>
+
                             </div>
                         </>
 

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* width: 100%; */
+    height: fit-content;
     padding: 10px 20px 10px 0;
 }
 .header_collapse_icon {
@@ -24,7 +24,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    position: relative;
+    /* position: relative; */
 }
 .user_name {
     color: #404040;
@@ -37,19 +37,22 @@
 }
 .user_name_dropdown {
     position: absolute;
-    top: 30px;
+    top: 45px;
     right: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(38, 38, 38, 0.5);
 }
 .user_name_dropdown ul {
     list-style: none;
-    padding: 10px;
+    padding:5px 10px;
     background-color: #fff;
     border-radius: 5px;
 }
 .user_name_dropdown ul li {
     cursor: pointer;
-    margin: 5px 0;
+    margin: 1px 0;
     color: #404040;
+}
+.user_name_dropdown ul li:hover {
+    text-decoration: underline;
 }

@@ -4,6 +4,7 @@ import style1 from '../Transactions/Transaction.module.css';
 import styles from "../MerchantManagement/Merchants.module.css";
 import { IoEye, IoSearch } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
@@ -11,8 +12,13 @@ import { APIPATH } from '../apiPath/apipath';
 import { useNavigate } from 'react-router-dom';
 
 function CustomerReports() {
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }, [])
 
   const { token } = useContextData();
@@ -101,7 +107,7 @@ function CustomerReports() {
   };
   // Pagination Logic Previous button ------------------------------------
   const handlePrev = () => {
-    if (prevCursor) {
+    if (prevCursor && currentPage > 1) {
       setCursors(prevCursor);
       setDirection('prev');
       setCurrentPage(prev => prev - 1);
@@ -162,7 +168,7 @@ function CustomerReports() {
                   maxDate={new Date()}
                   selected={startDate}
                   onChange={(date) => {
-                    setStartDate(date?.toLocaleString()?.split("T")[0]);
+                    setStartDate(date?.toLocaleDateString());
                   }}
                 />
               </div>
@@ -172,7 +178,7 @@ function CustomerReports() {
                   minDate={startDate}
                   maxDate={new Date()}
                   selected={endDate}
-                  onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+                  onChange={(date) => setEndDate(date?.toLocaleDateString())}
                   placeholderText='Select end date' />
               </div>
             </div>
@@ -219,7 +225,7 @@ function CustomerReports() {
                       <td>{val.metal_type}</td>
                       <td>{val.metal_quantity_grams}</td>
                       <td>{val.metal_price_per_gram}</td>
-                      <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
+                      <td>{parseFloat(val.total_amount_after_tax || 0)?.toFixed(2)}</td>
                       <td>{val.customer_payment_status}</td>
                       <td>
                         {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
@@ -239,7 +245,7 @@ function CustomerReports() {
             </table>
           </div>
           <div className={style.pagination_parent}>
-            <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
+            <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
             <span className={style.pagination_parent_pageno}>{currentPage}</span>
             <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
           </div>

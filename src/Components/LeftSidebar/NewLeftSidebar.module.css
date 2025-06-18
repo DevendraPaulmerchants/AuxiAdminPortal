@@ -1,29 +1,27 @@
 .sidebar_container {
-    /* background: #1F342F; */
     background: linear-gradient(-135deg,
             #1F342F 0%,
             #1F342F 10%,
             #3B544E 10%,
             #1F342F 10%,
-            /* #3B544E 10%,
-            #1F342F 10%,
-            #3B544E 10%, */
             #3B544E 20%,
             #1F342F 30%,
             #1F342F 70%,
             #3B544E 70%,
             #1F342F 70%,
             #3B544E 80%,
-            /* #3B544E 80%, */
             #1F342F 90%,
             #1F342F 100%);
 
-    width: 275px;
+    /* background-attachment: fixed; */
+    /* width: 275px; */
+    overflow-x: hidden;
     height: fit-content;
     padding-bottom: 4rem;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     transition: 300ms ease-in-out;
+    z-index: 999;
 }
 
 .sidebar_container_collapsed {
@@ -32,25 +30,23 @@
             #1F342F 10%,
             #3B544E 10%,
             #1F342F 10%,
-            /* #3B544E 10%,
-            #1F342F 10%,
-            #3B544E 10%, */
             #3B544E 20%,
             #1F342F 30%,
             #1F342F 70%,
             #3B544E 70%,
             #1F342F 70%,
             #3B544E 80%,
-            /* #3B544E 80%, */
             #1F342F 90%,
             #1F342F 100%);
-    width: 90px;
+
+    /* width: 90px; */
     height: fit-content;
     padding-bottom: 4rem;
     overflow: hidden;
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     transition: 300ms ease-in-out;
+    z-index: 999;
 }
 
 .logo_container {
@@ -131,6 +127,9 @@
 .sidebar_item_name {
     font-size: 14px;
     font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin-bottom: 5px;
 }
 
@@ -138,11 +137,41 @@
     display: none;
 }
 
+@keyframes opacityOut {
+    0% {
+        opacity: 0;
+        max-height: 0px;
+    }
+
+    100% {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+@keyframes opacityIn {
+    0% {
+        max-height: 500px;
+    }
+
+    100% {
+        max-height: 0px;
+    }
+}
+
+.sub_items_close_container {
+    /* animation: opacityOut 1s linear; */
+}
+
 .sub_items_container {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    animation: opacityOut 1s linear;
 }
+
+/* ----------------- */
+/* ------------------ */
 
 .sub_item {
     display: flex;
@@ -189,13 +218,14 @@
     font-weight: 600;
     border-radius: 10px;
 }
+
 .sidebar_logout_btn_icon_only {
     cursor: pointer;
     color: #8D9F9B;
     background: #8D9F9B33;
     outline: none;
     border: none;
-    padding:5px 10px 2px 10px;
+    padding: 5px 10px 2px 10px;
     border-radius: 10px;
     font-size: 16px;
     font-weight: 600;

@@ -7,21 +7,26 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
-        const {token}=useContextData();
-    
-    document.body.style.overflow = "hidden";
+    const { token } = useContextData();
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, []);
+
     console.log(selectedAccount)
     const [metalType, setMetalType] = useState(selectedAccount?.metal_type || "");
     //  GST ------------------------------------
     const [buygst, setBuyGst] = useState(selectedAccount?.buy_gst || "");
-   const [sellgst,setSellgst]=useState(selectedAccount?.sell_gst || "");
-   const [transfergst,setTransfergst]=useState(selectedAccount?.transfer_gst || "");
-   const [conversiongst,setConversiongst]=useState(selectedAccount?.conversion_gst || "");
-   // Plateform ------------------------
+    const [sellgst, setSellgst] = useState(selectedAccount?.sell_gst || "");
+    const [transfergst, setTransfergst] = useState(selectedAccount?.transfer_gst || "");
+    const [conversiongst, setConversiongst] = useState(selectedAccount?.conversion_gst || "");
+    // Plateform ------------------------
     const [buyplatformChanrge, setBuyPlatformCharge] = useState(selectedAccount?.buy_platform_charge_fee || "");
-    const [sellplateformCharge,setSellplateformCharge]=useState(selectedAccount?.sell_platform_charge_fee || "");
-    const [transferplateformcharge,setTransferplateformcharge]=useState(selectedAccount?.transfer_platform_charge_fee || "");
-    const [conversionplateformcharge,setConversionplateformcharge]=useState(selectedAccount?.conversion_platform_charge_fee || "")
+    const [sellplateformCharge, setSellplateformCharge] = useState(selectedAccount?.sell_platform_charge_fee || "");
+    const [transferplateformcharge, setTransferplateformcharge] = useState(selectedAccount?.transfer_platform_charge_fee || "");
+    const [conversionplateformcharge, setConversionplateformcharge] = useState(selectedAccount?.conversion_platform_charge_fee || "")
     // Margin ------------------------------
     const [buyMargin, setBuyMargin] = useState(selectedAccount?.buy_margin || "");
     const [sellMargin, setSellMargin] = useState(selectedAccount?.sell_margin || "");
@@ -33,18 +38,18 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
 
     const newData = {
         metal_type: metalType,
-        buy_gst:parseFloat(buygst),
-        sell_gst:parseFloat(sellgst),
-        conversion_gst:parseFloat(conversiongst),
-        transfer_gst:parseFloat(transfergst),
+        buy_gst: parseFloat(buygst),
+        sell_gst: parseFloat(sellgst),
+        conversion_gst: parseFloat(conversiongst),
+        transfer_gst: parseFloat(transfergst),
         buy_margin: parseFloat(buyMargin),
         sell_margin: parseFloat(sellMargin),
         transfer_margin: parseFloat(transferMargin),
         conversion_margin: parseFloat(conversionMargin),
-        buy_platform_charge_fee:parseFloat(buyplatformChanrge),
-        sell_platform_charge_fee:parseFloat(sellplateformCharge),
-        transfer_platform_charge_fee:parseFloat(transferplateformcharge),
-        conversion_platform_charge_fee:parseFloat(conversionplateformcharge),
+        buy_platform_charge_fee: parseFloat(buyplatformChanrge),
+        sell_platform_charge_fee: parseFloat(sellplateformCharge),
+        transfer_platform_charge_fee: parseFloat(transferplateformcharge),
+        conversion_platform_charge_fee: parseFloat(conversionplateformcharge),
     }
     const addPermission = (e) => {
         e.preventDefault();
@@ -81,7 +86,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
-                    <h2>Add New Global Margin</h2>
+                    <h2>Add New Global Scheme</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
@@ -191,28 +196,13 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                             />
                         </div>
                     </div>
-                    {/* <div className={style.name_email_parent_container}>
-                        <div className={style.name_label_input_contaner}>
-                            <label>Transfer Margin*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={transferMargin}
-                                onChange={(e) => handleInputChangeWithNumericValueOnly(e, setTransferMargin)}
-                            />
-                        </div>
-                        <div className={style.name_label_input_contaner}>
-                            <label>Conversion MArgin*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
-                                value={conversionMargin}
-                                onChange={(e) => handleInputChangeWithNumericValueOnly(e, setConversionMargin)}
-                            />
-                        </div>
-                    </div> */}
 
                     {isLoading ? <div className={style.loader_container}><div className={style.loader_item}>
                         <img src='/gold-coin.png' alt='Gold loading...' />
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}>
-                                {selectedAccount ? "Update Margin" : "Add Margin"}
+                                {selectedAccount ? "Update" : "Add"}
                             </button>
                         </div>
                     }

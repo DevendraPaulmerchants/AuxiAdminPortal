@@ -8,6 +8,13 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function Approval() {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [])
   const { token } = useContextData();
   const [merchantPendingCreditList, setMerchantPendingCreditList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,7 +81,7 @@ function Approval() {
           <IoSearch />
         </div>
         <div>
-          <p>Below is the complete list of pending credits requests</p>
+          <p>Pending credits requests</p>
         </div>
         <div>
         </div>
@@ -87,45 +94,47 @@ function Approval() {
         </div>
       ) : (
         <>
-          <table className={style.merchants_list_container}>
-            <thead>
-              <tr>
-                <th>Merchant Name</th>
-                {/* <th>Transaction Type</th> */}
-                <th>Payment Method</th>
-                <th>Reference Id</th>
-                <th>Req. Credits</th>
-                <th>Payment Status</th>
-                <th>Approval Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedList?.length > 0 ? (
-                paginatedList?.map((val, id) => (
-                  <tr key={id} style={{ position: "relative" }}>
-                    <td>{val.merchant_name || "Merchants name"}</td>
-                    {/* <td>{val.transaction_type || "0"}</td> */}
-                    <td>{val.payment_method || "Cash"}</td>
-                    <td>{val.payment_reference_id || "1234"}</td>
-                    <td>{val.amount || "0"}</td>
-                    <td>{val.payment_status || "Pending"}</td>
-                    <td>{val.approval_status || "Pending"}</td>
-                    <td>
-                      <p style={{ cursor: "pointer", fontSize: "24px" }}
-                        onClick={() => { selectedCreditList(val.id); }}>
-                        <GoEye />
-                      </p>
-                    </td>
-                  </tr>
-                ))
-              ) : (
+          <div className={style.table_wrapper}>
+            <table className={style.merchants_list_container}>
+              <thead>
                 <tr>
-                  <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                  <th>Merchant Name</th>
+                  {/* <th>Transaction Type</th> */}
+                  <th>Payment Method</th>
+                  <th>Reference Id</th>
+                  <th>Req. Credits</th>
+                  <th>Payment Status</th>
+                  <th>Approval Status</th>
+                  <th>Action</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {paginatedList?.length > 0 ? (
+                  paginatedList?.map((val, id) => (
+                    <tr key={id} style={{ position: "relative" }}>
+                      <td>{val.merchant_name || "Merchants name"}</td>
+                      {/* <td>{val.transaction_type || "0"}</td> */}
+                      <td>{val.payment_method || "Cash"}</td>
+                      <td>{val.payment_reference_id || "1234"}</td>
+                      <td>{val.amount || "0"}</td>
+                      <td>{val.payment_status || "Pending"}</td>
+                      <td>{val.approval_status || "Pending"}</td>
+                      <td>
+                        <p style={{ cursor: "pointer", fontSize: "24px" }}
+                          onClick={() => { selectedCreditList(val.id); }}>
+                          <GoEye />
+                        </p>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
           {merchantPendingCreditList?.length > rowsPerPage &&
             <div className={style.pagination_parent}>
               <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

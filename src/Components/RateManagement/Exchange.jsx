@@ -4,10 +4,17 @@ import style from "../Admin/Admin.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function Exchange() {
-        const {token} = useContextData();
-    
+    useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth"
+        })
+    },[])
+    const {token} = useContextData();
     const [exchangeList, setexchangeList] = useState(null);
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +69,7 @@ function Exchange() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Here is the complete list of metal rates fetched from the official source</p>
+                    <p>Metal rates fetched from the official source</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
@@ -76,6 +83,7 @@ function Exchange() {
                 </div>
             </div> :
                 <>
+                <div className={style.table_wrapper}>
                     <table className={style.merchants_list_container}>
                         <thead>
                             <tr>
@@ -98,15 +106,16 @@ function Exchange() {
                                         <td>{val?.purity}</td>
                                         <td>{val?.unit}</td>
                                         <td>{val?.exchange_rate_to_inr.toFixed(2)}</td>
-                                        <td>{val?.fetched_at?.split("T")[0]}</td>
+                                        <td>{dateAndTimeFormat(val?.fetched_at)}</td>
                                     </tr>
                                 })
                             ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                <td colSpan="7">No Data Found</td>
                             </tr>
                             }
                         </tbody>
                     </table>
+                </div>
                     {exchangeList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

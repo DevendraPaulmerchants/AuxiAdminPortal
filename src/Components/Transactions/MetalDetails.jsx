@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "./Transaction.module.css";
 import { IoMdClose } from "react-icons/io";
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function MetalDetails({ close, selectedMetal }) {
 
-useEffect(() => {
-  document.body.style.overflow = 'hidden';
-  return () => {
-    document.body.style.overflow = 'auto';
-  };
-}, []);
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 
     return <>
         <div className={style.add_merchants_parent}>
@@ -35,14 +36,14 @@ useEffect(() => {
                                 <td>
                                     <h4 className={style.merchant_name}>Email:
                                         <span>
-                                            {selectedMetal?.customer_email }
+                                            {selectedMetal?.customer_email}
                                         </span>
                                     </h4>
                                 </td>
                                 <td>
                                     <h4 className={style.merchant_name}>Mobile:
                                         <span>
-                                            {selectedMetal?.customer_mobile}
+                                            {selectedMetal?.customer_phone}
                                         </span>
                                     </h4>
                                 </td>
@@ -78,14 +79,14 @@ useEffect(() => {
                                     </h4>
                                 </td>
                                 <td>
-                                    <h4 className={style.merchant_name}>Margin(%):
+                                    <h4 className={style.merchant_name}>Profit Margin(%):
                                         <span>
                                             {parseFloat(selectedMetal?.merchant_margin).toFixed(2)}
                                         </span>
                                     </h4>
                                 </td>
                                 <td>
-                                    <h4 className={style.merchant_name}>Profit:
+                                    <h4 className={style.merchant_name}>Profit Amount:
                                         <span>
                                             {parseFloat(selectedMetal?.merchant_profit).toFixed(2)}
                                         </span>
@@ -101,21 +102,23 @@ useEffect(() => {
                     <table className={style.merchant_details_page_table}>
                         <tbody>
                             <tr className={style.merchant_details_page_row}>
-                                <td>
-                                    <h4 className={style.merchant_name}>Payment Mode:
-                                        <span>
-                                            {selectedMetal?.payment_mode}
-                                        </span>
-                                    </h4>
-                                </td>
-                                <td>
-                                    {selectedMetal?.customer_payment_status === "COMPLETED" &&
-                                        <h4 className={style.merchant_name}>Customer Payment Status:
+                                {selectedMetal?.payment_mode &&
+                                    <td>
+                                        <h4 className={style.merchant_name}>Payment Mode:
                                             <span>
-                                                {selectedMetal?.customer_payment_status}
+                                                {selectedMetal?.payment_mode}
                                             </span>
                                         </h4>
-                                    }
+                                    </td>
+                                }
+                                <td>
+                                    {/* {selectedMetal?.customer_payment_status === "COMPLETED" && */}
+                                    <h4 className={style.merchant_name}>Customer Payment Status:
+                                        <span>
+                                            {selectedMetal?.customer_payment_status}
+                                        </span>
+                                    </h4>
+                                    {/* // } */}
                                     {selectedMetal?.payment_failure_reason !== null &&
                                         <h4 className={style.merchant_name}>Payment Failure Reason:
                                             <span>
@@ -123,29 +126,33 @@ useEffect(() => {
                                             </span>
                                         </h4>}
                                 </td>
-
                                 <td>
-                                    <h4 className={style.merchant_name}>Customer Payment referenceId:
-                                        <span>
-                                            {selectedMetal?.customer_payment_reference }
-                                        </span>
-                                    </h4>
-                                    <h4 className={style.merchant_name}>Merchant Payment referenceId:
-                                        <span>
-                                            {selectedMetal?.merchant_transaction_id }
-                                        </span>
-                                    </h4>
-                                    <h4 className={style.merchant_name}>PG Payment referenceId:
-                                        <span>
-                                            {selectedMetal?.pg_transaction_id }
-                                        </span>
-                                    </h4>
+                                    {selectedMetal?.customer_payment_reference &&
+                                        <h4 className={style.merchant_name}>Customer Payment referenceId:
+                                            <span>
+                                                {selectedMetal?.customer_payment_reference}
+                                            </span>
+                                        </h4>
+                                    }
+                                    {selectedMetal?.merchant_transaction_id &&
+                                        <h4 className={style.merchant_name}>Merchant Payment referenceId:
+                                            <span>
+                                                {selectedMetal?.merchant_transaction_id}
+                                            </span>
+                                        </h4>
+                                    }
+                                    {selectedMetal?.pg_transaction_id &&
+                                        <h4 className={style.merchant_name}>PG Payment referenceId:
+                                            <span>
+                                                {selectedMetal?.pg_transaction_id}
+                                            </span>
+                                        </h4>
+                                    }
                                 </td>
                                 <td>
                                     <h4 className={style.merchant_name}>Requested date:
                                         <span>
-                                            {selectedMetal?.created_at?.split("T")[0]},{" "}
-                                            {selectedMetal?.created_at?.split("T")[1].split(".")[0]}
+                                            {dateAndTimeFormat(selectedMetal?.created_at)}
                                         </span>
                                     </h4>
                                 </td>
@@ -174,14 +181,14 @@ useEffect(() => {
                                     </h4>
                                 </td>
                                 <td>
-                                    <h4 className={style.merchant_name}>Margin(%):
+                                    <h4 className={style.merchant_name}>Profit Margin(%):
                                         <span>
                                             {parseFloat(selectedMetal?.platform_margin).toFixed(2)}
                                         </span>
                                     </h4>
                                 </td>
                                 <td>
-                                    <h4 className={style.merchant_name}>Profit:
+                                    <h4 className={style.merchant_name}>Profit Amount:
                                         <span>
                                             {parseFloat(selectedMetal?.platform_profit).toFixed(2)}
                                         </span>
@@ -211,13 +218,13 @@ useEffect(() => {
                                         </span>
                                     </h4>
                                 </td>
-                                {/* <td>
-                                    <h4 className={style.merchant_name}>GST :
+                                <td>
+                                    <h4 className={style.merchant_name}>GST Amount:
                                         <span>
                                             {parseFloat(selectedMetal?.gst_amount).toFixed(2)}
                                         </span>
                                     </h4>
-                                </td> */}
+                                </td>
                                 <td>
                                     <h4 className={style.merchant_name}>Total Price(with GST):
                                         <span>

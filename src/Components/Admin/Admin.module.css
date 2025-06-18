@@ -1,15 +1,14 @@
 .merchants_parent {
-    /* width: 100%; */
-    height: 100%;
+    height: 100vh;
     background: rgba(72, 193, 181, 0.08);
     border-radius: 5px;
-    padding:1rem;
+    padding: 1rem;
 }
 
 .merchants_parent_subheader {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 10px;
     flex-wrap: wrap;
     padding: 1rem 0;
 }
@@ -42,6 +41,7 @@
     border: none;
     outline: none;
 }
+
 .merchants_list_container {
     text-align: center;
     border-spacing: 0;
@@ -51,8 +51,11 @@
     white-space: nowrap;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 5px 5px 5px rgba(38, 38, 38, 0.5);
+    box-shadow:inset 1px 1px 15px 2px rgba(0, 0, 0, 0.5);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+    /* box-shadow: 5px 10px 15px 5px rgba(0, 0, 0, 0.5); */
 }
+
 .table_wrapper {
     width: calc(100% - 2px);
     overflow-x: scroll;
@@ -64,7 +67,7 @@
 
 .merchants_list_container th {
     /* background: rgba(38, 38, 38, 0.5); */
-   background:#1F342F;
+    background: #1F342F;
     padding: 5px 10px;
     font-weight: 500;
     font-size: 14px;
@@ -212,16 +215,27 @@
     border-radius: 5px;
     padding: 5px;
 }
+
 /* -----------------------  */
+.date_filter_container {
+    display: flex;
+    gap: 10px;
+}
+
 .date_filter_container input {
     padding: 3px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     outline: none;
 }
+
 .date_filter_container select {
     padding: 3px 12px;
     border-radius: 6px;
     border: 1px solid #ccc;
     outline: none;
+    height: fit-content;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

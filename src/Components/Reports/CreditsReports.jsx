@@ -4,6 +4,7 @@ import style1 from '../Transactions/Transaction.module.css';
 import styles from "../MerchantManagement/Merchants.module.css";
 import { IoEye, IoSearch } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
@@ -153,7 +154,7 @@ function CreditsReports() {
                                     maxDate={new Date()}
                                     selected={startDate}
                                     onChange={(date) => {
-                                        setStartDate(date?.toLocaleString()?.split("T")[0]);
+                                        setStartDate(date?.toLocaleDateString());
                                     }}
                                 />
                             </div>
@@ -163,7 +164,7 @@ function CreditsReports() {
                                     minDate={startDate}
                                     maxDate={new Date()}
                                     selected={endDate}
-                                    onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+                                    onChange={(date) => setEndDate(date?.toLocaleDateString())}
                                     placeholderText='Select end date' />
                             </div>
                         </div>
@@ -227,7 +228,7 @@ function CreditsReports() {
                         </table>
                     </div>
                     <div className={style.pagination_parent}>
-                        <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
+                        <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
                         <span className={style.pagination_parent_pageno}>{currentPage}</span>
                         <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "./Margin.module.css";
@@ -6,8 +6,14 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddMarchantMargin({ close, selectedAccount, updateList }) {
-    document.body.style.overflow = "hidden";
-    const {token} = useContextData();
+
+    const { token } = useContextData();
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, []);
     // const [metalType, setMetalType] = useState(selectedAccount?.metal_type || "");
     // const [margin, setMargin] = useState(selectedAccount?.margin || 0);
     const [schemeName, setSchemeName] = useState(selectedAccount?.name || '')

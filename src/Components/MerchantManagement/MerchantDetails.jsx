@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import style from "./Merchants.module.css";
 import style1 from "../Admin/Admin.module.css"
 // import { IoMdClose } from "react-icons/io";
@@ -96,13 +96,15 @@ function MerchantDetails() {
                                     </td>
                                 </tr>
                                 <tr className={style.merchant_details_page_row}>
-                                    {/* <td>
-                                        <h4 className={style.merchant_name}>GST:
+                                    <td>
+                                        <h4 className={style.merchant_name}>Scheme name:
                                             <span>
-                                                {selectedMerchant?.gst_no}
+                                                <Link to='/scheme_list' state={{schemeName:selectedMerchant?.scheme_name}}>
+                                                    {selectedMerchant?.scheme_name}
+                                                </Link>
                                             </span>
                                         </h4>
-                                    </td> */}
+                                    </td>
                                     <td>
                                         <h4 className={style.merchant_name}>Address:
                                             <span>
@@ -134,19 +136,7 @@ function MerchantDetails() {
                                 </tr>
                             </tbody>
                         </table>
-                        {/* <div className={style.merchant_details_document}>
-                            <h4 className={style.merchant_name}>Business document:
-                                <span className={style.merchant_document_image}>
-                                    <img src={selectedMerchant?.business_document_url} alt='' />
-                                </span>
-                            </h4>
 
-                            <h4 className={style.merchant_name}>PAN document:
-                                <span className={style.merchant_document_image}>
-                                    <img src={selectedMerchant?.pan_document_url} alt='' />
-                                </span>
-                            </h4>
-                        </div> */}
                         {/* Uploded document */}
                         <h2 className={style.uploaded_docement_title}>Uploaded Document</h2>
                         <div className={style.merchant_details_document}>

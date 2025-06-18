@@ -14,7 +14,11 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function MetalLogs() {
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
     }, [])
 
     const { token } = useContextData();
@@ -59,7 +63,10 @@ function MetalLogs() {
         getmetalLogs();
     }, [transactionType, startDate, endDate, metalType]);
 
-    const filteredList = metalList?.filter((list) => list.order_id?.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredList = metalList?.filter((list) => list.order_id?.toLowerCase().includes(searchText.toLowerCase())
+   && (transactionType === "" || list?.transaction_type === transactionType)
+);
+
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
@@ -95,7 +102,7 @@ function MetalLogs() {
                             maxDate={new Date()}
                             selected={startDate}
                             onChange={(date) => {
-                                setStartDate(date?.toLocaleString()?.split("T")[0]);
+                                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
                             }}
                         />
                     </div>
@@ -105,7 +112,7 @@ function MetalLogs() {
                             minDate={startDate}
                             maxDate={new Date()}
                             selected={endDate}
-                            onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+                            onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
                             placeholderText='Select end date'
                         />
                     </div>
@@ -125,10 +132,10 @@ function MetalLogs() {
                         onChange={(e) => setTransactionType(e.target.value)} >
                         <option value="all" disabled>Select Transaction Type</option>
                         <option value="">All</option>
-                        <option value="BUY">Buy</option>
-                        <option value="SELL">Sell</option>
-                        <option value="TRANSFER">Transfer</option>
-                        <option value="CONVERSION">Conversion</option>
+                        <option value="DEBIT">Debit</option>
+                        <option value="CREDIT">Credit</option>
+                        {/* <option value="TRANSFER">Transfer</option>
+                        <option value="CONVERSION">Conversion</option> */}
                     </select>
                 </div>
             </div>
@@ -180,9 +187,9 @@ function MetalLogs() {
                                                 {/* {val.action_type} */}
                                                 {capitalizeWord(val.transaction_type)}
                                             </td>
-                                            <td>{val?.transaction_status}</td>
+                                            <td>{val?.transaction_status || val?.status}</td>
                                             <td>
-                                                <p style={{ cursor: "pointer", fontSize: "24px" }}
+                                                <p style={{ cursor: "pointer", fontSize: "16px" }}
                                                     onClick={(e) => {
                                                         setSelectedMetal(val);
                                                     }}

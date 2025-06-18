@@ -1,3 +1,15 @@
+@keyframes fadeInOut {
+    0% {
+        opacity: 0.6;
+        max-width: 10%;
+    }
+
+    100% {
+        opacity: 1;
+        max-width: 100%;
+    }
+}
+
 .add_merchants_parent {
     position: fixed;
     height: 100vh;
@@ -6,6 +18,9 @@
     left: 0;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(1px);
+    /* animation: fadeInOut 0.5s linear; */
+    /* transition: opacity 0.3s ease, transform 0.3s ease; */
+
 }
 
 .add_merchants_form_container {
@@ -20,6 +35,8 @@
     max-height: 90%;
     overflow-y: scroll;
     scrollbar-width: none;
+    animation: fadeInOut 0.4s linear;
+    /* transition: opacity 0.3s ease, transform 0.3s ease; */
     /* For Firefox */
 }
 
@@ -35,7 +52,7 @@
     gap: 2rem;
     padding-bottom: 1rem;
     padding-top: 10px;
-  
+
 }
 
 .add_merchants_header h2 {
@@ -74,7 +91,7 @@
     outline: none;
     border-radius: 5px;
     padding: 5px 5px 5px 10px;
-    width: 100%;
+    width: 99%;
     color: #646464;
 }
 
@@ -153,16 +170,19 @@
     font-size: 14px;
     display: block;
 }
+
 .uploaded_docement_title {
     font-size: 16px;
     font-weight: 500;
     color: rgba(38, 38, 38, 0.9);
 }
+
 .merchant_details_document {
     display: flex;
     flex-wrap: wrap;
     gap: 3rem;
 }
+
 .merchant_document_image {
     height: 200px;
     width: 300px;
@@ -171,25 +191,30 @@
     border: 1px solid rgba(38, 38, 38, 0.5);
     position: relative;
 }
+
 .document_kyc_status {
-  position: absolute;
-  font-size: 20px;
-  border:1px solid rgba(38, 38, 38, 0.5);
-  background:#fff;
-  padding:0 5px;
-  border-radius: 5px;
-  right: 5px;
-  bottom: 0;
+    position: absolute;
+    font-size: 20px;
+    border: 1px solid rgba(38, 38, 38, 0.5);
+    background: #fff;
+    padding: 0 5px;
+    border-radius: 5px;
+    right: 5px;
+    bottom: 0;
 }
+
 .pending {
-     color: orange;
+    color: orange;
 }
+
 .rejected {
     color: red;
 }
+
 .verified {
     color: green;
 }
+
 .merchant_document_image img {
     height: 100%;
     width: 100%;
@@ -203,7 +228,7 @@
     text-align: center;
     display: flex;
     justify-content: center;
-    margin:50px auto;
+    margin: 50px auto;
 }
 
 .loader_item {
@@ -239,6 +264,7 @@
     gap: 1rem;
     padding-bottom: 1rem;
 }
+
 .api_key_value_icon {
     display: flex;
     gap: 10px;
@@ -246,13 +272,15 @@
     justify-content: center;
     padding: 5px 0;
 }
+
 .api_key_icon {
     cursor: pointer;
     background: rgba(38, 38, 38, 0.2);
-    padding:2px 5px;
+    padding: 2px 5px;
     border-radius: 2px;
     color: rgba(38, 38, 38, 0.7);
 }
+
 .api_key_block {
     color: red !important;
 }

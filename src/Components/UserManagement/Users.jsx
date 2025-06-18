@@ -12,6 +12,14 @@ import { dateFormat } from "../../helperFunction/helper";
 // import AddNewuser from "./Newuser";
 
 const Users = () => {
+     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+
+    }, [])
     const {token}=useContextData();
     const [searchText, setSearchText] = useState("");
     const [userList, setuserList] = useState(null);

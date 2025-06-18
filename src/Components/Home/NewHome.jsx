@@ -135,7 +135,7 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ALL";
-                                navigate(`/merchant`,{ state: active})
+                                navigate(`/approved-merchants`, { state: active })
                             }}
                         >
                             <h2 className={styles.value}>Total</h2>
@@ -144,7 +144,7 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ACTIVE";
-                               navigate(`/merchant`,{ state: active})
+                                navigate(`/approved-merchants`, { state: active })
                             }}
                         >
                             <h2 className={styles.value}>Active</h2>
@@ -153,7 +153,7 @@ const NewHome = () => {
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "INACTIVE";
-                                navigate(`/merchant`,{ state: active})
+                                navigate(`/approved-merchants`, { state: active })
                             }}
                         >
                             <h2 className={styles.value}>InActive</h2>
@@ -161,7 +161,7 @@ const NewHome = () => {
                         </div>
                         <div className={styles.value_container}
                             onClick={(e) => {
-                                navigate(`/pending-merchants`)
+                                navigate(`/pending_merchants`)
                             }}
                         >
                             <h2 className={styles.value}>Pending</h2>
@@ -210,7 +210,7 @@ const NewHome = () => {
                         </div>
                         <div className={styles.value_container}
                             onClick={(e) => {
-                                navigate(`/credits_transactions`)
+                                navigate(`/credits_transactions`, { state: 'DEBIT' })
                             }}
                         >
                             <h2 className={styles.value}>Consumed</h2>
@@ -249,41 +249,46 @@ const NewHome = () => {
                         <table>
                             <tbody>
                                 <tr className={styles.row_hover}
-                                  onClick={(e) => {
-                                        navigate(`/metal_logs`, { state: '' })
-                                    }}>
+                                    // onClick={(e) => {
+                                    //     navigate(`/credits_transactions`, { state: '' })
+                                    // }}
+                                    >
                                     <td><h2 className={styles.value}>Total</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                  onClick={(e) => {
-                                        navigate(`/metal_logs`, { state: 'SELL' })
-                                    }}>
+                                    // onClick={(e) => {
+                                    //     navigate(`/credits_transactions`, { state: 'CREDIT' })
+                                    // }}
+                                    >
                                     <td><h2 className={styles.value}>Sell</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                  onClick={(e) => {
-                                        navigate(`/metal_logs`, { state: 'BUY' })
-                                    }}>
+                                    // onClick={(e) => {
+                                    //     navigate(`/credits_transactions`, { state: 'DEBIT' })
+                                    // }}
+                                    >
                                     <td><h2 className={styles.value}>Buy</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                  onClick={(e) => {
-                                        navigate(`/metal_logs`, { state: 'TRANSFER' })
-                                    }}>
+                                    // onClick={(e) => {
+                                    //     navigate(`/metal_logs`, { state: 'TRANSFER' })
+                                    // }}
+                                    >
                                     <td><h2 className={styles.value}>Transfer</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                  onClick={(e) => {
-                                        navigate(`/metal_logs`, { state: 'CONVERSION' })
-                                    }}>
+                                    // onClick={(e) => {
+                                    //     navigate(`/metal_logs`, { state: 'CONVERSION' })
+                                    // }}
+                                    >
                                     <td><h2 className={styles.value}>Conversion</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.amount?.toFixed(2) || 0}</h2></td>
@@ -359,16 +364,24 @@ const NewHome = () => {
                             </tbody>
                         </table>
                     </div>
-                    <div className={styles.card} onClick={() => navigate('/silver')}>
+                    <div className={styles.card}>
                         <p className={styles.label}>🔁 Conversion</p>
                         <table>
                             <tbody>
-                                <tr>
+                                <tr className={styles.row_hover}
+                                    onClick={(e) => {
+                                        navigate(`/gold_transactions`, { state: 'CONVERSION' })
+                                    }}
+                                >
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.gold_to_silver?.gold_quantity || 0}g🏅</h2></td>
                                     <td><h2 className={styles.value}>➡️</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.gold_to_silver?.silver_quantity || 0}g🥈</h2></td>
                                 </tr>
-                                <tr>
+                                <tr className={styles.row_hover}
+                                    onClick={(e) => {
+                                        navigate(`/silver_transactions`, { state: 'CONVERSION' })
+                                    }}
+                                >
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.silver_to_gold?.silver_quantity || 0}g🥈</h2></td>
                                     <td><h2 className={styles.value}>➡️</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.silver_to_gold?.gold_quantity || 0}g🏅</h2></td>

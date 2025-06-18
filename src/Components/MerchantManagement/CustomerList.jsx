@@ -16,7 +16,11 @@ import { dateFormat } from '../../helperFunction/helper';
 
 function CustomerList() {
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
     }, [])
 
     const { token } = useContextData();
@@ -50,6 +54,7 @@ function CustomerList() {
         } catch (error) {
             console.error("Error fetching customers:", error);
             setCustomer([]);
+            setIsLoading(false)
         }
 
     };
@@ -105,6 +110,7 @@ function CustomerList() {
 
     const [openDetailPage, setOpenDetailPage] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
+    
     const openDPage = (val) => {
         setOpenDetailPage(true);
         setSelectedCustomer(val)
@@ -120,7 +126,7 @@ function CustomerList() {
                 <div className={style.search_input_field}>
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search by customer name.."
                         maxLength={12}
                         value={searchText}
                         onChange={(e) => {
@@ -137,7 +143,7 @@ function CustomerList() {
                             maxDate={new Date()}
                             selected={startDate}
                             onChange={(date) => {
-                                setStartDate(date?.toISOString()?.split("T")[0]);
+                                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
                             }}
                         />
                     </div>
@@ -147,14 +153,14 @@ function CustomerList() {
                             minDate={startDate}
                             maxDate={new Date()}
                             selected={endDate}
-                            onChange={(date) => setEndDate(date?.toISOString()?.split("T")[0])}
+                            onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
                             placeholderText='Select end date'
                         />
                     </div>
                 </div>
                 <div className={style.date_filter_container}>
                     <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
-                        <option value="" disabled>Select Merchant</option>
+                        <option value="all" disabled>Select Merchant</option>
                         <option value="">All</option>
                         {merchantList?.map((merchant) => (
                             <option key={merchant.id} value={merchant.id}>

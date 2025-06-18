@@ -7,8 +7,16 @@ import style1 from "../MerchantManagement/Merchants.module.css";
 import AddNewPermission from "./AddNewPermission";
 import { APIPATH } from "../apiPath/apipath";
 import { useContextData } from "../Context/Context";
+import { dateFormat } from "../../helperFunction/helper";
 
 const Permission = () => {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, [])
     const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [permissionList, setPermissionList] = useState(null);
@@ -70,7 +78,7 @@ const Permission = () => {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of all permissions along with their descriptions</p>
+                    <p>All permissions along with their descriptions</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     {/* <button className={style1.primary_login_btn} onClick={() => setIsNewPermissionClick(true)}>Add Permission</button> */}
@@ -99,15 +107,15 @@ const Permission = () => {
                                         return <tr key={id}>
                                             <td>{val.name}</td>
                                             <td>{val.description}</td>
-                                            <td>{val.created_at.split("T")[0]}</td>
-                                            <td>{val.updated_at.split("T")[0]}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{dateFormat(val.updated_at)}</td>
                                             <td><p style={{ cursor: "pointer" }}
                                                 onClick={() => setSelectedPermission(val)}
                                             ><MdEdit /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="5">No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

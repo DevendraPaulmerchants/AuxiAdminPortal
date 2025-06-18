@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useLocation, useNavigate, useNavigation } from 'react-router-dom';
+import React, { memo, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import style from '../Admin/Admin.module.css'
 import styles from './Reports.module.css'
 import { MdKeyboardBackspace } from 'react-icons/md';
@@ -10,8 +10,8 @@ import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function ReportsDetails() {
     const { state } = useLocation();
+
     const [isDownloadClicked, setIsDownloadClicked] = useState(false);
-    console.log("state", state);
     const navigate = useNavigate();
 
     const closeDownloadConfirmation = () => {
@@ -26,7 +26,7 @@ function ReportsDetails() {
                         navigate(-1);
                     }}
                 />
-                <FaRegShareFromSquare title='Download & Share Invoice'
+                <FaRegShareFromSquare title='Send Invoice'
                     onClick={() => {
                         setIsDownloadClicked(true);
                     }}
@@ -163,7 +163,7 @@ function ReportsDetails() {
                         </div>
                         <div className={styles.customer_details_row}>
                             <div className={styles.customer_details_label}>GST(%)</div>
-                            <div className={styles.customer_details_value}>₹ {parseFloat(state?.gst).toFixed(2)}</div>
+                            <div className={styles.customer_details_value}>{parseFloat(state?.gst).toFixed(2)}</div>
                         </div>
                         <div className={styles.customer_details_row}>
                             <div className={styles.customer_details_label}>GST Amount</div>
@@ -180,8 +180,9 @@ function ReportsDetails() {
         {isDownloadClicked && <InvoiceConfirmation close={closeDownloadConfirmation}
             customerName={state?.customer_name}
             customerEmail={state?.customer_email}
+            orderId={state?.order_id}
         />}
     </>
 }
 
-export default ReportsDetails;
+export default memo(ReportsDetails);

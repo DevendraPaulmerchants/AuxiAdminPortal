@@ -11,8 +11,12 @@ import { dateFormat } from '../../helperFunction/helper';
 
 function UPI() {
     useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [])
 
     const { token } = useContextData();
     const [UPIList, setUPIList] = useState(null);
@@ -108,7 +112,7 @@ function UPI() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of previously added UPI IDs</p>
+                    <p>List of previously added UPI IDs</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}

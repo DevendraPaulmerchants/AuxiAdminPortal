@@ -4,6 +4,7 @@ import style1 from '../Transactions/Transaction.module.css';
 import styles from "../MerchantManagement/Merchants.module.css";
 import { IoSearch } from "react-icons/io5";
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
@@ -11,8 +12,14 @@ import { APIPATH } from '../apiPath/apipath';
 
 function MerchantsTDSReports() {
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+
     }, [])
+
     const { token } = useContextData();
     const [creditsData, setCreditsData] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -99,7 +106,7 @@ function MerchantsTDSReports() {
     };
     // Pagination Logic Previous button ------------------------------------
     const handlePrev = () => {
-        if (prevCursor) {
+        if (prevCursor && currentPage > 1) {
             setCursors(prevCursor);
             setDirection('prev');
             setCurrentPage(prev => prev - 1);
@@ -155,7 +162,7 @@ function MerchantsTDSReports() {
                                     maxDate={new Date()}
                                     selected={startDate}
                                     onChange={(date) => {
-                                        setStartDate(date?.toLocaleString()?.split("T")[0]);
+                                        setStartDate(date?.toLocaleDateString());
                                     }}
                                 />
                             </div>
@@ -165,7 +172,7 @@ function MerchantsTDSReports() {
                                     minDate={startDate}
                                     maxDate={new Date()}
                                     selected={endDate}
-                                    onChange={(date) => setEndDate(date?.toLocaleString()?.split("T")[0])}
+                                    onChange={(date) => setEndDate(date?.toLocaleDateString())}
                                     placeholderText='Select end date' />
                             </div>
                         </div>
@@ -213,10 +220,10 @@ function MerchantsTDSReports() {
                                             <td>{val.order_type}</td>
                                             <td>{val.total_amount_after_tax}</td>
                                             <td>{val.total_amount_after_tax}</td>
-                                            <td>{parseFloat(val.merchant_profit)?.toFixed(2)}</td>
-                                            <td>{val.merchant_tds_percentage}</td>
-                                            <td>{parseFloat(val.merchant_tds_amount)?.toFixed(2)}</td>
-                                            <td>{(parseFloat(val.merchant_profit) - parseFloat(val.merchant_tds_amount))?.toFixed(2)}</td>
+                                            <td>{parseFloat(val.merchant_profit || 0)?.toFixed(2)}</td>
+                                            <td>{parseFloat(val.merchant_tds_percentage || 0).toFixed(2)}</td>
+                                            <td>{parseFloat(val.merchant_tds_amount || 0)?.toFixed(2)}</td>
+                                            <td>{(parseFloat(val.merchant_profit || 0) - parseFloat(val.merchant_tds_amount || 0))?.toFixed(2)}</td>
                                             <td>
                                                 {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
                                                 {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
@@ -235,7 +242,7 @@ function MerchantsTDSReports() {
                         </table>
                     </div>
                     <div className={style.pagination_parent}>
-                        <button onClick={handlePrev} disabled={!prevCursor} >&lt;</button>
+                        <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
                         <span className={style.pagination_parent_pageno}>{currentPage}</span>
                         <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
                     </div>

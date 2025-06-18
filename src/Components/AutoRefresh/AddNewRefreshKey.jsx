@@ -3,16 +3,20 @@ import React, { useState, useEffect } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import style1 from "./AutoRefresh.module.css";
 import { IoMdClose } from "react-icons/io";
-import { handleIFSC, handleInputChangeWithAlphabetOnly, handleInputChangeWithNumericValueOnly } from '../InputValidation/InputValidation';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function AddNewRefreshKey({ close, selectedRow, updateList }) {
-    document.body.style.overflow = "hidden";
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = "auto";
+        }
+    }, []);
     const { token } = useContextData();
     const [keyName, setKeyName] = useState(selectedRow?.key || "");
     const [timeUnit, setTimeUnit] = useState(selectedRow?.time_unit || "");
-    const [minutes,setMinutes]=useState(selectedRow?.value || "");
+    const [minutes, setMinutes] = useState(selectedRow?.value || "");
     const [type, setType] = useState(selectedRow?.type || "");
     const [description, setDescription] = useState(selectedRow?.description || "");
     const [category, setCategory] = useState(selectedRow?.category || "");
@@ -61,7 +65,7 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
-                    <h2>Add New Scheduler</h2>
+                    <h2>{selectedRow ? 'Update this Scheduler':'Add New Scheduler'}</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => addNewRefresh(e)}>
@@ -72,7 +76,7 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
                                 onChange={(e) => handleInputChangeWithAlphabetOnly(e, setKeyName)}
                             /> */}
                             <select required onChange={(e => setKeyName(e.target.value))} value={keyName}>
-                                <option value=""disabled>Select Key</option>
+                                <option value="" disabled>Select Key</option>
                                 <option value="RATE_REFRESH_INTERVAL">RATE REFRESH INTERVAL</option>
                                 <option value="RATE_REFRESH_TIME">Rate Refresh Time</option>
                             </select>
@@ -82,7 +86,7 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
                             <div className={style1.input_and_label_for_new_refresh}>
                                 <div>
                                     <label>Time Unit*</label>
-                                    <select required value={timeUnit} onChange={(e)=>setTimeUnit(e.target.value)} >
+                                    <select required value={timeUnit} onChange={(e) => setTimeUnit(e.target.value)} >
                                         <option value="" disabled>Select Time Unit</option>
                                         <option value="HOURS">Hour</option>
                                         <option value="MINUTES">Minute</option>

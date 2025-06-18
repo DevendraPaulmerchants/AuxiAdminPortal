@@ -11,9 +11,13 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function Bank() {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+     useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }, [])
 
     const { token } = useContextData();
     const [bankList, setBankList] = useState(null);
@@ -109,7 +113,7 @@ function Bank() {
                 </div>
                 <div>
                     <div>
-                        <p>Below is the complete list of previously added banks</p>
+                        <p>List of previously added Banks</p>
                     </div>
                 </div>
                 <div className={style.add_merchants_and_filter}>

@@ -9,7 +9,11 @@ import { useContextData } from '../Context/Context';
 
 function Metal() {
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
     }, [])
 
     const { token } = useContextData();
@@ -85,7 +89,7 @@ function Metal() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the detailed breakdown of metal weights and availability.</p>
+                    <p>Metal weights and availability.</p>
                 </div>
                 <div>
 
@@ -97,45 +101,49 @@ function Metal() {
                 </div>
             </div> :
                 <>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Metal Type</th>
-                                <th>Physical wt.(gm)</th>
-                                <th>Digital wt.(gm)</th>
-                                <th>Available(gm)</th>
-                                <th>Vault Provider</th>
-                                <th>Location</th>
-                                <th>Insured</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList?.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val?.metal_type}</td>
-                                        <td>{val?.total_physical_weight}</td>
-                                        <td>{val?.digital_equivalent_weight}</td>
-                                        <td>{val?.available_weight}</td>
-                                        <td>{val?.vault_provider}</td>
-                                        <td>{val?.storage_location}</td>
-                                        <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
-                                        <td>
-                                            <p style={{ cursor: "pointer", fontSize: "24px" }}
-                                                onClick={(e) => { openCreditMenu(e); setSelectedMetal(val) }}
-                                            >
-                                                <IoEye />
-                                            </p>
-                                        </td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Metal Type</th>
+                                    <th>Physical wt.(gm)</th>
+                                    <th>Digital wt.(gm)</th>
+                                    <th>Available(gm)</th>
+                                    <th>Used(gm)</th>
+                                    <th>Vault Provider</th>
+                                    <th>Location</th>
+                                    <th>Insured</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList?.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val?.metal_type}</td>
+                                            <td>{val?.total_physical_weight}</td>
+                                            <td>{val?.digital_equivalent_weight}</td>
+                                            <td>{val?.available_weight}</td>
+                                            <td>{val.allocated_to_customers}</td>
+                                            <td>{val?.vault_provider}</td>
+                                            <td>{val?.storage_location}</td>
+                                            <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
+                                            <td>
+                                                <p style={{ cursor: "pointer", fontSize: "16px" }}
+                                                    onClick={(e) => { openCreditMenu(e); setSelectedMetal(val) }}
+                                                >
+                                                    <IoEye />
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {metalList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
@@ -166,7 +174,7 @@ function Metal() {
             >
                 <ul className={style.user_menu_list}>
                     <li onClick={() => { closeCreditMenu(); setIsUpdateClick(true) }}>Update</li>
-                    <li onClick={() => { closeCreditMenu(); }}>View Details</li>
+                    {/* <li onClick={() => { closeCreditMenu(); }}>View Details</li> */}
                 </ul>
             </Model>
         )}

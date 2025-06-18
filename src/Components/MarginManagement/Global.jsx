@@ -9,6 +9,13 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function Global() {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+    }, [])
     const { token } = useContextData();
     const [globalList, setGlobalList] = useState(null);
     const [selectedGlobal, setSelectedGlobal] = useState(null);
@@ -59,12 +66,10 @@ function Global() {
     const closeNewGlobalPage = () => {
         setIsNewGlobalClick(false);
         setSelectedGlobal(null);
-        document.body.style.overflow = "auto";
     }
     const closeAfterAPICall = () => {
         getGlobalLIst();
         closeNewGlobalPage();
-        document.body.style.overflow = "auto";
     }
     return <>
         <div className={style.merchants_parent}>
@@ -75,13 +80,14 @@ function Global() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Below is the complete list of all applicable charges for metals</p>
+                    <p>Global Margin</p>
                 </div>
-                <div className={style.add_merchants_and_filter}>
+                <div></div>
+                {/* <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
                         onClick={() => setIsNewGlobalClick(true)}
-                    >Add New Margin</button>
-                </div>
+                    >Add New Scheme</button>
+                </div> */}
             </div>
             {isLoading ? <div className={style1.loader_container}>
                 <div className={style1.loader_item}>

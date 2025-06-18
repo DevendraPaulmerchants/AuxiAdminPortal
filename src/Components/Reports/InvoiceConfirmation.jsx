@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import style from "./Reports.module.css";
 import { FaCheckCircle } from 'react-icons/fa';
 import { useContextData } from '../Context/Context';
+import { APIPATH } from '../apiPath/apipath';
 
-function InvoiceConfirmation({close,customerName}) {
+function InvoiceConfirmation({close,customerName,orderId}) {
     const {token}=useContextData();
     const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
@@ -13,10 +14,11 @@ function InvoiceConfirmation({close,customerName}) {
         };
     }, []);
 
+// download invoice function ---------------------------------
     const handleDownload=()=>{
         console.log("Download Invoice");
         setIsLoading(true);
-        const url=''
+        const url=`${APIPATH}/api/v1/admin/transactions/${orderId}/invoice/resend`
         fetch(url,{
             headers:{
                 'Authorization': `Bearer ${token}`,
@@ -25,20 +27,12 @@ function InvoiceConfirmation({close,customerName}) {
             method:'GET',
             mode:'cors'
         })
-        .then(((res)=>res.blob()))
+        .then(((res)=>res.json()))
         .then((data)=>{
-            const url = window.URL.createObjectURL(data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Customer-Invoice.xlsx';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
-            console.log("Invoice Downloaded",data);
+             alert(data.message);
             close();
         }).catch((err)=>{
-            console.error("Error downloading invoice:", err);
+            console.error("Error Sending invoice:", err);
         })
         .finally(()=>setIsLoading(false))
     }
@@ -51,7 +45,7 @@ function InvoiceConfirmation({close,customerName}) {
                 <p>Are you sure you want to send invoice to
                     <b style={{ color: '#1F342F' }}> {customerName}</b>.
                 </p>
-                { isLoading ? <p className={style.loading_text}>Downloading Invoice...</p> :
+                { isLoading ? <p className={style.loading_text}>Sending Invoice...</p> :
                 <div className={style.invoice_confirmation_buttons}>
                     <button className={style.cancel_button} onClick={close}>Cancel</button>
                     <button className={style.confirm_button} onClick={handleDownload} >Confirm</button>

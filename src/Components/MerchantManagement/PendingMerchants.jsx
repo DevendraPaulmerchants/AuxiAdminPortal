@@ -12,9 +12,7 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function PendingMerchants() {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
+
     const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
@@ -92,7 +90,7 @@ function PendingMerchants() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Review and verify the following merchants.</p>
+                    <p>Review and verify the listed merchants.</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}>Add Merchant</button>

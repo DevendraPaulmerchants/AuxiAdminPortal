@@ -3,6 +3,9 @@
     padding: 5px 10px;
     border: 1px solid rgba(38, 38, 38, 0.3);
     border-radius: 5px;
+    max-width: 200px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .date_picker_input {
     outline: none;

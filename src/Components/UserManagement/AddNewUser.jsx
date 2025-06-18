@@ -15,6 +15,7 @@ function AddUser({ close, updateList, selecteduser }) {
             document.body.style.overflow = 'auto';
         };
     }, []);
+    console.log('selected user: ',selecteduser)
     const [name, setName] = useState(selecteduser?.name || "");
     const [userEmail, setUserEmail] = useState(selecteduser?.email || "");
     const [isValidEmail, setIsValidEmail] = useState(true);

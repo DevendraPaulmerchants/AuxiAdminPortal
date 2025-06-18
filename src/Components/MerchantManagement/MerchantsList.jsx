@@ -12,9 +12,15 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function MerchantsList({ open }) {
-    useEffect(()=>{
-       window.scrollTo(0, 0);
-    },[])
+    useEffect(() => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth',
+            });
+    
+        }, [])
+        
     const { token } = useContextData();
     const { state } = useLocation();
 

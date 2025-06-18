@@ -9,8 +9,13 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function APIKey() {
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
   }, [])
 
   const { token } = useContextData();
@@ -85,6 +90,16 @@ function APIKey() {
       document.body.removeChild(textArea);
     }
   };
+  const handleDeleteAPIKey=()=>{
+    const confirm=window.confirm('Are you sure to delete this API Key ');
+    if(confirm){
+      alert("Deleting..");
+      return;
+    }
+    else{
+      return
+    }
+  }
 
   return (
     <>
@@ -93,7 +108,7 @@ function APIKey() {
           <div className={style.search_input_field}>
             <input
               type='text'
-              placeholder='Search by name or email..'
+              placeholder='Search by merchant name'
               maxLength={12}
               value={searchText}
               onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }}
@@ -101,7 +116,7 @@ function APIKey() {
             <IoSearch />
           </div>
           <div>
-            <p>Below is the complete list of approved merchants API Key(Test/Live)</p>
+            <p>Approved merchants API Key(Test/Live)</p>
           </div>
           <div>
           </div>
@@ -115,70 +130,74 @@ function APIKey() {
           </div>
         ) : (
           <>
-            <table className={style.merchants_list_container}>
-              <thead>
-                <tr>
-                  <th>Merchant Name</th>
-                  <th>API Key (Regenerate/Copy/Block)</th>
-                  <th>API Secret Key (Regenerate/Copy/Block)</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedList.length > 0 ? (
-                  paginatedList?.map((val, id) => (
-                    <tr key={id}>
-                      <td>{val.merchant_name}</td>
-                      <td>
-                        <p className={style1.api_key_value_icon}>
-                          <span><b>Test: </b>{val.test_api_key?.slice(0, 15) + "..."}</span>
-                          <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                          <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_key, `test-${id}`)}>
-                            <MdContentCopy />
-                          </span>
-                          {copiedKey === `test-${id}` && <span className={style1.copied_message}>Copied!</span>}
-                          <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
-                        </p>
-                        <p className={style1.api_key_value_icon}>
-                          <span><b>Live: </b>{val.live_api_key?.slice(0, 15) + "..."}</span>
-                          <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                          <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_key, `live-${id}`)}>
-                            <MdContentCopy />
-                          </span>
-                          {copiedKey === `live-${id}` && <span className={style1.copied_message}>Copied!</span>}
-                          <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
-                        </p>
-                      </td>
-                      <td>
-                        <p className={style1.api_key_value_icon}>
-                          <span><b>Test: </b>{val.test_api_secret_key?.slice(0, 15) + "..."}</span>
-                          <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                          <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_secret_key, `test-secret-${id}`)}>
-                            <MdContentCopy />
-                          </span>
-                          {copiedKey === `test-secret-${id}` && <span className={style1.copied_message}>Copied!</span>}
-                          <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
-                        </p>
-                        <p className={style1.api_key_value_icon}>
-                          <span><b>Live: </b>{val.live_api_secret_key?.slice(0, 15) + "..."}</span>
-                          <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                          <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_secret_key, `live-secret-${id}`)}>
-                            <MdContentCopy />
-                          </span>
-                          {copiedKey === `live-secret-${id}` && <span className={style1.copied_message}>Copied!</span>}
-                          <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
-                        </p>
-                      </td>
-                      <td><p style={{ cursor: "pointer", fontSize: "20px" }}><MdDelete /></p></td>
-                    </tr>
-                  ))
-                ) : (
+            <div className={style.table_wrapper}>
+              <table className={style.merchants_list_container}>
+                <thead>
                   <tr>
-                    <td colSpan="4">No Data Found</td>
+                    <th>Merchant Name</th>
+                    <th>API Key (Regenerate/Copy/Block)</th>
+                    <th>API Secret Key (Regenerate/Copy/Block)</th>
+                    <th>Action</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {paginatedList.length > 0 ? (
+                    paginatedList?.map((val, id) => (
+                      <tr key={id}>
+                        <td>{val.merchant_name}</td>
+                        <td>
+                          <p className={style1.api_key_value_icon}>
+                            <span><b>Test: </b>{val.test_api_key?.slice(0, 15) + "..."}</span>
+                            <span className={style1.api_key_icon}><FiRefreshCw /></span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_key, `test-${id}`)}>
+                              <MdContentCopy />
+                            </span>
+                            {copiedKey === `test-${id}` && <span className={style1.copied_message}>Copied!</span>}
+                            <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
+                          </p>
+                          <p className={style1.api_key_value_icon}>
+                            <span><b>Live: </b>{val.live_api_key?.slice(0, 15) + "..."}</span>
+                            <span className={style1.api_key_icon}><FiRefreshCw /></span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_key, `live-${id}`)}>
+                              <MdContentCopy />
+                            </span>
+                            {copiedKey === `live-${id}` && <span className={style1.copied_message}>Copied!</span>}
+                            <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
+                          </p>
+                        </td>
+                        <td>
+                          <p className={style1.api_key_value_icon}>
+                            <span><b>Test: </b>{val.test_api_secret_key?.slice(0, 15) + "..."}</span>
+                            <span className={style1.api_key_icon}><FiRefreshCw /></span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_secret_key, `test-secret-${id}`)}>
+                              <MdContentCopy />
+                            </span>
+                            {copiedKey === `test-secret-${id}` && <span className={style1.copied_message}>Copied!</span>}
+                            <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
+                          </p>
+                          <p className={style1.api_key_value_icon}>
+                            <span><b>Live: </b>{val.live_api_secret_key?.slice(0, 15) + "..."}</span>
+                            <span className={style1.api_key_icon}><FiRefreshCw /></span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_secret_key, `live-secret-${id}`)}>
+                              <MdContentCopy />
+                            </span>
+                            {copiedKey === `live-secret-${id}` && <span className={style1.copied_message}>Copied!</span>}
+                            <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
+                          </p>
+                        </td>
+                        <td><p style={{ cursor: "pointer", fontSize: "18px" }}
+                        onClick={()=>handleDeleteAPIKey()}
+                        ><MdDelete /></p></td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4">No Data Found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             {apiList?.length > rowsPerPage &&
               <div className={style.pagination_parent}>
                 <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

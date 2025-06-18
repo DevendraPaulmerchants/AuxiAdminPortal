@@ -85,13 +85,15 @@ function CustomerDetails({ close, selectedCustomer }) {
                                     </span>
                                 </h4>
                             </td>
-                            <td>
-                                <h4 className={style.merchant_name}>Agent Name:
-                                    <span>
-                                        {selectedCustomer?.agent_name}
-                                    </span>
-                                </h4>
-                            </td>
+                            {selectedCustomer?.agent_name &&
+                                <td>
+                                    <h4 className={style.merchant_name}>Agent Name:
+                                        <span>
+                                            {selectedCustomer?.agent_name}
+                                        </span>
+                                    </h4>
+                                </td>
+                            }
 
                         </tr>
                     </tbody>
@@ -99,7 +101,7 @@ function CustomerDetails({ close, selectedCustomer }) {
             </div>
             {/* ------------- Payment Details ---------- */}
             <div className={style1.customer_detail_container}>
-                <h2>Metal Details:</h2>
+                <h2>Wallets Details:</h2>
                 <table className={style.merchant_details_page_table}>
                     <tbody>
                         <tr className={style.merchant_details_page_row}>

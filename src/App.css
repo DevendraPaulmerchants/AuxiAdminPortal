@@ -5,7 +5,9 @@
   padding: 0;
 }
 .App {
-  height: 100vh;
+  /* height: 100vh; */
+  /* overflow-y: hidden; */
+  /* height: fit-content; */
 }
 .app_layout {
   display: flex;
@@ -15,3 +17,13 @@
   width: 100%;
   overflow: hidden;
 }
+/* Hide scrollbar but allow scrolling */
+*{
+  overflow: auto;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+*::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
