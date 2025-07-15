@@ -137,25 +137,25 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={goldbuymargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={goldbuymargin}
                                 onChange={(e) => setGoldbuymargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={goldsellmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={goldsellmargin}
                                 onChange={(e) => setGoldsellmargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={goldtransfermargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={goldtransfermargin}
                                 onChange={(e) => setGoldtransfermargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={goldconversionmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={goldconversionmargin}
                                 onChange={(e) => setGoldconversionmargin(e.target.value)}
                             />
                         </div>
@@ -165,25 +165,25 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={silverbuymargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={silverbuymargin}
                                 onChange={(e) => setSilverbuymargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={silversellmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={silversellmargin}
                                 onChange={(e) => setSilversellmargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={silvertransfermargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={silvertransfermargin}
                                 onChange={(e) => setSilvertransfermargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={silverconversionmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={silverconversionmargin}
                                 onChange={(e) => setSilverconversionmargin(e.target.value)}
                             />
                         </div>
@@ -193,25 +193,25 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={platinumbuymargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={platinumbuymargin}
                                 onChange={(e) => setPlatinumbuymargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={platinumsellmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={platinumsellmargin}
                                 onChange={(e) => setPlatinumsellmargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={platinumtransfermargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={platinumtransfermargin}
                                 onChange={(e) => setPlatinumtransfermargin(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={platinumconversionmargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={platinumconversionmargin}
                                 onChange={(e) => setPlatinumconversionmargin(e.target.value)}
                             />
                         </div>

@@ -10,6 +10,7 @@ import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
 import { APIPATH } from '../apiPath/apipath';
 import { useNavigate } from 'react-router-dom';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CustomerReports() {
 
@@ -218,7 +219,7 @@ function CustomerReports() {
                   paginatedList?.map((val, id) => {
                     return <tr key={id}>
                       <td>XXXX{val.order_id?.slice(-4)}</td>
-                      <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
+                      <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>{val.customer_name}</td>
                       <td>{val.merchant_name}</td>
                       <td>{val.order_type}</td>

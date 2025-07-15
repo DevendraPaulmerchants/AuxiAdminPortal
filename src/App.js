@@ -90,6 +90,7 @@ function App() {
             <div className='app_content'>
               {isAuthenticated && <NewHeader open={state.open} handleOpen={handleOpen} handleLogOut={handleLogOut} />}
               <Routes>
+                
                 {!isAuthenticated ? (
                   <>
                     <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />

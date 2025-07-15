@@ -4,6 +4,9 @@
     align-items: center;
     height: fit-content;
     padding: 10px 20px 10px 0;
+    position: sticky;
+    top: 0;
+    background: #fff;
 }
 .header_collapse_icon {
     cursor: pointer;
@@ -36,7 +39,7 @@
     font-size: 12px;
 }
 .user_name_dropdown {
-    position: absolute;
+    position: fixed;
     top: 45px;
     right: 20px;
     border-radius: 5px;

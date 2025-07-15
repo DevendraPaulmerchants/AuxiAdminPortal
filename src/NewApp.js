@@ -85,7 +85,7 @@ function App() {
                   <Route path='/customer_list' element={<CustomerList />} />
                   <Route path='/approved_credits' element={<Credits />} />
                   <Route path='/requested_credits' element={<Approval />} />
-                  <Route path='/credit/:id' element={<CreditDetails />} />
+                  <Route path='/requested_credits/:id' element={<CreditDetails />} />
                   <Route path='/merchant_api' element={<APIKey />} />
                   {/* Users */}
                   <Route path='/user_list' element={<Users />} />

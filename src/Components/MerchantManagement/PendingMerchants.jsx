@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from "../Admin/Admin.module.css";
 import style1 from "./Merchants.module.css";
@@ -10,9 +10,9 @@ import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
+const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 
 function PendingMerchants() {
-
     const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
@@ -153,8 +153,9 @@ function PendingMerchants() {
                 </>
             }
         </div>
-        {isAddMerchnatsClick && <AddMerchants close={closeAddMerchantsForm} updateList={fetchMerchantList} />}
+        {/* {isAddMerchnatsClick && <AddMerchants close={closeAddMerchantsForm} updateList={fetchMerchantList} />} */}
         {/* {isFilterClick && <FilterMerchants close={closeFilteredForm} />} */}
+        {isAddMerchnatsClick && <AddMerchant close={closeAddMerchantsForm} updateList={fetchMerchantList} />}
     </>
 }
 

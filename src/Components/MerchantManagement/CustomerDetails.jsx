@@ -13,7 +13,6 @@ function CustomerDetails({ close, selectedCustomer }) {
         };
     }, []);
 
-
     return <div className={style.add_merchants_parent}>
         <div className={style.add_merchants_form_container} style={{ width: "80%" }}>
             <div className={style.add_merchants_header}>

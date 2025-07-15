@@ -40,13 +40,9 @@
 
 .customer_details_container {
     display: flex;
-    /* justify-content: space-between; */
-    gap: 4rem;
+    gap: 1rem 4rem;
     flex-wrap: wrap;
 }
-/* .customer_details_row {
-    flex: 1;
-} */
 
 .customer_details_label {
     color: #969696;
