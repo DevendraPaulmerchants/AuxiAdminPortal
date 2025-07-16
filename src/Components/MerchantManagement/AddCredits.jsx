@@ -22,6 +22,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
         payment_reference_id: referenceId,
         payment_method: paymentMethod
     }
+    
     const addCredit = (e) => {
         e.preventDefault();
         setIsLoading(true);

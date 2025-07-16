@@ -121,6 +121,7 @@ function Credits() {
           </div>
         ) : (
           <>
+          <div className={style.table_wrapper}>
             <table className={style.merchants_list_container}>
               <thead>
                 <tr>
@@ -162,6 +163,8 @@ function Credits() {
                 )}
               </tbody>
             </table>
+          </div>
+
             {creditList?.length > rowsPerPage &&
               <div className={style.pagination_parent}>
                 <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>

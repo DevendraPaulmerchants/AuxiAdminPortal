@@ -31,7 +31,7 @@
     background: #fff;
     padding: 10px 1rem;
     border-radius: 5px;
-    width: 60%;
+    width: 75%;
     max-height: 90%;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -68,41 +68,50 @@
 
 .name_email_parent_container {
     display: flex;
-    gap: 4rem;
+    gap: 1rem 4rem;
     justify-content: space-between;
     padding-bottom: 8px;
 }
 
+@media screen and (max-width: 768px) {
+    .name_email_parent_container {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+}
+
 .name_label_input_contaner {
-    padding-right: 1rem;
+    /* padding-right: 1rem; */
     width: 100%;
 }
 
 .name_label_input_contaner label {
     display: block;
-    /* color: rgba(255, 140, 0, 1); */
     color: rgba(38, 38, 38, 0.9);
     margin-bottom: 5px;
 }
 
 .name_label_input_contaner input {
-    /* border: 1px solid rgba(205, 133, 63, 1); */
     border: 1px solid rgba(38, 38, 38, 0.4);
     outline: none;
     border-radius: 5px;
     padding: 5px 5px 5px 10px;
-    width: 99%;
-    color: #646464;
+    width: 95%;
+    color: #000;
+}
+
+.name_label_input_contaner input[type='file'] {
+    width: 93%;
 }
 
 .name_label_input_contaner select {
-    /* border: 1px solid rgba(205, 133, 63, 1); */
     border: 1px solid rgba(38, 38, 38, 0.4);
     outline: none;
     border-radius: 5px;
     padding: 5px 5px 5px 10px;
-    width: 100%;
-    color: #646464;
+    width: 98.5%;
+    color: #000;
     margin-bottom: 10px;
 }
 
@@ -114,7 +123,7 @@
     padding: 5px 5px 5px 10px;
     width: 100%;
     max-height: 50px;
-    color: #646464;
+    color: #000;
 }
 
 .not_valid_text {
@@ -125,6 +134,13 @@
     font-weight: 500;
     font-size: 20px;
     color: rgba(139, 69, 19, 1);
+    margin-top: 10px;
+}
+
+.add_merchants_bussiness_address h4 {
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.5);
     margin-top: 10px;
 }
 
@@ -146,7 +162,7 @@
     border-radius: 5px;
     border: none;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 14px;
     padding: 5px 20px;
     width: 100%;
     cursor: pointer;
@@ -283,4 +299,32 @@
 
 .api_key_block {
     color: red !important;
+}
+
+hr {
+    margin: 10px 0;
+    border: 1.5px solid rgba(0, 0, 0, 0.3);
+}
+
+/* ------------ New Document Verification ------------------ */
+.verify_icon_text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: green;
+    font-weight: 500;
+}
+
+.not_verify_icon_text {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: red;
+    font-weight: 500;
+}
+
+.verify_icon_text,
+.not_verify_icon_text b {
+    font-size: 14px;
+    font-weight: 400;
 }

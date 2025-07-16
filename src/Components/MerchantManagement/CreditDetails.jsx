@@ -28,7 +28,7 @@ function CreditDetails() {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data.data);
-                setCreditDetails(data.data[0]);
+                setCreditDetails(data?.data[0]);
             })
             .catch((err) => {
                 console.log(err);
@@ -156,7 +156,7 @@ function CreditDetails() {
                                 <button className={style.primary_login_btn}
                                     disabled={creditDetails?.approval_status.toLowerCase() !== "pending"}
                                     onClick={openApproveForm}
-                                >{creditDetails?.approval_status.toLowerCase() === "pending" ? "Approve" : "Approved"}</button>
+                                >{creditDetails?.approval_status.toLowerCase() === "pending" ? "Approve Credits" : "Approved"}</button>
 
                             </div>
                         </>

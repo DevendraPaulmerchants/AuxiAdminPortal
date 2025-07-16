@@ -55,10 +55,6 @@
 .form_conatainer form input[type="email"],
 .form_conatainer form input[type="password"] {
     width: 100%;
-    /* padding:10px 1rem ; */
-    /* margin: 0.8rem 0; */
-    /* border: 1px solid #B6BBC6; */
-    /* border-radius: 5px; */
     display: block;
     outline: none;
     border: none;

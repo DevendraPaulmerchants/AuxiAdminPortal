@@ -9,6 +9,7 @@ import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
 import { APIPATH } from '../apiPath/apipath';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function MerchantsTDSReports() {
     useEffect(() => {
@@ -213,7 +214,7 @@ function MerchantsTDSReports() {
                                     paginatedList?.map((val, id) => {
                                         return <tr key={id}>
                                             <td>XXXX{val.order_id?.slice(-4)}</td>
-                                            <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
+                                            <td>{dateAndTimeFormat(val.created_at)}</td>
                                             <td>{val.merchant_name}</td>
                                             <td>{val.customer_name}</td>
                                             <td>{val.metal_type}</td>

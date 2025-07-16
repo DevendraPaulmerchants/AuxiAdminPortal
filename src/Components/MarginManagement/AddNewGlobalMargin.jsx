@@ -86,7 +86,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
-                    <h2>Add New Global Scheme</h2>
+                    <h2>Update Rate Margins</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
@@ -108,28 +108,28 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='GST in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='GST in %' min={0} max={10}
                                 value={buygst}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setBuyGst)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='GST in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='GST in %' min={0} max={10}
                                 value={sellgst}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setSellgst)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='GST in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='GST in %' min={0} max={10}
                                 value={transfergst}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setTransfergst)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='GST in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='GST in %' min={0} max={10}
                                 value={conversiongst}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setConversiongst)}
                             />
@@ -139,28 +139,28 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={buyplatformChanrge}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setBuyPlatformCharge)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={sellplateformCharge}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setSellplateformCharge)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={transferplateformcharge}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setTransferplateformcharge)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={conversionplateformcharge}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setConversionplateformcharge)}
                             />
@@ -170,27 +170,27 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
-                            <input type='decimal' required placeholder='Margin in %' min={0} max={10} value={buyMargin}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Margin in %' min={0} max={10} value={buyMargin}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setBuyMargin)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Sell*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={sellMargin}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setSellMargin)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Transfer*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={transferMargin}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setTransferMargin)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Conversion*</label>
-                            <input type='decimal' required placeholder='Plateform Charge in %' min={0} max={10}
+                            <input type='decimal' style={{width:'85%'}} required placeholder='Plateform Charge in %' min={0} max={10}
                                 value={conversionMargin}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setConversionMargin)}
                             />

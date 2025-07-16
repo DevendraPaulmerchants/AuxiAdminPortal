@@ -11,9 +11,6 @@ const NewHeader = ({open,handleOpen,handleLogOut}) => {
     const openUserModel=()=>{
         setIsUserIconClick(!isUserIconClick);
     }
-      const closeUserModel = () => {
-        setIsUserIconClick(false);
-      }
 
     return (
         <header className={style.header_container}>
@@ -30,7 +27,6 @@ const NewHeader = ({open,handleOpen,handleLogOut}) => {
                     {isUserIconClick && (
                         <div className={style.user_name_dropdown}>
                             <ul>
-                                {/* <li>Profile</li> */}
                                 <li onClick={handleLogOut}>Log out</li>
                             </ul>
                         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { useLocation, useNavigate, } from 'react-router-dom';
 import style from "../Admin/Admin.module.css";
 import style1 from "./Merchants.module.css";
@@ -6,21 +6,22 @@ import { GoEye } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import Switch from '@mui/material/Switch';
 import AddMerchants from './AddMerchants';
-import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
+// import AddMerchant from './AddMerchant/AddMerchant';
+const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 
 function MerchantsList({ open }) {
     useEffect(() => {
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth',
-            });
-    
-        }, [])
-        
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth',
+        });
+
+    }, [])
+
     const { token } = useContextData();
     const { state } = useLocation();
 
@@ -73,12 +74,6 @@ function MerchantsList({ open }) {
     const closeAddMerchantsForm = () => {
         setIsMerchantsClick(false);
     }
-    const openFilteredForm = () => {
-        setIsFilterClick(true);
-    }
-    const closeFilteredForm = () => {
-        setIsFilterClick(false);
-    }
 
     const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())) : [];
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
@@ -97,6 +92,7 @@ function MerchantsList({ open }) {
     const selectedMerchant = (merchantId) => {
         navigate(`/approved-merchants/${merchantId}`);
     }
+    
     const changeStatusOfSelectedMerchant = (merchantId, currentStatus) => {
         const confirm = window.confirm("Do you really want to change the status of this merchant?");
         if (!confirm) {
@@ -139,16 +135,11 @@ function MerchantsList({ open }) {
     return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                {/* <h2>Merchants List</h2> */}
                 <div className={style.search_input_field}>
                     <input type='text' placeholder='Search by name..' maxLength={12} value={searchText}
                         onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                     <IoSearch />
                 </div>
-                {/* <div>
-                    <p>Below is the complete list of approved merchants</p>
-                </div> */}
-
                 <div>
                     <label>Filter By Status : </label>
                     <select className={style.merchants_select} value={merchantStatus}
@@ -190,7 +181,7 @@ function MerchantsList({ open }) {
                                         return <tr key={id}>
                                             <td>{val.merchant_name}</td>
                                             <td>{val.primary_person_email}</td>
-                                    
+
                                             <td>
                                                 {val.primary_person_mobile?.includes('-')
                                                     ? val.primary_person_mobile.split('-')[1]
@@ -227,8 +218,8 @@ function MerchantsList({ open }) {
                 </>
             }
         </div>
-        {isAddMerchnatsClick && <AddMerchants close={closeAddMerchantsForm} updateList={fetchMerchantList} />}
-        {/* {isFilterClick && <FilterMerchants close={closeFilteredForm} />} */}
+        {/* {isAddMerchnatsClick && <AddMerchants close={closeAddMerchantsForm} updateList={fetchMerchantList} />} */}
+        {isAddMerchnatsClick && <AddMerchant close={closeAddMerchantsForm} updateList={fetchMerchantList} />}
     </>
 }
 

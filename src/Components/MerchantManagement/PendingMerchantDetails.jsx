@@ -1,15 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "./Merchants.module.css";
 import style1 from "../Admin/Admin.module.css"
-import { IoMdClose } from "react-icons/io";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
-// import ApproveKYC from './DocumentApprove';
 import ApproveKYC from './KycApprove';
 import AddMerchants from './AddMerchants';
 import ApproveThisDocument from './DocumentApprove';
+import AddMerchant from './AddMerchant/AddMerchant';
 
 function PendingMerchantDetails() {
     const { token } = useContextData();
@@ -244,7 +243,8 @@ function PendingMerchantDetails() {
         {isKYCRejectClicked && <ApproveThisDocument close={closeKYCReject} merchantId={Id} docId={selectedDocId} updateList={getSelectedMerchantDetails} />}
         {isveryfied && <ApproveKYC close={closeverifyandrejectKycpage}
             merchantId={Id} updateList={getSelectedMerchantDetails} />}
-        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}
+        {/* {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />} */}
+        {isUpdateClicked && <AddMerchant close={closeUpdatePage} updateList={getSelectedMerchantDetails} selectedMerchant={selectedMerchant} />}
     </>
 }
 

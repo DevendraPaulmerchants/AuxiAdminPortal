@@ -45,6 +45,7 @@ function ApprovalForm({ close,creditId,merchantId}) {
             return
         }).finally(()=>setIsLoading(false))
     }
+    
     return <>
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>

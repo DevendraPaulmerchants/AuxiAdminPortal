@@ -10,6 +10,7 @@ import { useContextData } from '../Context/Context';
 import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
 import { MdContentCopy } from 'react-icons/md';
 import { APIPATH } from '../apiPath/apipath';
+import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CreditsReports() {
     useEffect(() => {
@@ -202,8 +203,7 @@ function CreditsReports() {
                                     paginatedList?.map((val, id) => {
                                         return <tr key={id}>
                                             <td>XXXX{val.order_id?.slice(-4)}</td>
-                                            {/* <td>{val.created_at}</td> */}
-                                            <td>{`${val.created_at?.split("T")[0]} ${val.created_at?.split("T")[1]?.split(".")[0]}`}</td>
+                                            <td>{dateAndTimeFormat(val.created_at)}</td>
                                             <td>{val.merchant_name}</td>
                                             <td>{val.transaction_type}</td>
                                             <td>{val.opening_credits}</td>

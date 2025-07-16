@@ -61,7 +61,7 @@ function Approval() {
 
   const navigate = useNavigate();
   const selectedCreditList = (Id) => {
-    navigate(`/credit/${Id}`);
+    navigate(`/requested_credits/${Id}`);
   }
 
   return <>
@@ -113,7 +113,6 @@ function Approval() {
                   paginatedList?.map((val, id) => (
                     <tr key={id} style={{ position: "relative" }}>
                       <td>{val.merchant_name || "Merchants name"}</td>
-                      {/* <td>{val.transaction_type || "0"}</td> */}
                       <td>{val.payment_method || "Cash"}</td>
                       <td>{val.payment_reference_id || "1234"}</td>
                       <td>{val.amount || "0"}</td>

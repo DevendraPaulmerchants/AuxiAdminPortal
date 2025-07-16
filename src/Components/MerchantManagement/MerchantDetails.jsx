@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import style from "./Merchants.module.css";
 import style1 from "../Admin/Admin.module.css"
@@ -7,6 +7,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import AddMerchants from './AddMerchants';
+// import AddMerchant from './AddMerchant/AddMerchant';
+const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 // import ApproveKYC from './KycApprove';
 
 function MerchantDetails() {
@@ -99,7 +101,7 @@ function MerchantDetails() {
                                     <td>
                                         <h4 className={style.merchant_name}>Scheme name:
                                             <span>
-                                                <Link to='/scheme_list' state={{schemeName:selectedMerchant?.scheme_name}}>
+                                                <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
                                                     {selectedMerchant?.scheme_name}
                                                 </Link>
                                             </span>
@@ -136,8 +138,7 @@ function MerchantDetails() {
                                 </tr>
                             </tbody>
                         </table>
-
-                        {/* Uploded document */}
+                        {/*----------------------- Uploded document --------------------------- */}
                         <h2 className={style.uploaded_docement_title}>Uploaded Document</h2>
                         <div className={style.merchant_details_document}>
                             {selectedMerchant?.kyc_documents?.map((doc, id) => (
@@ -155,15 +156,6 @@ function MerchantDetails() {
                                             {doc?.kyc_status === "PENDING" && "Pending"}
                                         </p>
                                     </div>
-                                    {/* <div className={style.add_merchats_btn_container}>
-                                        <button className={style.primary_login_btn}
-                                            onClick={() => ApproveDocument(doc.id, doc.kyc_status)}
-                                        >Approve</button>
-                                        <button className={style.primary_login_btn}
-                                            disabled={doc.kyc_status === "VERIFIED"}
-                                            onClick={()=>{setIsKYCRejectClicked(true);setSelectedDocId(doc.id)}}
-                                        >Reject</button>
-                                    </div> */}
                                 </h4>
                             ))}
                         </div>
@@ -173,9 +165,7 @@ function MerchantDetails() {
                             >
                                 Update Details
                             </button>
-                            <button className={style.primary_login_btn}
-                            // onClick={() => { openverifyandrejectKycpage() }}
-                            >
+                            <button className={style.primary_login_btn}>
                                 {selectedMerchant?.kyc_status ? "✅ KYC Verified" : " ❌ Not Verified"}</button>
                         </div>
                     </>
@@ -194,10 +184,8 @@ function MerchantDetails() {
                 </div>
             </div>
         </div>}
-        {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />}
-
-        {/* {isveryfied && <ApproveKYC close={closeverifyandrejectKycpage}
-            merchantId={merchantId} updateList={getSelectedMerchantDetails} />} */}
+        {/* {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />} */}
+        {isUpdateClicked && <AddMerchant close={closeUpdatePage} updateList={getSelectedMerchantDetails} selectedMerchant={selectedMerchant} />}
     </>
 }
 

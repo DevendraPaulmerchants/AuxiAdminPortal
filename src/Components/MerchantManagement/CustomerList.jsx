@@ -25,7 +25,7 @@ function CustomerList() {
 
     const { token } = useContextData();
     const { state } = useLocation();
-    console.log(state);
+
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +46,9 @@ function CustomerList() {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     "Content-Type": "application/json",
-                }
+                },
+                method:'GET',
+                mode:'cors'
             });
             const result = await response.json();
             setCustomer(result.data);
@@ -190,9 +192,6 @@ function CustomerList() {
                                     <th>Mobile</th>
                                     <th>Merchant Name</th>
                                     <th>Create At</th>
-                                    {/* <th>Gold</th> */}
-                                    {/* <th>Silver</th> */}
-                                    {/* <th>Fund Balance</th> */}
                                     <th>KYC Status</th>
                                     <th>A/C Status</th>
                                     <th>More</th>
@@ -207,9 +206,6 @@ function CustomerList() {
                                             <td>{val.phone}</td>
                                             <td>{val.merchant_name}</td>
                                             <td>{dateFormat(val.created_at)}</td>
-                                            {/* <td>{val.gold}</td> */}
-                                            {/* <td>{val.silver}</td> */}
-                                            {/* <td>{val.balance}</td> */}
                                             <td>{val.kyc_status}</td>
                                             <td>
                                                 <Switch checked={val.account_status === 'ACTIVE'} />

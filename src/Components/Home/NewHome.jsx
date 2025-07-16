@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useContextData } from '../Context/Context';
-import styles from './NewHome.module.css'; // Import CSS for stylingfrom 
+import styles from './NewHome.module.css'; 
 import style1 from "../Admin/Admin.module.css";
 import style2 from "../MerchantManagement/Merchants.module.css"
-import { FaUsers, FaMoneyBillWave, FaShoppingCart, FaCoins, FaExchangeAlt } from 'react-icons/fa'; // Import icons
 import { APIPATH } from '../apiPath/apipath';
 import { useNavigate } from 'react-router-dom';
 
@@ -67,7 +66,6 @@ const NewHome = () => {
                 setIsLoading(false);
             }
         };
-
         fetchData();
     }, [selectedmerchant, startDate, endDate, token]);
 
@@ -114,7 +112,9 @@ const NewHome = () => {
                 </div>
                 <div>
                     <label htmlFor="End Date">End Date: </label>
-                    <input type="date" value={endDate} min={startDate} max={new Date().toISOString().split('T')[0]} disabled={!startDate}
+                    <input type="date" value={endDate} min={startDate} 
+                    max={new Date().toISOString().split('T')[0]} 
+                    disabled={!startDate}
                         onChange={(e) => setEndDate(e.target.value)} />
                 </div>
                 <select onChange={(e) => setSelectedMerchant(e.target.value)} className={styles.select}>
