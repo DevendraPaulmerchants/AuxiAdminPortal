@@ -8,7 +8,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 
 
 const NewLogIn = ({ handleLogIn }) => {
-    const { setUserType, setToken } = useContextData();
+    const { setToken } = useContextData();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState();
     const [showPass, setShowPass] = useState(false);

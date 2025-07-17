@@ -84,7 +84,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Transaction Type* </label>
-                            <select required value={transactionType} onChange={(e) => setTransactionType(e.target.value)} style={{ width: "106%" }} >
+                            <select required value={transactionType} onChange={(e) => setTransactionType(e.target.value)}  >
                                 <option value="" disabled>Select Transaction Type</option>
                                 <option value="manual_credit">Manual Credit</option>
                                 <option value="Cash">Cash</option>

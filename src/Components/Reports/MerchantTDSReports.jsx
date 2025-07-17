@@ -38,6 +38,7 @@ function MerchantsTDSReports() {
     // Merchant TDS Reports List ------------------------------------
     useEffect(() => {
         if (!token) return;
+        console.log("API Count: ",cursors,direction)
         const fetchData = async () => {
             setIsLoading(true);
             try {
