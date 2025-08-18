@@ -62,7 +62,7 @@ function CreditDetails() {
                 'Content-type': 'Application/json'
             },
             method: 'PATCH',
-            body:JSON.stringify(data),
+            body: JSON.stringify(data),
             mode: 'cors'
         }).then((res) => res.json())
             .then((data) => {
@@ -78,69 +78,25 @@ function CreditDetails() {
     return <>
         <div className={style1.merchants_parent}>
             <div className={style1.credit_details_and_chat}>
-                <div className={style1.credit_details_container}>
+                <div className={style1.credit_details_container} style={{ width: '100%' }}>
                     <div className={style.add_merchants_header}>
-                        <h2 style={{ cursor: "pointer" }} onClick={() => {
-                            navigate(-1)
-                        }}><IoMdArrowRoundBack /></h2>
+                        <button className='back_button'
+                            onClick={() => {
+                                navigate(-1)
+                            }}><IoMdArrowRoundBack /></button>
                     </div>
                     {isloading ? <div className={style.loader_container}><div className={style.loader_item}>
                         <img src='/gold-coin.png' alt='Loading' />
                     </div></div> :
                         <>
-                            <table className={style.merchant_details_page_table}>
-                                <tbody>
-                                    <tr className={style.merchant_details_page_row}>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Merchant`s Name:
-                                                <span>
-                                                    {creditDetails?.merchant_name}
-                                                </span>
-                                            </h4>
-                                        </td>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Requested Credits:
-                                                <span>
-                                                    {creditDetails?.amount}
-                                                </span>
-                                            </h4>
-                                        </td>
-
-                                    </tr>
-                                    <tr className={style.merchant_details_page_row}>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Transaction Type:
-                                                <span>
-                                                    {creditDetails?.transaction_type}
-                                                </span>
-                                            </h4>
-                                        </td>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Payment Method:
-                                                <span>
-                                                    {creditDetails?.payment_method}
-                                                </span>
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                    <tr className={style.merchant_details_page_row}>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Approval Status:
-                                                <span>
-                                                    {creditDetails?.approval_status}
-                                                </span>
-                                            </h4>
-                                        </td>
-                                        <td>
-                                            <h4 className={style.merchant_name}>Payment Status:
-                                                <span>
-                                                    {creditDetails?.payment_status}
-                                                </span>
-                                            </h4>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div className={style.list_details}>
+                                <h4 className={style.merchant_name}>Merchant`s Name:<span>{creditDetails?.merchant_name}</span></h4>
+                                <h4 className={style.merchant_name}>Requested Credits:<span>{creditDetails?.amount}</span></h4>
+                                <h4 className={style.merchant_name}>Transaction Type:<span>{creditDetails?.transaction_type}</span></h4>
+                                <h4 className={style.merchant_name}>Payment Method:<span>{creditDetails?.payment_method}</span></h4>
+                                <h4 className={style.merchant_name}>Approval Status:<span>{creditDetails?.approval_status}</span></h4>
+                                <h4 className={style.merchant_name}>Payment Status:<span>{creditDetails?.payment_status}</span></h4>
+                            </div>
                             <div className={style.add_merchats_btn_container}>
                                 {paymentClick ? <div className={style.loader_container}><div className={style.loader_item}>
                                     <img src='/gold-coin.png' alt='Loading' />

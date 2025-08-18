@@ -77,3 +77,10 @@
   cursor: pointer;
   font-size: 20px;
 }
+/* -------------------- */
+.details_container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+}

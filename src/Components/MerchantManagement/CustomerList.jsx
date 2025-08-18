@@ -47,8 +47,8 @@ function CustomerList() {
                     'Authorization': `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
-                method:'GET',
-                mode:'cors'
+                method: 'GET',
+                mode: 'cors'
             });
             const result = await response.json();
             setCustomer(result.data);
@@ -92,10 +92,9 @@ function CustomerList() {
         fetchMerchant();
     }, [token])
 
-    const filteredList = Array.isArray(customer)
-        ? customer.filter((list) =>
-            list.first_name?.toLowerCase().includes(searchText.toLowerCase())
-        )
+    const filteredList = Array.isArray(customer) ? customer.filter((list) => {
+        return list.first_name?.toLowerCase().includes(searchText.toLowerCase())
+    })
         : [];
 
     const totalPages = Math.ceil(filteredList.length / rowsPerPage);
@@ -112,7 +111,7 @@ function CustomerList() {
 
     const [openDetailPage, setOpenDetailPage] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
-    
+
     const openDPage = (val) => {
         setOpenDetailPage(true);
         setSelectedCustomer(val)

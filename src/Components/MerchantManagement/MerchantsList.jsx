@@ -47,17 +47,7 @@ function MerchantsList({ open }) {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                if (merchantStatus === "ACTIVE") {
-                    const active = data.data.filter((data) => data.status === "ACTIVE")
-                    setMerchantList(active);
-                }
-                else if (merchantStatus === "INACTIVE") {
-                    const Inactive = data.data.filter(data => data.status === "INACTIVE");
-                    setMerchantList(Inactive);
-                }
-                else {
-                    setMerchantList(data.data);
-                }
+                setMerchantList(data.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -67,7 +57,8 @@ function MerchantsList({ open }) {
     }
     useEffect(() => {
         fetchMerchantList();
-    }, [merchantStatus]);
+    }, []);
+
     const openAddMerchantsForm = () => {
         setIsMerchantsClick(true);
     }
@@ -75,7 +66,12 @@ function MerchantsList({ open }) {
         setIsMerchantsClick(false);
     }
 
-    const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())) : [];
+    const filteredList = Array.isArray(merchantList) ? merchantList?.filter((list) => {
+        if (merchantStatus === 'ACTIVE' && list.status !== 'ACTIVE') return false;
+        if (merchantStatus === 'INACTIVE' && list.status !== 'INACTIVE') return false;
+        return list.merchant_name?.toLowerCase().includes(searchText.toLowerCase())
+    }) : [];
+
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
@@ -92,7 +88,7 @@ function MerchantsList({ open }) {
     const selectedMerchant = (merchantId) => {
         navigate(`/approved-merchants/${merchantId}`);
     }
-    
+
     const changeStatusOfSelectedMerchant = (merchantId, currentStatus) => {
         const confirm = window.confirm("Do you really want to change the status of this merchant?");
         if (!confirm) {

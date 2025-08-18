@@ -52,7 +52,7 @@ function APIKey() {
     fetchAPILIst();
   }, []);
 
-  const filteredList = apiList && apiList?.filter((list) => list?.merchant_name?.toLowerCase().includes(searchText.toLowerCase()));
+  const filteredList = apiList?.filter((list) => list?.merchant_name?.toLowerCase().includes(searchText.toLowerCase())) ?? [];
 
   const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -94,15 +94,11 @@ function APIKey() {
     const confirm=window.confirm('Are you sure to delete this API Key ');
     if(confirm){
       alert("Deleting..");
-      return;
     }
-    else{
-      return
-    }
+    
   }
 
   return (
-    <>
       <div className={style.merchants_parent}>
         <div className={style.merchants_parent_subheader}>
           <div className={style.search_input_field}>
@@ -143,24 +139,20 @@ function APIKey() {
                 <tbody>
                   {paginatedList.length > 0 ? (
                     paginatedList?.map((val, id) => (
-                      <tr key={id}>
+                      <tr key={val.id}>
                         <td>{val.merchant_name}</td>
                         <td>
                           <p className={style1.api_key_value_icon}>
                             <span><b>Test: </b>{val.test_api_key?.slice(0, 15) + "..."}</span>
                             <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_key, `test-${id}`)}>
-                              <MdContentCopy />
-                            </span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.test_api_key, `test-${id}`)}><MdContentCopy /></span>
                             {copiedKey === `test-${id}` && <span className={style1.copied_message}>Copied!</span>}
                             <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
                           </p>
                           <p className={style1.api_key_value_icon}>
                             <span><b>Live: </b>{val.live_api_key?.slice(0, 15) + "..."}</span>
                             <span className={style1.api_key_icon}><FiRefreshCw /></span>
-                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_key, `live-${id}`)}>
-                              <MdContentCopy />
-                            </span>
+                            <span className={style1.api_key_icon} onClick={() => handleCopy(val.live_api_key, `live-${id}`)}><MdContentCopy /></span>
                             {copiedKey === `live-${id}` && <span className={style1.copied_message}>Copied!</span>}
                             <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
                           </p>
@@ -208,7 +200,6 @@ function APIKey() {
           </>
         )}
       </div>
-    </>
   );
 }
 

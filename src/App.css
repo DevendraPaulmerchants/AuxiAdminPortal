@@ -26,4 +26,11 @@
 *::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Opera */
 }
-
+/* ---------- Back Button ----------- */
+.back_button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 20px;
+}

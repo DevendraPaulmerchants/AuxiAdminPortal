@@ -2,11 +2,11 @@ import React, { lazy, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import style from "./Merchants.module.css";
 import style1 from "../Admin/Admin.module.css"
-// import { IoMdClose } from "react-icons/io";
+
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
-import AddMerchants from './AddMerchants';
+
 // import AddMerchant from './AddMerchant/AddMerchant';
 const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 // import ApproveKYC from './KycApprove';
@@ -58,91 +58,51 @@ function MerchantDetails() {
     return <>
         <div className={style1.merchants_parent}>
             <div>
-                <div className={style.add_merchants_header}>
-                    <h2 onClick={() => navigate(-1)}><IoMdArrowRoundBack /></h2>
+                <div className={style.add_merchants_header} style={{ background: 'transparent' }}>
+                    <button className='back_button' onClick={() => navigate(-1)}><IoMdArrowRoundBack /></button>
                 </div>
                 {isloading ? <div className={style.loader_container}><div className={style.loader_item}>
                     <img src='/gold-coin.png' alt='loading...' />
                 </div></div> :
                     <>
-                        <table className={style.merchant_details_page_table}>
-                            <tbody>
-                                <tr className={style.merchant_details_page_row}>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Merchant`s Name:
-                                            <span>
-                                                {selectedMerchant?.merchant_name}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4 className={style.merchant_name}> Primary person name:
-                                            <span>
-                                                {selectedMerchant?.primary_person_name}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Primary person email:
-                                            <span>
-                                                {selectedMerchant?.primary_person_email}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Primary person mobile:
-                                            <span>
-                                                {selectedMerchant?.primary_person_mobile}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                </tr>
-                                <tr className={style.merchant_details_page_row}>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Scheme name:
-                                            <span>
-                                                <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
-                                                    {selectedMerchant?.scheme_name}
-                                                </Link>
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Address:
-                                            <span>
-                                                <p>{selectedMerchant?.address_street}</p>
-                                                {" "}{selectedMerchant?.address_district},
-                                                {" "}{selectedMerchant?.address_state},
-                                                {" "}{selectedMerchant?.address_pincode}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                </tr>
-                                <tr className={style.merchant_details_page_row}>
-                                    <td>
-                                        <h4 className={style.merchant_name}>Kyc Status:
-                                            <span>
-                                                {selectedMerchant?.kyc_status === 0 ? "Not Approved" : " Approved"}
-                                            </span>
-                                        </h4>
-                                    </td>
-                                    <td>
-                                        {selectedMerchant?.kyc_status === 0 &&
-                                            <h4 className={style.merchant_name}>Kyc Rejected comments:
-                                                <span>
-                                                    {selectedMerchant?.rejected_reason}
-                                                </span>
-                                            </h4>
-                                        }
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div className={style.list_details}>
+                            <h4 className={style.merchant_name}>Merchant`s Name:<span>{selectedMerchant?.merchant_name}</span></h4>
+                            <h4 className={style.merchant_name}> Primary person name:<span>{selectedMerchant?.primary_person_name}</span></h4>
+                            <h4 className={style.merchant_name}>Primary person email:<span>{selectedMerchant?.primary_person_email}</span></h4>
+                            <h4 className={style.merchant_name}>Primary person mobile:<span>{selectedMerchant?.primary_person_mobile}</span>
+                            </h4><h4 className={style.merchant_name}>Scheme name:<span>
+                                <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
+                                    {selectedMerchant?.scheme_name}
+                                </Link>
+                            </span>
+                            </h4>
+                            <h4 className={style.merchant_name}>Address:
+                                <span>
+                                    <p>{selectedMerchant?.address_street}</p>
+                                    {" "}{selectedMerchant?.address_district},
+                                    {" "}{selectedMerchant?.address_state},
+                                    {" "}{selectedMerchant?.address_pincode}
+                                </span>
+                            </h4>
+                            <h4 className={style.merchant_name}>Kyc Status:
+                                <span>
+                                    {selectedMerchant?.kyc_status === 0 ? "Not Approved" : " Approved"}
+                                </span>
+                            </h4>
+
+                            {selectedMerchant?.kyc_status === 0 &&
+                                <h4 className={style.merchant_name}>Kyc Rejected comments:
+                                    <span>
+                                        {selectedMerchant?.rejected_reason}
+                                    </span>
+                                </h4>
+                            }
+                        </div>
                         {/*----------------------- Uploded document --------------------------- */}
                         <h2 className={style.uploaded_docement_title}>Uploaded Document</h2>
                         <div className={style.merchant_details_document}>
                             {selectedMerchant?.kyc_documents?.map((doc, id) => (
-                                <h4 className={style.merchant_name} key={doc.id}>{doc?.document_type} :
+                                <h4 key={doc.id}>{doc?.document_type} :
                                     <div className={style.merchant_document_image}>
                                         <img src={doc?.document_url} alt=''
                                             onDoubleClick={() => {
@@ -170,8 +130,8 @@ function MerchantDetails() {
                         </div>
                     </>
                 }
-            </div>
-        </div>
+            </div >
+        </div >
         {showImage && <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "500px", width: "600px" }}>
                 <div className={style.add_merchants_header}>
@@ -183,7 +143,8 @@ function MerchantDetails() {
                     <img src={showImageUrl} alt='' />
                 </div>
             </div>
-        </div>}
+        </div>
+        }
         {/* {isUpdateClicked && <AddMerchants close={closeUpdatePage} selectedMerchant={selectedMerchant} updateList={getSelectedMerchantDetails} />} */}
         {isUpdateClicked && <AddMerchant close={closeUpdatePage} updateList={getSelectedMerchantDetails} selectedMerchant={selectedMerchant} />}
     </>

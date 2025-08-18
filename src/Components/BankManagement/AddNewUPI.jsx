@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import style from "../Merchants/Merchants.module.css";
 import style from "../MerchantManagement/Merchants.module.css";
-import Select from "react-select";
 import { useMask } from "@react-input/mask";
 import { IoMdClose } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
@@ -16,6 +15,7 @@ function AddNewUPI({ close, selectedAccount, updateList }) {
     const [linkedMobile, setLinkedMobile] = useState(selectedAccount?.linked_mobile_number || "");
     const [isValidMobile, setIsValidMobile] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
     const inputRef = useMask({
         mask: "+91-__________",
         replacement: { _: /\d/ },
@@ -61,20 +61,18 @@ function AddNewUPI({ close, selectedAccount, updateList }) {
             });
     }
 
-
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+            <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
                     <h2>Add New UPI</h2>
-                    <h3 onClick={close}><IoMdClose /></h3>
+                    <h3 ><IoMdClose onClick={close} /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>UPI Id</label>
                             <input type='text' required placeholder='Enter UPI id' maxLength={20} value={upiId}
-                                // onChange={(e) => setUPIid(e.target.value)}
                                 onChange={(e) =>handleUpiId(e,setUPIid,setIsValidUPI)}
                             />
                             {!isValidUPI && <span className={style.not_valid_text}>Please enter a valid UPI id</span>}
@@ -108,7 +106,7 @@ function AddNewUPI({ close, selectedAccount, updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    )
 }
 
 export default AddNewUPI;

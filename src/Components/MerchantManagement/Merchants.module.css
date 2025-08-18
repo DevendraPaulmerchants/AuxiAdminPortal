@@ -32,12 +32,13 @@
     padding: 0px 1rem 10px;
     border-radius: 5px;
     width: 75%;
+    max-width: 1000px;
     max-height: 90%;
     overflow-y: scroll;
     scrollbar-width: none;
     animation: fadeInOut 0.4s linear;
     /* transition: opacity 0.3s ease, transform 0.3s ease; */
-    /* For Firefox */
+
 }
 
 .add_merchants_form_container::-webkit-scrollbar {
@@ -50,7 +51,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-    padding: 1rem 0 ;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
     background: #FFF;
@@ -153,11 +154,6 @@
 }
 
 .primary_login_btn {
-    /* background: rgb(255, 215, 0); */
-    /* background: rgba(38, 38, 38, 0.3); */
-    /* background: linear-gradient(to right, rgba(38, 38, 38, 0.4), rgba(38, 38, 38, 0.2)); */
-    /* color: rgb(139, 69, 19); */
-    /* color: #1f1e19; */
     background: #1F342F;
     color: #FFF;
     outline: none;
@@ -178,9 +174,6 @@
     padding-bottom: 1rem;
 }
 
-.merchant_name {
-    font-weight: 500;
-}
 
 .merchant_name span {
     font-weight: 400;
@@ -329,4 +322,16 @@ hr {
 .not_verify_icon_text b {
     font-size: 14px;
     font-weight: 400;
+}
+
+/* ----------All list Details---------------   */
+.list_details {
+    display: flex;
+    gap: 1rem 4rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+.merchant_name {
+    font-weight: 500;
+    width: 250px;
 }

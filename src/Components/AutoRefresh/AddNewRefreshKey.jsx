@@ -61,12 +61,12 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
     }
 
 
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+            <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
                     <h2>{selectedRow ? 'Update this Scheduler':'Add New Scheduler'}</h2>
-                    <h3 onClick={close}><IoMdClose /></h3>
+                    <h3 ><IoMdClose onClick={close} /></h3>
                 </div>
                 <form onSubmit={(e) => addNewRefresh(e)}>
                     <div className={style.name_email_parent_container}>
@@ -147,7 +147,7 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    );
 }
 
 export default AddNewRefreshKey;

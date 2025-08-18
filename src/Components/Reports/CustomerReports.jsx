@@ -63,6 +63,7 @@ function CustomerReports() {
     };
     fetchData();
   }, [token, selectedMerchant, startDate, endDate, cursors, direction]);
+  
   // ------------------ Merchant List ------------------
   useEffect(() => {
     const fetchMerchant = async () => {
@@ -91,6 +92,7 @@ function CustomerReports() {
     };
     fetchMerchant();
   }, [token])
+
   // ---------- Search Logic -------------------------------------
   const paginatedList = creditsData?.filter((list) => {
     const name = list?.customer_name?.toLowerCase() || '';

@@ -60,7 +60,7 @@ const NewLogIn = ({ handleLogIn }) => {
             <div className={style.login_rigth_side}>
                 <div className={style.form_conatainer}>
                     <h1>Welcome to AuXiVault! </h1>
-                    <p>Please Log-in to your account</p>
+                    <p>Admin portal</p>
                     <form onSubmit={(e) => { handleLogInData(e) }}>
                     <div  className={style.label_and_input_field}>
                         <input

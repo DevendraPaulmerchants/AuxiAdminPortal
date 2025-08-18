@@ -60,20 +60,26 @@
   justify-content: space-between;
   padding: 0 5px;
 }
-.value_container:hover{
+
+.value_container:hover {
   text-decoration: underline;
 }
+
 .value {
   font-size: 16px;
   color: rgba(38, 38, 38, 0.8);
   font-weight: 500;
 }
+
 .card table {
   width: 100%;
 }
+
 .card table tr td:last-child {
   text-align: end;
+  padding-left: 5px;
 }
+
 .row_hover:hover {
   text-decoration: underline;
 }

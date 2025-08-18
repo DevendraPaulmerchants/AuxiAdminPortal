@@ -62,12 +62,12 @@ function AddNewBank({ close, selectedAccount,updateList }) {
     }
 
 
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+            <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
                     <h2>Add New Bank</h2>
-                    <h3 onClick={close}><IoMdClose /></h3>
+                    <h3><IoMdClose onClick={close} /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
                     <div className={style.name_email_parent_container}>
@@ -128,7 +128,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    )
 }
 
 export default AddNewBank;

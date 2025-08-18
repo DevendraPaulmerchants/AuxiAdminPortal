@@ -9,13 +9,13 @@ import { useNavigate } from 'react-router-dom';
 
 const NewHome = () => {
     const { token } = useContextData();
-    const [report, setReport] = useState(null); // State to store the API response
+    const [report, setReport] = useState(null); 
     const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
     const [endDate, setEndDate] = useState('');
     const [merchant, setMerchant] = useState(null);
     const [selectedmerchant, setSelectedMerchant] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); // State to track loading
-    const [error, setError] = useState(null); // State to track errors
+    const [isLoading, setIsLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -50,7 +50,6 @@ const NewHome = () => {
                 const result = await response.json();
                 console.log(result);
                 if (result.error) {
-                    alert(result.error);
                     localStorage.removeItem("token");
                     window.location.reload();
                     return;
@@ -306,7 +305,7 @@ const NewHome = () => {
                                     }}
                                 >
                                     <td><h2 className={styles.value}>Buy</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.gold?.buy_gold_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.buy_gold_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.buy_gold_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}

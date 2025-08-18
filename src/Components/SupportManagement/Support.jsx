@@ -30,7 +30,9 @@ function Support() {
   const rowsPerPage = 8;
 
   const getSupportRequest = useCallback(() => {
-    fetch(`${APIPATH}/api/v1/admin/ticket`, {
+    // const url=`${APIPATH}/api/v1/admin/ticket`;
+    const url=`http://103.171.97.105:8070/ticket-service/tickets?requestingUserType=AGENT&page=0&size=10&sortBy=createdAt&sortDir=desc`
+    fetch(url, {
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "Application/json"
@@ -40,7 +42,8 @@ function Support() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setSupportList(data.data);
+        console.log(data)
+        setSupportList(data);
       })
       .catch((err) => {
         console.error(err);
@@ -53,7 +56,7 @@ function Support() {
     getSupportRequest();
   }, [getSupportRequest])
 
-  const filteredList = supportList?.filter((list) => list.merchant_name?.toLowerCase().includes(searchText.toLowerCase()));
+  const filteredList = supportList?.filter((list) => list.issueType?.toLowerCase().includes(searchText.toLowerCase()));
 
   const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
@@ -136,7 +139,7 @@ function Support() {
               <tr>
                 <th>Merchant Name</th>
                 <th>Category</th>
-                <th>Subject</th>
+                {/* <th>Subject</th> */}
                 <th>Priority</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -147,13 +150,13 @@ function Support() {
                 paginatedList?.map((val, id) => (
                   <tr key={id} style={{ position: "relative" }}>
                     <td>{val.merchant_name}</td>
-                    <td>{val.category}</td>
-                    <td style={{ maxWidth: "200px" }}>{val.subject}</td>
+                    <td>{val.issueType}</td>
+                    {/* <td style={{ maxWidth: "200px" }}>{val.subject}</td> */}
                     <td>{val.priority}</td>
                     <td>{val.status}</td>
                     <td>
                       <p style={{ cursor: "pointer", fontSize: "24px" }}
-                        onClick={() => { selectedSupportList(val.id); }}
+                        onClick={() => { selectedSupportList(val.ticketId); }}
                       >
                         <GoEye />
                       </p>
