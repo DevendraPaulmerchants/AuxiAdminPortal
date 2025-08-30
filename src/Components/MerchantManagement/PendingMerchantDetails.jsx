@@ -104,10 +104,10 @@ function PendingMerchantDetails() {
     const closeUpdatePage = () => {
         setIsUpdateClicked(false);
     }
+
     return <>
         <div className={style1.merchants_parent}>
-            <div>
-                <div className={style.add_merchants_header}>
+                <div className={style.add_merchants_header} style={{background:'transparent'}}>
                     <button className='back_button' onClick={() => navigate(-1)}><IoMdArrowRoundBack /></button>
                 </div>
                 {isloading ? <div className={style.loader_container}><div className={style.loader_item}>
@@ -164,14 +164,13 @@ function PendingMerchantDetails() {
                                 onClick={() => { openverifyandrejectKycpage() }}
                             // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
                             //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
-                            // } 
+                            // }
                             >
                                 {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
                         </div>
 
                     </>
                 }
-            </div>
         </div>
         {showImage && <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "500px", width: "600px" }}>

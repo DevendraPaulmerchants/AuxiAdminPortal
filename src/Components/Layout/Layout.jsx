@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import NewHeader from '../Header/NewHeader';
 import SideBar from '../LeftSidebar/NewLeftSidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet} from 'react-router-dom';
 
 function Layout({ handleLogOut }) {
-
     const [open, setOpen] = useState(true);
     const handleOpen = () => {
         setOpen(!open);
@@ -28,7 +27,8 @@ function Layout({ handleLogOut }) {
                 <Outlet />
             </div>
         </div>
-        )
+
+    </>
 }
 
 export default Layout;
