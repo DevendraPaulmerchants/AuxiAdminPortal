@@ -43,7 +43,7 @@ function Support() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data)
-        setSupportList(data);
+        setSupportList(data?.data || []);
       })
       .catch((err) => {
         console.error(err);
@@ -52,6 +52,7 @@ function Support() {
         setIsLoading(false);
       })
   }, [token, startDate, endDate])
+
   useEffect(() => {
     getSupportRequest();
   }, [getSupportRequest])
@@ -158,14 +159,14 @@ function Support() {
                       <p style={{ cursor: "pointer", fontSize: "24px" }}
                         onClick={() => { selectedSupportList(val.ticketId); }}
                       >
-                        <GoEye />
+                        <GoEye title='see details' />
                       </p>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                  <td colSpan="5" style={{ textAlign: "center" }}>No Data Found</td>
                 </tr>
               )}
             </tbody>

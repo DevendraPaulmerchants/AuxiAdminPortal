@@ -48,13 +48,13 @@
 }
 
 .logo_container {
-    padding: 20px 30px 20px 20px;
+    padding: 20px 30px 20px 0px;
     cursor: pointer;
     border-bottom: 1.5px solid #3B544E;
 }
 
 .logo_image_container {
-    height: 40px;
+    height: 60px;
     width: 200px;
 }
 
@@ -152,16 +152,8 @@
     flex-direction: column;
     gap: 5px;
     animation: opacityOut 1s linear;
-    /* transition: height 0.5s; */
+    /* transition: all 5s linear ease-in-out; */
 }
- /* .sub_items_container {
-  max-height: 0;
-  overflow: hidden;
-  transition:3s ease;
-} */
-/* .sub_items_container.expanded {
-  max-height: 500px; 
-} */
 
 
 .sub_item {

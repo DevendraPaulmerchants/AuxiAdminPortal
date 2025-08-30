@@ -6,6 +6,7 @@ import { DataProvider } from './Components/Context/Context';
 import NewLogIn from './Components/LogIn/NewLogIn';
 import NewHome from './Components/Home/NewHome';
 import Loader from './Components/Loader/Loader';
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 
 // Lazy-loaded components
 const Layout = lazy(() => import('./Components/Layout/Layout'));
@@ -52,7 +53,7 @@ const SupportDetails = lazy(() => import('./Components/SupportManagement/Support
 
 
 function App() {
-  
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -69,8 +70,10 @@ function App() {
   return (
     <div className="App">
       <DataProvider>
+
         <Router>
           <Suspense fallback={<Loader />}>
+          <ScrollToTop>
             <Routes>
               {!isAuthenticated ? (
                 <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
@@ -122,13 +125,13 @@ function App() {
                 </Route>
               )}
             </Routes>
+            </ScrollToTop>
           </Suspense>
         </Router>
+
       </DataProvider>
     </div>
   );
 }
 
 export default App;
-
-

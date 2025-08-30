@@ -115,8 +115,8 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                 <form onSubmit={(e) => addPermission(e)}>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label>Merchant Name*</label>
-                            <input type='text' required placeholder='Enter scheme name..'
+                            <label>Schemes Name*</label>
+                            <input type='text' required placeholder='Enter scheme name..' style={{width:'97%'}}
                                 readOnly={selectedAccount}
                                 value={schemeName}
                                 onChange={(e) => setSchemeName(e.target.value)}
@@ -124,7 +124,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                         </div>
                         {/* <div className={style.name_label_input_contaner}>
                             <label>Select Metal Type* </label>
-                            <select required value={metalType} onChange={(e) => setMetalType(e.target.value)}>
+                            <select required value='' onChange={(e) => console.log(e.target)}>
                                 <option value="" disabled>Select Metal</option>
                                 <option value="GOLD">Gold</option>
                                 <option value="SILVER">Silver</option>

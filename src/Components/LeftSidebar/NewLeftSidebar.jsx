@@ -27,7 +27,7 @@ const SideBar = ({ open, handleLogOut }) => {
         <div className={open ? style.sidebar_container : style.sidebar_container_collapsed}>
             <div className={style.logo_container}>
                 <div className={style.logo_image_container}>
-                    <img src="/SIdebar_logo.png" alt="Logo" className={style.logo} />
+                    <img src="/AdminLogo.svg" alt="Logo" className={style.logo} />
                 </div>
             </div>
             <div className={style.sidebar_menu_container}>
