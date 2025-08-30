@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { IoSearch } from "react-icons/io5";
 import { MdEdit, MdKeyboardBackspace } from "react-icons/md";
 import style from "../Admin/Admin.module.css";
-// import style1 from "../Merchants/Merchants.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import AddMarchantMargin from './AddMarchantMargin';
 import { APIPATH } from '../apiPath/apipath';
@@ -16,7 +15,8 @@ function MerchantMargin() {
             left: 0,
             behavior: 'smooth',
         });
-    }, [])
+    }, []);
+
     const { token } = useContextData();
     const location=useLocation();
     const schemeName=location.state?.schemeName;
@@ -42,7 +42,6 @@ function MerchantMargin() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data.data);
                 setmerchantMarginList(data.data);
             })
             .catch((err) => {

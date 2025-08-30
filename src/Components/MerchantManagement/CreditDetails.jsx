@@ -7,16 +7,18 @@ import ChatWithMerchant from './ChatWithMerchant';
 import ApprovalForm from './ApprovalForm';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import PaymentApproval from './PaymentApproval';
 
 function CreditDetails() {
     const { token } = useContextData();
     const { id } = useParams();
     const [creditDetails, setCreditDetails] = useState(null);
-    const [isloading, setIsLoading] = useState(false);
-    const [isApprovebtnClick, setIsApprovebtnClick] = useState(false)
+    const [isloading, setIsloading] = useState(false);
+    const [isApprovebtnClick, setIsApprovebtnClick] = useState(false);
+    const [paymentClick, setPaymentClick] = useState(false);
 
     const getCreditDetails = () => {
-        setIsLoading(true);
+        setIsloading(true);
         fetch(`${APIPATH}/api/v1/admin/merchants/credits/requests?id=${id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -34,11 +36,12 @@ function CreditDetails() {
                 console.log(err);
             })
             .finally(() => {
-                setIsLoading(false)
+                setIsloading(false)
             })
     }
     const navigate = useNavigate();
     useEffect(() => {
+        if (!id) return;
         getCreditDetails()
     }, [id]);
 
@@ -48,31 +51,10 @@ function CreditDetails() {
     const closeApproveForm = () => {
         setIsApprovebtnClick(false)
     }
-    const [paymentClick, setPaymentClick] = useState(false);
-    const data = {
-        status: "SUCCESSFUL",
-        comment: "Payment verified in HDFC bank statement on 2025-04-30."
-    }
-    const handlePaymentRequest = () => {
+    
+
+    const handlePaymentPage = () => {
         setPaymentClick(true)
-        const url = `https://uat.magicalvacation.com/api/v1/admin/merchants/credits/requests/${creditDetails.id}/verify-payment`;
-        fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-type': 'Application/json'
-            },
-            method: 'PATCH',
-            body: JSON.stringify(data),
-            mode: 'cors'
-        }).then((res) => res.json())
-            .then((data) => {
-                alert(data.message);
-                getCreditDetails();
-            })
-            .catch((err) => {
-                alert(err)
-            })
-            .finally(() => setPaymentClick(false))
     }
 
     return <>
@@ -101,9 +83,7 @@ function CreditDetails() {
                                 {paymentClick ? <div className={style.loader_container}><div className={style.loader_item}>
                                     <img src='/gold-coin.png' alt='Loading' />
                                 </div></div> :
-                                    <button className={style.primary_login_btn}
-                                        onClick={handlePaymentRequest}
-                                    >
+                                    <button className={style.primary_login_btn} onClick={()=>handlePaymentPage()}>
                                         {creditDetails?.payment_status === 'SUCCESSFUL' && ' ✅Verified'}
                                         {creditDetails?.payment_status === 'FAILED' && '❌Rejected'}
                                         {creditDetails?.payment_status === 'PENDING' && 'Verify Payment'}
@@ -127,8 +107,12 @@ function CreditDetails() {
         </div>
         {isApprovebtnClick && <ApprovalForm
             close={closeApproveForm}
-            merchantId={creditDetails?.merchant_id}
             creditId={creditDetails?.id}
+        />}
+        {paymentClick && <PaymentApproval
+            close={() => setPaymentClick(false)}
+            creditId={creditDetails?.id}
+            getCreditDetails={getCreditDetails}
         />}
     </>
 }

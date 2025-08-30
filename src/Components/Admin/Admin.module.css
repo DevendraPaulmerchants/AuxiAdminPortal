@@ -1,5 +1,5 @@
 .merchants_parent {
-    height: 100vh;
+    height: calc(100vh - 8rem);
     background: rgba(72, 193, 181, 0.08);
     border-radius: 5px;
     padding: 1rem;

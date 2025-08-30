@@ -10,7 +10,7 @@ function Layout({ handleLogOut }) {
         setOpen(!open);
     };
 
-    return <>
+    return (
         <div style={{ display: 'flex', gap: '20px', height: '100vh' }}>
             <div style={{
                 height: '100vh', overflowY: 'scroll',
@@ -28,8 +28,7 @@ function Layout({ handleLogOut }) {
                 <Outlet />
             </div>
         </div>
-
-    </>
+        )
 }
 
 export default Layout;

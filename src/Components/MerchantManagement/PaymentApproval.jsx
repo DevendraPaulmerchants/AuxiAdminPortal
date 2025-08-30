@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import style from "./Merchants.module.css";
 import { IoMdClose } from "react-icons/io";
 import { useContextData } from '../Context/Context';
-import { useNavigate } from 'react-router-dom';
+
 import { APIPATH } from '../apiPath/apipath';
 
-function ApprovalForm({ close,creditId}) {
+function PaymentApproval({ close,creditId, getCreditDetails }) {
+
     const {token} =useContextData()
     const [approvalDescription, setApprovalDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -15,38 +16,38 @@ function ApprovalForm({ close,creditId}) {
         comment:approvalDescription,
         status:approvalStatus,
     }
-    const navigate=useNavigate();
     
     const handleCreditAction=(e)=>{
         e.preventDefault();
-        console.log(approvalData);
         setIsLoading(true);
-        fetch(`${APIPATH}/api/v1/admin/merchants/credits/requests/${creditId}/approve`,{
-            headers:{
-                'Authorization':`Barear ${token}`,
-                'Content-Type':"Application/json"
+        const url = `${APIPATH}/api/v1/admin/merchants/credits/requests/${creditId}/verify-payment`;
+        fetch(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-type': 'Application/json'
             },
-            method:"PATCH",
-            body:JSON.stringify(approvalData),
-            mode:"cors"
-        })
-        .then((res)=>res.json())
-        .then((data)=>{
-            console.log(data);
-            alert(data.message);
-            close();
-            navigate("/approved_credits");
-        })
-        .catch((err)=>{
-            console.error(err);
-        }).finally(()=>setIsLoading(false))
-    }
+            method: 'PATCH',
+            body: JSON.stringify(approvalData),
+            mode: 'cors'
+        }).then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                close();
+                getCreditDetails();
+            })
+            .catch((err) => {
+                alert(err)
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+        }
     
     return (
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container}>
                 <div className={style.add_merchants_header}>
-                    <h2>Approve credits for the merchant</h2>
+                    <h2>Approve payment for the merchant</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e)=>handleCreditAction(e)}>
@@ -66,7 +67,7 @@ function ApprovalForm({ close,creditId}) {
                         </div>
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}
-                            onClick={()=>setApprovalStatus("APPROVED")}
+                            onClick={()=>setApprovalStatus("SUCCESSFUL")}
                             >Approve</button>
                         </div>
                     </div>
@@ -74,7 +75,8 @@ function ApprovalForm({ close,creditId}) {
                 </form>
             </div>
         </div>
-    )
+    );
+    
 }
 
-export default ApprovalForm;
+export default PaymentApproval;

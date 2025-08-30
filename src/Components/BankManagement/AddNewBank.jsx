@@ -72,42 +72,72 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                 <form onSubmit={(e) => addPermission(e)}>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label>Bank Holder Name* </label>
-                            <input type='text' required placeholder='Enter bank holder name' minLength={3} maxLength={30} value={bankHolderName}
+                            <label htmlFor="bankHolderName">Bank Holder Name* </label>
+                            <input
+                                id="bankHolderName"
+                                type='text'
+                                required
+                                placeholder='Enter bank holder name'
+                                minLength={3}
+                                maxLength={30}
+                                value={bankHolderName}
                                 onChange={(e) => handleInputChangeWithAlphabetOnly(e, setBankHolderName)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label>Bank Name</label>
-                            <input type='text' required placeholder='Enter bank name' maxLength={50} value={bankName.toUpperCase()}
-                                onChange={(e) => handleInputChangeWithAlphabetOnly(e, setBankName)}
+                            <label htmlFor='bankName'>Bank Name</label>
+                            <input 
+                            type='text' 
+                            required 
+                            placeholder='Enter bank name'
+                            maxLength={50} 
+                            value={bankName.toUpperCase()}
+                            onChange={(e) => handleInputChangeWithAlphabetOnly(e, setBankName)}
                             />
                         </div>
                     </div>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label>Branch Name</label>
-                            <input type='text' required placeholder='Enter descriptions' maxLength={150} value={branchName}
+                            <label htmlFor="branchName">Branch Name</label>
+                            <input
+                                id="branchName"
+                                type='text'
+                                required
+                                placeholder='Enter descriptions'
+                                maxLength={150}
+                                value={branchName}
                                 onChange={(e) => setBranchName(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label>Account Number</label>
-                            <input type='text' required placeholder='Enter descriptions' minLength={8} maxLength={18} value={accountNumber}
-                                onChange={(e) => handleInputChangeWithNumericValueOnly(e, setAccountNumber)}
+                            <label htmlFor='accountNumber'>Account Number</label>
+                            <input 
+                            type='text' 
+                            required 
+                            placeholder='Enter descriptions' 
+                            minLength={8} 
+                            maxLength={18} 
+                            value={accountNumber}
+                            onChange={(e) => handleInputChangeWithNumericValueOnly(e, setAccountNumber)}
                             />
                         </div>
                     </div>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label>IFSC Code</label>
-                            <input type='text' required placeholder='Enter descriptions' minLength={11} maxLength={11} value={ifscCode}
-                                onChange={(e) => handleIFSC(e, setIFSCCode, setIsIFSC)}
+                            <label htmlFor='IfscCode'>IFSC Code</label>
+                            <input 
+                            type='text' 
+                            required 
+                            placeholder='Enter descriptions' 
+                            minLength={11} 
+                            maxLength={11} 
+                            value={ifscCode}
+                            onChange={(e) => handleIFSC(e, setIFSCCode, setIsIFSC)}
                             />
                             {!isIFSC && <p className={style.not_valid_text}>Please write valid IFSC Code..</p>}
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label>Select Type</label>
+                            <label htmlFor='selectType'>Select Type</label>
                             <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
                                 <option value="" disabled>Select A/C Type</option>
                                 <option value="savings">Saving</option>
