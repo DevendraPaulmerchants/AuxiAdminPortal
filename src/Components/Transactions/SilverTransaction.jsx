@@ -12,15 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
 import { useLocation } from 'react-router-dom';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
+import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
 
 function SilverTransaction() {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
 
   const { token } = useContextData();
   const { state } = useLocation();
@@ -33,6 +27,7 @@ function SilverTransaction() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [transactionType, setTransactionType] = useState(state || "");
+  const [accountStatus,setAccountStatus]=useState('');
   const [direction, setDirection] = useState("");
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
@@ -87,11 +82,21 @@ function SilverTransaction() {
     }
   };
 
-  const paginatedList = pagesData?.filter((list) => {
-    const name = list?.customer_name?.toLowerCase() || '';
-    const id = String(list?.customer_id || '').toLowerCase();
-    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
-  }) || [];
+ const paginatedList = pagesData?.filter((list) => {
+  const name = list?.customer_name?.toLowerCase() || '';
+  const id = String(list?.customer_id || '').toLowerCase();
+  const listStatus = list?.order_status?.toLowerCase() || '';
+
+  const matchesSearch =
+    name.includes(searchText.toLowerCase()) ||
+    id.includes(searchText.toLowerCase());
+
+  const matchesStatus =
+    !accountStatus || listStatus === accountStatus.toLowerCase();
+
+  return matchesSearch && matchesStatus;
+}) || [];
+
 
   const downloadRecords = async () => {
     if (paginatedList?.length === 0) {
@@ -132,11 +137,9 @@ function SilverTransaction() {
   const handleCopy = async (text) => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
-        // Modern approach using Clipboard API
         await navigator.clipboard.writeText(text);
         alert('Text copied to clipboard successfully.');
       } else {
-        // Fallback for insecure contexts or older browsers
         const textArea = document.createElement('textarea');
         textArea.value = text;
 
@@ -174,9 +177,6 @@ function SilverTransaction() {
         </div>
         <div className={style1.start_date_and_end_date}>
           <div>
-            <p>Filter:</p>
-          </div>
-          <div>
             <DatePicker className={style1.date_input}
               placeholderText='Select start date'
               maxDate={new Date()}
@@ -198,7 +198,6 @@ function SilverTransaction() {
 
         </div>
         <div className={style1.transaction_type_input}>
-          {/* <label htmlFor="Transaction Type">Order Type: </label> */}
           <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
             <option value="all" disabled>Select Order Type</option>
             <option value="">All</option>
@@ -206,6 +205,16 @@ function SilverTransaction() {
             <option value="SELL">Sell</option>
             <option value="TRANSFER">Transfer</option>
             <option value="CONVERSION">Conversion</option>
+          </select>
+        </div>
+        <div className={style1.transaction_type_input}>
+          <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)}>
+            <option value="all" disabled>Select Order Status</option>
+            <option value="">All</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
+            <option value="FAILED">Failed</option>
+            <option value="Rejected">Rejected</option>
           </select>
         </div>
         <div className={style1.transaction_record_download}>
@@ -245,9 +254,9 @@ function SilverTransaction() {
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
                       <td>
-                        {val.order_status === "COMPLETED" && '✅'}
-                        {val.order_status === "PENDING" && '⏳'}
-                        {val.order_status === "FAILED" && '❌'}
+                        {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
+                        {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
+                        {val.order_status === "FAILED" && <FcCancel title='Failed' />}
                       </td>
                       <td><p style={{ cursor: "pointer" }}>
                         <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />

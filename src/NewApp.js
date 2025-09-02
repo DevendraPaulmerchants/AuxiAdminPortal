@@ -73,7 +73,6 @@ function App() {
 
         <Router>
           <Suspense fallback={<Loader />}>
-          <ScrollToTop>
             <Routes>
               {!isAuthenticated ? (
                 <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
@@ -125,7 +124,6 @@ function App() {
                 </Route>
               )}
             </Routes>
-            </ScrollToTop>
           </Suspense>
         </Router>
 

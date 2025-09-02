@@ -15,17 +15,9 @@ import { dateAndTimeFormat } from '../../helperFunction/helper';
 import { useLocation } from 'react-router-dom';
 
 function CreditTransaction() {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
 
   const { token } = useContextData();
   const {state}=useLocation();
-  console.log(state);
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isloading, setIsLoading] = useState(false);
@@ -36,6 +28,7 @@ function CreditTransaction() {
   const [endDate, setEndDate] = useState('');
   const [direction, setDirection] = useState("");
   const [transactionType, setTransactionType] = useState(state || "");
+  const [accountStatus,setAccountStatus]=useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
@@ -88,10 +81,20 @@ function CreditTransaction() {
     }
   };
 
-  const paginatedList = pagesData?.filter((list) =>
-    list?.merchant_name?.toLowerCase().includes(searchText.toLowerCase()) &&
-  (transactionType === "" || list?.transaction_type === transactionType)
-  ) || [];
+ const paginatedList = pagesData?.filter((list) => {
+  const name = list?.customer_name?.toLowerCase() || '';
+  const id = String(list?.customer_id || '').toLowerCase();
+  const listStatus = list?.status?.toLowerCase() || '';
+
+  const matchesSearch =
+    name.includes(searchText.toLowerCase()) ||
+    id.includes(searchText.toLowerCase());
+
+  const matchesStatus =
+    !accountStatus || listStatus === accountStatus.toLowerCase();
+
+  return matchesSearch && matchesStatus;
+}) || [];
 
 
   const closeDetailsPage = () => {
@@ -175,9 +178,6 @@ function CreditTransaction() {
         </div>
         <div className={style1.start_date_and_end_date}>
           <div>
-            <p>Filter :</p>
-          </div>
-          <div>
             <DatePicker className={style1.date_input}
               placeholderText='Select start date'
               maxDate={new Date()}
@@ -198,12 +198,21 @@ function CreditTransaction() {
           </div>
         </div>
         <div className={style1.transaction_type_input}>
-          {/* <label htmlFor="Transaction Type">Order Type: </label> */}
           <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
             <option value="all" disabled>Select Order Type</option>
             <option value="">All</option>
             <option value="DEBIT">Debit</option>
             <option value="CREDIT">Credit</option>
+          </select>
+        </div>
+        <div className={style1.transaction_type_input}>
+          <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)}>
+            <option value="all" disabled>Select Order Status</option>
+            <option value="">All</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
+            <option value="FAILED">Failed</option>
+            <option value="Rejected">Rejected</option>
           </select>
         </div>
         <div className={style1.transaction_record_download}>

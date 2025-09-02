@@ -15,16 +15,10 @@ import { useLocation } from 'react-router-dom';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function GoldTransaction() {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
 
   const { token } = useContextData();
   const { state } = useLocation();
+
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isloading, setIsLoading] = useState(false);
@@ -34,6 +28,7 @@ function GoldTransaction() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [transactionType, setTransactionType] = useState(state || "");
+  const [accountStatus,setAccountStatus]=useState('');
   const [direction, setDirection] = useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
@@ -87,11 +82,20 @@ function GoldTransaction() {
     }
   };
 
-  const paginatedList = pagesData?.filter((list) => {
-    const name = list?.customer_name?.toLowerCase() || '';
-    const id = String(list?.customer_id || '').toLowerCase();
-    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
-  }) || [];
+const paginatedList = pagesData?.filter((list) => {
+  const name = list?.customer_name?.toLowerCase() || '';
+  const id = String(list?.customer_id || '').toLowerCase();
+  const listStatus = list?.order_status?.toLowerCase() || '';
+
+  const matchesSearch =
+    name.includes(searchText.toLowerCase()) ||
+    id.includes(searchText.toLowerCase());
+
+  const matchesStatus =
+    !accountStatus || listStatus === accountStatus.toLowerCase();
+
+  return matchesSearch && matchesStatus;
+}) || [];
 
 
   const closeDetailsPage = () => {
@@ -177,9 +181,6 @@ function GoldTransaction() {
         </div>
         <div className={style1.start_date_and_end_date}>
           <div>
-            <p>Filter :</p>
-          </div>
-          <div>
             <DatePicker className={style1.date_input}
               placeholderText='Select start date'
               maxDate={new Date()}
@@ -201,7 +202,6 @@ function GoldTransaction() {
           </div>
         </div>
         <div className={style1.transaction_type_input}>
-          {/* <label htmlFor="Order Type">Order Type: </label> */}
           <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
             <option value="all" disabled>Select Order Type</option>
             <option value="">All</option>
@@ -209,6 +209,16 @@ function GoldTransaction() {
             <option value="SELL">Sell</option>
             <option value="TRANSFER">Transfer</option>
             <option value="CONVERSION">Conversion</option>
+          </select>
+        </div>
+        <div className={style1.transaction_type_input}>
+          <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)}>
+            <option value="all" disabled>Select Order Status</option>
+            <option value="">All</option>
+            <option value="COMPLETED">Completed</option>
+            <option value="PENDING">Pending</option>
+            <option value="FAILED">Failed</option>
+            <option value="Rejected">Rejected</option>
           </select>
         </div>
         <div className={style1.transaction_record_download}>

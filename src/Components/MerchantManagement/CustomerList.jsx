@@ -15,14 +15,6 @@ import { dateFormat } from '../../helperFunction/helper';
 
 
 function CustomerList() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, [])
-
     const { token } = useContextData();
     const { state } = useLocation();
 
@@ -92,10 +84,15 @@ function CustomerList() {
         fetchMerchant();
     }, [token])
 
-    const filteredList = Array.isArray(customer) ? customer.filter((list) => {
-        return list.first_name?.toLowerCase().includes(searchText.toLowerCase())
-    })
-        : [];
+    // const filteredList = Array.isArray(customer) ? customer.filter((list) => {
+    //     return list.first_name?.toLowerCase().includes(searchText.toLowerCase())
+    // })
+    //     : [];
+    const filteredList = customer?.filter((list) => {
+    const name = list?.first_name?.toLowerCase() || '';
+    const id = String(list?.id || '').toLowerCase();
+    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+  }) || [];
 
     const totalPages = Math.ceil(filteredList.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -186,8 +183,9 @@ function CustomerList() {
                         <table className={style.merchants_list_container}>
                             <thead>
                                 <tr>
-                                    <th>Customer Name</th>
-                                    <th>Email</th>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    {/* <th>Email</th> */}
                                     <th>Mobile</th>
                                     <th>Merchant Name</th>
                                     <th>Create At</th>
@@ -200,8 +198,9 @@ function CustomerList() {
                                 {paginatedList.length > 0 ? (
                                     paginatedList.map((val, id) => (
                                         <tr key={id}>
+                                            <td>XXXX{(val.customer_id || val.id).slice(-4)}</td>
                                             <td>{val.full_name || val.first_name}</td>
-                                            <td>{val.email}</td>
+                                            {/* <td>{val.email}</td> */}
                                             <td>{val.phone}</td>
                                             <td>{val.merchant_name}</td>
                                             <td>{dateFormat(val.created_at)}</td>
