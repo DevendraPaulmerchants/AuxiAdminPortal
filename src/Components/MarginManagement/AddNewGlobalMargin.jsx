@@ -82,7 +82,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
     }
 
 
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
@@ -99,7 +99,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                                 <option value="" disabled>Select Metal</option>
                                 <option value="GOLD">Gold</option>
                                 <option value="SILVER">Silver</option>
-                                <option value="PLATINUM">Platinum</option>
+                                {/* <option value="PLATINUM">Platinum</option> */}
                             </select>
                         </div>
                     </div>
@@ -135,7 +135,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                             />
                         </div>
                     </div>
-                    <h2 className={style1.metal_margin_type}>Plateform Charges</h2>
+                    {/* <h2 className={style1.metal_margin_type}>Plateform Charges</h2>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
@@ -165,7 +165,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setConversionplateformcharge)}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     <h2 className={style1.metal_margin_type}>Margin(%)</h2>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
@@ -209,7 +209,7 @@ function AddNewGlobalMargin({ close, selectedAccount, closeAfterAPICall }) {
                 </form>
             </div>
         </div>
-    </>
+    )
 }
 
 export default AddNewGlobalMargin;

@@ -16,8 +16,8 @@ const NewHeader = ({open,handleOpen,handleLogOut}) => {
         <header className={style.header_container}>
             <h1 className={style.header_collapse_icon}><FiAlignLeft onClick={handleOpen} /></h1>
             <div className={style.header_logo_container}>
-                <h1><BsBrightnessHigh /></h1>
-                <h1><GrNotification /></h1>
+                {/* <h1><BsBrightnessHigh /></h1> */}
+                {/* <h1><GrNotification /></h1> */}
                 <div className={style.user_container}>
                     <img src="/HeaderUserIcon.png" alt="User" className="user_image" />
                     <pre className={style.user_info}>

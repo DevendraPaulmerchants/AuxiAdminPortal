@@ -6,16 +6,9 @@ import style1 from "../MerchantManagement/Merchants.module.css";
 import AddNewGlobalMargin from './AddNewGlobalMargin';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
-import { dateFormat } from '../../helperFunction/helper';
+import { dateAndTimeFormat, dateFormat } from '../../helperFunction/helper';
 
 function Global() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, [])
     const { token } = useContextData();
     const [globalList, setGlobalList] = useState(null);
     const [selectedGlobal, setSelectedGlobal] = useState(null);
@@ -80,7 +73,7 @@ function Global() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Global Margin</p>
+                    <p>Global Margin & Applicable Taxes</p>
                 </div>
                 <div></div>
                 {/* <div className={style.add_merchants_and_filter}>
@@ -100,24 +93,24 @@ function Global() {
                             <thead>
                                 <tr>
                                     <th>Metal Type</th>
-                                    <th>Platform Charge(INR)</th>
+                                    {/* <th>Platform Charge(INR)</th> */}
                                     <th>Margin(%)</th>
                                     <th>GST(%)</th>
-                                    <th>Created At</th>
+                                    <th>Updated at</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
+                                    paginatedList?.slice(-2).map((val, id) => {
                                         return <tr key={id}>
                                             <td>{val?.metal_type}</td>
-                                            <td>
+                                            {/* <td>
                                                 <p>Buy:- {val?.buy_platform_charge_fee}</p>
                                                 <p>Sell:- {val?.sell_platform_charge_fee}</p>
                                                 <p>Transfer:- {val?.transfer_platform_charge_fee}</p>
                                                 <p>Conversion:- {val?.conversion_platform_charge_fee}</p>
-                                            </td>
+                                            </td> */}
                                             <td>
                                                 <p>Buy:- {val?.buy_margin}</p>
                                                 <p>Sell:- {val?.sell_margin}</p>
@@ -130,7 +123,7 @@ function Global() {
                                                 <p>Transfer:- {val?.transfer_gst}</p>
                                                 <p>Conversion:- {val?.conversion_gst}</p>
                                             </td>
-                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
                                             <td><p style={{ cursor: "pointer" }}
                                                 onClick={() => {
                                                     setSelectedGlobal(val);

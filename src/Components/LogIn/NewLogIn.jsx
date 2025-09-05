@@ -5,6 +5,7 @@ import { useState } from "react";
 import { APIPATH } from "../apiPath/apipath";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+// import PaulLogo from '/AdminLogo.svg';
 
 
 const NewLogIn = ({ handleLogIn }) => {
@@ -56,10 +57,13 @@ const NewLogIn = ({ handleLogIn }) => {
         <div className={style.login_container}>
             <div className={style.login_left_side}>
                 <img src="/LogInLeftImage.png" alt="Logo" />
+                <div className={style.new_logo}>
+                    <img src='/LoginLeftIcon.svg' alt="Paul Gold" />
+                </div>
             </div>
             <div className={style.login_rigth_side}>
                 <div className={style.form_conatainer}>
-                    <h1>Welcome to AuXiVault! </h1>
+                    <h1>Welcome to Paul Gold </h1>
                     <p>Admin portal</p>
                     <form onSubmit={(e) => { handleLogInData(e) }}>
                     <div  className={style.label_and_input_field}>

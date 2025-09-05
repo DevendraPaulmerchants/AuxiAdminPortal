@@ -16,7 +16,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     const { token } = useContextData();
     // Organition Document Verification -------------------
     const [panNumber, setPANnumber] = useState(selectedMerchant?.kyc_documents?.[1]?.document_number || '');
-    const [isValidPAN, setIsValidPAN] = useState(true);
+    const [isValidPAN, setIsValidPAN] = useState(false);
     const [panData, setPanData] = useState(null);
     const [gstNumber, setGSTNumber] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number || '');
     const [isvalidGst, setIsvalidGst] = useState(true);

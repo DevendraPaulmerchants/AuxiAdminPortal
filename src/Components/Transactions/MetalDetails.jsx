@@ -8,12 +8,13 @@ function MetalDetails({ close, selectedMetal }) {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
+        console.log(selectedMetal)
         return () => {
             document.body.style.overflow = 'auto';
         };
     }, []);
 
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container}>
                 <div className={style.add_merchants_header}>
@@ -22,67 +23,77 @@ function MetalDetails({ close, selectedMetal }) {
                 </div>
                 {/* -------------- Customer Details -------------- */}
                 <div className={style1.customer_detail_container}>
-                    <h2>Customer Details:</h2>
+                    <h2>Merchant & Customer Details:</h2>
                     <div className={style1.details_container}>
-                        <h4 className={style.merchant_name}>Name:
+                        <h4 className={style.merchant_name}>Merchnat Name:
+                            <span>
+                                {selectedMetal?.merchant_name}
+                            </span>
+                        </h4>
+                        <h4 className={style.merchant_name}>Customer Name:
                             <span>
                                 {selectedMetal?.customer_name}
                             </span>
                         </h4>
+                        {selectedMetal?.customer_email &&
+                            <h4 className={style.merchant_name}>Customer Email:
+                                <span>
+                                    {selectedMetal?.customer_email}
+                                </span>
+                            </h4>
+                        }
 
-                        <h4 className={style.merchant_name}>Email:
-                            <span>
-                                {selectedMetal?.customer_email}
-                            </span>
-                        </h4>
-
-                        <h4 className={style.merchant_name}>Mobile:
+                        <h4 className={style.merchant_name}>Customer Mobile:
                             <span>
                                 {selectedMetal?.customer_phone}
                             </span>
                         </h4>
+                        
                     </div>
 
                 </div>
                 {/* --------- Merchant Details --------------- */}
                 <div className={style1.customer_detail_container}>
-                    <h2>Merchant Details:</h2>
+                    <h2>Rate Calculation Breakdown:</h2>
                     <div className={style1.details_container}>
-                        <h4 className={style.merchant_name}>Name:
-                            <span>
-                                {selectedMetal?.merchant_name}
-                            </span>
-                        </h4>
-
-                        <h4 className={style.merchant_name}>Price/gm:
-                            <span>
-                                {parseFloat(selectedMetal?.metal_price_per_gram).toFixed(2)}
-                            </span>
-                        </h4>
-
-                        <h4 className={style.merchant_name}>Quantity (in gm):
-                            <span>
-                                {parseFloat(selectedMetal?.metal_quantity_grams).toFixed(2)}
-                            </span>
-                        </h4>
-
-                        <h4 className={style.merchant_name}>Profit Margin(%):
-                            <span>
-                                {parseFloat(selectedMetal?.merchant_margin).toFixed(2)}
-                            </span>
-                        </h4>
-
-                        <h4 className={style.merchant_name}>Profit Amount:
-                            <span>
-                                {parseFloat(selectedMetal?.merchant_profit).toFixed(2)}
-                            </span>
-                        </h4>
+                        <div className={style1.new_rate_details}>
+                            <div className={style1.rate_value}>
+                                <p>Exchange rate(per gram):</p>
+                                <p>₹ {parseFloat(selectedMetal?.metal_price_per_gram).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Applied Margin({selectedMetal?.platform_margin}%):</p>
+                                <p>₹ {parseFloat(selectedMetal?.platform_profit).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Final Rate(per gram):</p>
+                                <p>₹ {parseFloat(selectedMetal?.metal_price_per_gram).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Total Weight:</p>
+                                <p>{(selectedMetal?.metal_quantity_grams)}g</p>
+                            </div>
+                        </div>
+                        <div className={style1.new_rate_details}>
+                            <div className={style1.rate_value}>
+                                <p>Subtotal({(selectedMetal?.metal_quantity_grams)}g * {parseFloat(selectedMetal?.metal_price_per_gram).toFixed(2)}):</p>
+                                <p>₹ {parseFloat(selectedMetal?.total_amount_before_tax).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>GST({selectedMetal?.gst}%):</p>
+                                <p>₹ {parseFloat(selectedMetal?.gst_amount).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Total Amount:</p>
+                                <p>₹ {parseFloat(selectedMetal?.total_amount_after_tax).toFixed(2)}</p>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
                 {/* ------------- Payment Details ---------- */}
                 <div className={style1.customer_detail_container}>
-                    <h2>Payment Details:</h2>
+                    <h2>Transaction Details:</h2>
                     <div className={style1.details_container}>
                         {selectedMetal?.payment_mode &&
                             <h4 className={style.merchant_name}>Payment Mode:
@@ -132,54 +143,27 @@ function MetalDetails({ close, selectedMetal }) {
                 </div>
                 {/* ------------- Platform Details --------- */}
                 <div className={style1.customer_detail_container}>
-                    <h2>Services Charges:</h2>
+                    <h2>Profit Sharing Brakdown:</h2>
                     <div className={style1.details_container}>
-                        <h4 className={style.merchant_name}>Platform fee:
-                            <span>
-                                {parseFloat(selectedMetal?.platform_charge_fee).toFixed(2)}
-                            </span>
-                        </h4>
-                        <h4 className={style.merchant_name}>GST(%):
-                            <span>
-                                {parseFloat(selectedMetal?.gst).toFixed(2)}
-                            </span>
-                        </h4>
-                        <h4 className={style.merchant_name}>Profit Margin(%):
-                            <span>
-                                {parseFloat(selectedMetal?.platform_margin).toFixed(2)}
-                            </span>
-                        </h4>
-                        <h4 className={style.merchant_name}>Profit Amount:
-                            <span>
-                                {parseFloat(selectedMetal?.platform_profit).toFixed(2)}
-                            </span>
-                        </h4>
-                    </div>
-                </div>
-                {/* ------------------ Price Details ---------- */}
-                <div className={style1.customer_detail_container}>
-                    <h2>Cost breakdown:</h2>
-                    <div className={style1.details_container}>
-                        <h4 className={style.merchant_name}>Total Price(without GST):
-                            <span>
-                                {parseFloat(selectedMetal?.total_amount_before_tax).toFixed(2)}
-                            </span>
-                        </h4>
-                        <h4 className={style.merchant_name}>GST Amount:
-                            <span>
-                                {parseFloat(selectedMetal?.gst_amount).toFixed(2)}
-                            </span>
-                        </h4>
-                        <h4 className={style.merchant_name}>Total Price(with GST):
-                            <span>
-                                <b>{parseFloat(selectedMetal?.total_amount_after_tax).toFixed(2)}</b>
-                            </span>
-                        </h4>
+                        <div className={style1.details_container}>
+                            <div className={style1.rate_value}>
+                                <p>Total Margin Amount:</p>
+                                <p>₹ {parseFloat(selectedMetal?.platform_profit).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Paul Gold Share:</p>
+                                <p>₹ {parseFloat(selectedMetal?.platform_profit - selectedMetal?.merchant_profit).toFixed(2)}</p>
+                            </div>
+                            <div className={style1.rate_value}>
+                                <p>Merchant Share({selectedMetal?.merchant_margin}%):</p>
+                                <p>₹ {parseFloat(selectedMetal?.merchant_profit).toFixed(2)}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </>
+    )
 }
 
 export default MetalDetails; 

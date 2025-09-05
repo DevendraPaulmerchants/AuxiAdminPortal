@@ -45,11 +45,11 @@ function UpdateMetal({ close, selectedMetal,updateList }) {
 
     }
 
-    return <>
+    return (
         <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+            <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
-                    <h2>Update Metal Value</h2>
+                    <h2>Update Metal Details</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => {
@@ -74,15 +74,15 @@ function UpdateMetal({ close, selectedMetal,updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Vault provider* </label>
-                            <input type='text' required placeholder='Enter metal name' maxLength={50} value={vaultproviderName}
+                            <input type='text' required placeholder='Enter vault provider name' maxLength={50} value={vaultproviderName}
                                 onChange={(e) => handleInputChangeWithAlphabetOnly(e, setVaultProviderName)}
         
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Storage Location*</label>
-                            <input type='text' required placeholder='Enter wieght of metal' maxLength={30} value={storageLocation}
-                                onChange={(e) => handleInputChangeWithNumericValueOnly(e, setStorageLocation)}
+                            <input type='text' required placeholder='Enter Storage location' maxLength={30} value={storageLocation}
+                                onChange={(e) => handleInputChangeWithAlphabetOnly(e, setStorageLocation)}
                             />
                         </div>
                     </div>
@@ -104,7 +104,7 @@ function UpdateMetal({ close, selectedMetal,updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    )
 }
 
 export default UpdateMetal;

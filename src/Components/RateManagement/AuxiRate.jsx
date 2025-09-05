@@ -7,13 +7,7 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function AuxiRate() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-        })
-    }, [])
+
     const { token } = useContextData();
     const [exchangeList, setexchangeList] = useState(null);
     const [searchText, setSearchText] = useState("");
@@ -63,7 +57,7 @@ function AuxiRate() {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-    return <>
+    return (
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
                 <div className={style.search_input_field}>
@@ -72,7 +66,7 @@ function AuxiRate() {
                     <IoSearch />
                 </div>
                 <div>
-                    <p>Metal rates after applying all charges.</p>
+                    <p>Metal rates after applying all margin and GST.</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
@@ -86,41 +80,48 @@ function AuxiRate() {
                 </div>
             </div> :
                 <>
-                <div className={style.table_wrapper}>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Metal</th>
-                                <th>Unit</th>
-                                <th>Original Rate(INR)</th>
-                                <th>Buy Rate(INR)</th>
-                                <th>Sell Rate(INR)</th>
-                                <th>Transfer Rate(INR)</th>
-                                <th>Conversion Rate(INR)</th>
-                                <th>Updated at</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList.length > 0 ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val?.metal_type}</td>
-                                        <td>{val?.unit}</td>
-                                        <td>{val?.original_rate?.toFixed(2)}</td>
-                                        <td>{val?.buy_rate?.toFixed(2)}</td>
-                                        <td>{val?.sell_rate?.toFixed(2)}</td>
-                                        <td>{val.transfer_rate?.toFixed(2)}</td>
-                                        <td>{val?.conversion_rate?.toFixed(2)}</td>
-                                        <td>{dateFormat(val?.updated_at)}</td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Metal</th>
+                                    <th>Unit</th>
+                                    <th>Exchange Rate(₹)</th>
+                                    <th>Buy Rate(₹)</th>
+                                    <th>Sell Rate(₹)</th>
+                                    <th>Transfer Rate(₹)</th>
+                                    <th>Conversion Rate(₹)</th>
+                                    <th>Updated at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList.length > 0 ? (
+                                    paginatedList?.map((val, id) => {
+                                        return <tr key={id}>
+                                            <td>{val?.metal_type}</td>
+                                            <td>{val?.unit}</td>
+                                            <td>{val?.original_rate?.toFixed(2)}</td>
+                                            <td>
+                                                <p>{val?.buy_rate?.toFixed(2)} (Exc. GST)</p>
+                                                <p>{(parseFloat(val?.buy_rate) + parseFloat(val?.buy_gst_amount)).toFixed(2)} (Inc. GST)</p>
+                                            </td>
+                                            <td>{val?.sell_rate?.toFixed(2)}</td>
+                                            <td>{val.transfer_rate?.toFixed(2)}</td>
+                                            <td>
+                                                <p>{val?.conversion_rate?.toFixed(2)} (Exc. GST)</p>
+                                                <p>{(parseFloat(val?.conversion_rate) + parseFloat(val?.conversion_gst_amount)).toFixed(2)} (Inc. GST)</p>
+                                                
+                                            </td>
+                                            <td>{dateFormat(val?.updated_at)}</td>
+                                        </tr>
+                                    })
+                                ) : <tr>
+                                    <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {exchangeList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
@@ -131,7 +132,7 @@ function AuxiRate() {
                 </>
             }
         </div>
-    </>
+    )
 }
 
 export default AuxiRate;

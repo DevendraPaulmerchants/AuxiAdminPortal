@@ -1,35 +1,39 @@
 .transaction_type_input select {
-    outline: none;
-    padding: 5px 10px;
-    border: 1px solid rgba(38, 38, 38, 0.3);
-    border-radius: 5px;
-    max-width: 200px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  outline: none;
+  padding: 5px 10px;
+  border: 1px solid rgba(38, 38, 38, 0.3);
+  border-radius: 5px;
+  max-width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+
 .date_picker_input {
-    outline: none;
-    padding: 2px 5px;
-    border: 1px solid rgba(38, 38, 38, 0.3);
-    border-radius: 5px;
+  outline: none;
+  padding: 2px 5px;
+  border: 1px solid rgba(38, 38, 38, 0.3);
+  border-radius: 5px;
 }
+
 .from_and_to_date {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
-.metal_filter_btn button{
-    background: linear-gradient(to right, rgba(38, 38, 38, 0.4), rgba(38, 38, 38, 0.2));
-    color: #1f1e19;
-    outline: none;
-    border-radius: 5px;
-    border: none;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 2px 20px;
-    width: 100%;
-    cursor: pointer;
+
+.metal_filter_btn button {
+  background: linear-gradient(to right, rgba(38, 38, 38, 0.4), rgba(38, 38, 38, 0.2));
+  color: #1f1e19;
+  outline: none;
+  border-radius: 5px;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 2px 20px;
+  width: 100%;
+  cursor: pointer;
 }
+
 .customer_detail_container {
   box-shadow: 0 0 15px rgba(38, 38, 38, 0.3);
   border-radius: 10px;
@@ -37,8 +41,9 @@
   padding: 5px 10px;
   /* background-color:#3c7388; */
 }
-.customer_detail_container:nth-child(odd){
-    /* background-color: #14f1f1; */
+
+.customer_detail_container:nth-child(odd) {
+  /* background-color: #14f1f1; */
 }
 
 .customer_detail_container h2 {
@@ -47,40 +52,61 @@
   font-weight: 500;
   margin-bottom: 10px;
 }
+
 .customer_detail_row {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
+
 .customer_detail_container h4 {
-    color: rgba(38, 38, 38, 0.9);
-    font-size: 16px;
-    font-weight: 500;
-  }
+  color: rgba(38, 38, 38, 0.9);
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .customer_detail_container p {
-    color: rgba(38, 38, 38, 0.8);
-  }
-  /* date picker  */
-  .start_date_and_end_date {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+  color: rgba(38, 38, 38, 0.8);
+}
+
+/* date picker  */
+.start_date_and_end_date {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .date_input {
-    outline: none;
-    border: 1px solid rgba(38, 38, 38, 0.3);
-    padding: 5px;
-    border-radius: 5px;
+  outline: none;
+  border: 1px solid rgba(38, 38, 38, 0.3);
+  padding: 5px;
+  border-radius: 5px;
 }
+
 .transaction_record_download {
   cursor: pointer;
   font-size: 20px;
 }
+
 /* -------------------- */
 .details_container {
   display: flex;
   justify-content: space-between;
   gap: 1rem 2rem;
   flex-wrap: wrap;
+}
+
+/* ----------- New Changes ------------------------ */
+.new_rate_details {
+  width: 40%;
+}
+
+.rate_value {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+.rate_value p:last-child {
+  font-weight: 600;
 }

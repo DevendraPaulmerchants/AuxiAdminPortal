@@ -107,3 +107,21 @@
     color: #636578;
     margin-top: 1.2rem;
 }
+/* ------------------ New CSS ------- */
+.login_left_side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.new_logo {
+    position: absolute;
+    padding: 1rem;
+    border-radius: 20px;
+    height: 300px;
+}
+.new_logo img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+}

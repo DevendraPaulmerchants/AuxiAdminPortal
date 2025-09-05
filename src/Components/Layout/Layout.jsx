@@ -27,8 +27,7 @@ function Layout({ handleLogOut }) {
                 <Outlet />
             </div>
         </div>
-
-    </>
+    )
 }
 
 export default Layout;

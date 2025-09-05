@@ -58,7 +58,7 @@ import { VscKey } from "react-icons/vsc";
                 name: "Exchange", path: '/exchange', icon: <MdOutlineAccountBalanceWallet title='Exchange Rate' />,
             },
             {
-                name: "Applied Margin", path: "/applied_margin", icon: <RiPercentLine title='Applied Margin' />
+                name: "Apply Margin & GST", path: "/applied_margin", icon: <RiPercentLine title='Applied Margin' />
             },
 
             {

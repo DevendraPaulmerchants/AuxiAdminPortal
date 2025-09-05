@@ -217,9 +217,9 @@ function SilverTransaction() {
             <option value="Rejected">Rejected</option>
           </select>
         </div>
-        <div className={style1.transaction_record_download}>
+        {/* <div className={style1.transaction_record_download}>
           <IoMdDownload title='Download Records' onClick={downloadRecords} />
-        </div>
+        </div> */}
       </div>
       {isloading ? <div className={styles.loader_container}><div className={styles.loader_item}></div></div> :
         <>
