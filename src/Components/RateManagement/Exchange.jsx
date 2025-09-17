@@ -7,14 +7,7 @@ import { useContextData } from '../Context/Context';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function Exchange() {
-    useEffect(()=>{
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-        })
-    },[])
-    const {token} = useContextData();
+    const { token } = useContextData();
     const [exchangeList, setexchangeList] = useState(null);
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +27,7 @@ function Exchange() {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data.data);
-                setexchangeList(data.data);
+                setexchangeList(data.data || []);
             })
             .catch((err) => {
                 console.error(err)
@@ -47,7 +40,10 @@ function Exchange() {
         getexchangeLIst()
     }, [])
 
-    const filteredList = exchangeList && exchangeList?.filter((list) => list.source_name?.toLowerCase().includes(searchText.toLowerCase()));
+    // Ensure exchangeList is always an array for filtering
+    const safeExchangeList = Array.isArray(exchangeList) ? exchangeList : [];
+
+    const filteredList = safeExchangeList.filter((list) => list.source_name?.toLowerCase().includes(searchText.toLowerCase()));
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
@@ -60,7 +56,7 @@ function Exchange() {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-    return <>
+    return (
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
                 <div className={style.search_input_field}>
@@ -83,39 +79,53 @@ function Exchange() {
                 </div>
             </div> :
                 <>
-                <div className={style.table_wrapper}>
-                    <table className={style.merchants_list_container}>
-                        <thead>
-                            <tr>
-                                <th>Metal</th>
-                                <th>Source</th>
-                                <th>Source URL</th>
-                                <th>Purity</th>
-                                <th>Unit</th>
-                                <th>Rate(INR)/gm</th>
-                                <th>Fetched at</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {paginatedList ? (
-                                paginatedList?.map((val, id) => {
-                                    return <tr key={id}>
-                                        <td>{val?.commodity}</td>
-                                        <td>{val?.source_name}</td>
-                                        <td>{val?.source_url}</td>
-                                        <td>{val?.purity}</td>
-                                        <td>{val?.unit}</td>
-                                        <td>{val?.exchange_rate_to_inr.toFixed(2)}</td>
-                                        <td>{dateAndTimeFormat(val?.fetched_at)}</td>
-                                    </tr>
-                                })
-                            ) : <tr>
-                                <td colSpan="7">No Data Found</td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                    <div className={style.table_wrapper}>
+                        <table className={style.merchants_list_container}>
+                            <thead>
+                                <tr>
+                                    <th>Metal</th>
+                                    <th>Source</th>
+                                    <th>Source URL</th>
+                                    <th>Purity</th>
+                                    <th>Unit</th>
+                                    <th>Rate(INR)/gm</th>
+                                    <th>Fetched at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paginatedList ? (
+                                    // paginatedList?.map((val, id) => {
+                                    //     return 
+                                    <>
+                                        <tr >
+                                            <td>Gold</td>
+                                            <td>{exchangeList?.source}</td>
+                                            <td>{exchangeList?.source_url}</td>
+                                            <td>{exchangeList?.Purity}</td>
+                                            <td>gm</td>
+                                            <td>{exchangeList?.GoldRatePerGram}</td>
+                                            <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
+                                            {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
+                                        </tr>
+                                        <tr >
+                                            <td>Silver</td>
+                                            <td>{exchangeList?.source}</td>
+                                            <td>{exchangeList?.source_url}</td>
+                                            <td>{exchangeList?.Purity}</td>
+                                            <td>gm</td>
+                                            <td>{exchangeList?.SilverRatePerGram}</td>
+                                            <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
+                                            {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
+                                        </tr>
+                                    </>
+                                    // })
+                                ) : <tr>
+                                    <td colSpan="7">No Data Found</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                     {exchangeList?.length > rowsPerPage &&
                         <div className={style.pagination_parent}>
                             <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
@@ -126,7 +136,7 @@ function Exchange() {
                 </>
             }
         </div>
-    </>
+    )
 }
 
 export default Exchange;

@@ -15,11 +15,25 @@ import { CamelCase } from '../../InputValidation/InputValidation';
 function AddMerchant({ close, selectedMerchant, updateList }) {
     const { token } = useContextData();
     // Organition Document Verification -------------------
-    const [panNumber, setPANnumber] = useState(selectedMerchant?.kyc_documents?.[1]?.document_number || '');
-    const [isValidPAN, setIsValidPAN] = useState(false);
+    const [panNumber, setPANnumber] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number || '');
+    const [isValidPAN, setIsValidPAN] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number ? true : false);
     const [panData, setPanData] = useState(null);
-    const [gstNumber, setGSTNumber] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number || '');
+    const [gstNumber, setGSTNumber] = useState(selectedMerchant?.kyc_documents?.[1]?.document_number || '');
     const [isvalidGst, setIsvalidGst] = useState(true);
+
+    useEffect(() => {
+        if (selectedMerchant?.kyc_documents) {
+            selectedMerchant.kyc_documents.forEach((doc) => {
+                if (doc.document_type === 'GST') {
+                    setGSTNumber(doc.document_number);
+                }
+                if (doc.document_type === 'PAN') {
+                    setPANnumber(doc.document_number);
+                }
+            });
+        }
+    }, [selectedMerchant]);
+
     // Organition Name ---------------------------
     const [organizatioNname, setOrganizationName] = useState(selectedMerchant?.merchant_name || '');
     const [preferredName, setPreferredName] = useState(selectedMerchant?.merchant_brand_name || '');
@@ -28,7 +42,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     const [ownerName, setOwnerName] = useState(selectedMerchant?.owner_name || '');
     const [ownerMobile, setOwnerMobile] = useState(selectedMerchant?.owner_mobile || '');
     const [isValidOwnerMobile, setIsValidOwnerMobile] = useState(true);
-    const [ownerEmail, setOwnerEmail] = useState( selectedMerchant?.owner_email || '');
+    const [ownerEmail, setOwnerEmail] = useState(selectedMerchant?.owner_email || '');
     const [isValidOwnerEmail, setIsValidOwnerEmail] = useState(true);
     // ---------------- POC details --------------------------------------
     const [primaryContactName, setPrimaryContactName] = useState(selectedMerchant?.primary_person_name || '');
@@ -90,6 +104,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
         communication_address_district: secdistrictName,
         communication_address_pincode: secpinCode,
 
+
         owner_name: ownerName,
         owner_email: ownerEmail,
         owner_mobile: ownerMobile?.split("-")[1],
@@ -104,7 +119,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
         business_nature: businessNature,
         scheme_id: schemeId
     }
-    
+
     // Function to handle the Submitting data ------------
     const handleFormData = (e) => {
         e.preventDefault();

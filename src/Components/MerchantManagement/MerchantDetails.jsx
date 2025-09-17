@@ -67,21 +67,37 @@ function MerchantDetails() {
                     <>
                         <div className={style.list_details}>
                             <h4 className={style.merchant_name}>Merchant`s Name:<span>{selectedMerchant?.merchant_name}</span></h4>
-                            <h4 className={style.merchant_name}> Primary person name:<span>{selectedMerchant?.primary_person_name}</span></h4>
-                            <h4 className={style.merchant_name}>Primary person email:<span>{selectedMerchant?.primary_person_email}</span></h4>
-                            <h4 className={style.merchant_name}>Primary person mobile:<span>{selectedMerchant?.primary_person_mobile}</span>
-                            </h4><h4 className={style.merchant_name}>Scheme name:<span>
+                            <h4 className={style.merchant_name}>Owner Details:
+                                <span>{selectedMerchant?.owner_name}</span>
+                                <span>{selectedMerchant?.owner_email}</span>
+                                <span>{selectedMerchant?.owner_mobile}</span>
+                            </h4>
+                            <h4 className={style.merchant_name}>Contact Person Details:
+                                <span>{selectedMerchant?.primary_person_name}</span>
+                                <span>{selectedMerchant?.primary_person_email}</span>
+                                <span>{selectedMerchant?.primary_person_mobile}</span>
+                            </h4>
+                            
+                            <h4 className={style.merchant_name}>Scheme name:<span>
                                 <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
                                     {selectedMerchant?.scheme_name}
                                 </Link>
                             </span>
                             </h4>
-                            <h4 className={style.merchant_name}>Address:
+                            <h4 className={style.merchant_name}>Primary Address:
                                 <span>
                                     <p>{selectedMerchant?.address_street}</p>
                                     {" "}{selectedMerchant?.address_district},
                                     {" "}{selectedMerchant?.address_state},
                                     {" "}{selectedMerchant?.address_pincode}
+                                </span>
+                            </h4>
+                            <h4 className={style.merchant_name}>Communication Address:
+                                <span>
+                                    <p>{selectedMerchant?.communication_address_street}</p>
+                                    {" "}{selectedMerchant?.communication_address_district},
+                                    {" "}{selectedMerchant?.communication_address_state},
+                                    {" "}{selectedMerchant?.communication_address_pincode}
                                 </span>
                             </h4>
                             <h4 className={style.merchant_name}>Kyc Status:

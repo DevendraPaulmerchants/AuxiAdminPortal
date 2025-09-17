@@ -12,7 +12,7 @@ const SideBar = ({ open, handleLogOut }) => {
 
     useEffect(() => {
         sidebarItems.forEach((navItem) => {
-            if (navItem.subItems?.some(sub => sub.path === location.pathname)) {
+            if (navItem.subItems?.some(sub => sub.path.includes(location.pathname))) {
                 setOpenDropdown(navItem.name);
             }
         });

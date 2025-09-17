@@ -5,22 +5,12 @@ import style1 from "./Merchants.module.css";
 import { GoEye } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import Switch from '@mui/material/Switch';
-import AddMerchants from './AddMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
-// import AddMerchant from './AddMerchant/AddMerchant';
 const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 
-function MerchantsList({ open }) {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-
-    }, [])
+function MerchantsList() {
 
     const { token } = useContextData();
     const { state } = useLocation();

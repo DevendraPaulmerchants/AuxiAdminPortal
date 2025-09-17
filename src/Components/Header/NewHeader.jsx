@@ -21,7 +21,7 @@ const NewHeader = ({open,handleOpen,handleLogOut}) => {
                 <div className={style.user_container}>
                     <img src="/HeaderUserIcon.png" alt="User" className="user_image" />
                     <pre className={style.user_info}>
-                        <p className={style.user_name} onClick={openUserModel} >AuxiVault <FaAngleDown/></p>
+                        <p className={style.user_name} onClick={openUserModel} >Paul Gold <FaAngleDown/></p>
                         <p className={style.user_role}>Admin</p>
                     </pre>
                     {isUserIconClick && (

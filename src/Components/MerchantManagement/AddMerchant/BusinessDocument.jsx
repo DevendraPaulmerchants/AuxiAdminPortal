@@ -27,8 +27,7 @@ function BusinessDocument({ selectedMerchant,
         setPreviewMSME(fileUrl)
         setMSMEDocument(file)
     }
-    return <>
-        <div className={style.add_merchants_bussiness_address}>
+    return <div className={style.add_merchants_bussiness_address}>
             <h3>Upload Document </h3>
             <div className={style.name_email_parent_container}>
                 {/* Upload Pan Card */}
@@ -37,11 +36,11 @@ function BusinessDocument({ selectedMerchant,
                     <input 
                     
                         type='file'
-                        required={!selectedMerchant}
+                        required={!!selectedMerchant}
                         accept='application/pdf*'
                         onChange={handlePanDocument}
                     />
-                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a PDF/Image file only.</p>
+                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a Image file only.</p>
 
                     {previewPAN &&
                         <div className={style1.file_mini_view}>
@@ -69,11 +68,11 @@ function BusinessDocument({ selectedMerchant,
                     <input 
                     // style={{ width: "97%" }}
                         type='file'
-                        required={!selectedMerchant}
+                        required={!!selectedMerchant}
                         accept='application/pdf*'
                         onChange={handleBussinessDocument}
                     />
-                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a PDF/Image file only.</p>
+                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a Image file only.</p>
 
                     {previewBuDoc &&
                         <div className={style1.file_mini_view}>
@@ -101,11 +100,11 @@ function BusinessDocument({ selectedMerchant,
                     <input 
                     // style={{ width: "97%" }}
                         type='file'
-                        required={!selectedMerchant}
+                        required={!!selectedMerchant}
                         accept='application/pdf*'
                         onChange={handleMSMEDocument}
                     />
-                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a PDF/Image file only.</p>
+                    <p style={{ fontSize: '10px' }}>Kindly upload your document as a Image file only.</p>
 
                     {previewMSME &&
                         <div className={style1.file_mini_view}>
@@ -129,7 +128,7 @@ function BusinessDocument({ selectedMerchant,
                 </div>
             </div>
         </div>
-    </>
+    
 }
 
 export default BusinessDocument

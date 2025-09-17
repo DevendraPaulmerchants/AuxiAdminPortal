@@ -7,13 +7,15 @@ function Organization({organizatioNname,setOrganizationName,preferredName,setPre
         <div className={style.name_label_input_contaner}>
             <label>Organization Name* </label>
             <input type='text' required placeholder="Enter organization name" maxLength={100} value={organizatioNname}
-                onChange={(e) => handleInputChangeWithAlphabetOnly(e, setOrganizationName)}
+                // onChange={(e) => handleInputChangeWithAlphabetOnly(e, setOrganizationName)}
+                onChange={(e)=>setOrganizationName(e.target.value)}
             />
         </div>
         <div className={style.name_label_input_contaner}>
             <label>Brand/Preferred Name* </label>
             <input type='text' required placeholder='Enter preferred name' maxLength={50} value={preferredName}
-                onChange={(e) => handleInputChangeWithAlphabetOnly(e, setPreferredName)}
+                // onChange={(e) => handleInputChangeWithAlphabetOnly(e, setPreferredName)}
+                onChange={(e)=>setPreferredName(e.target.value)}
             />
         </div>
     </div>

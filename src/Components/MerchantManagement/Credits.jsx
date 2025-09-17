@@ -12,14 +12,6 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function Credits() {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
-
 
   const { token } = useContextData();
   const [creditList, setCreditList] = useState(null);
@@ -149,7 +141,7 @@ function Credits() {
                       <td>
                         <p
                           style={{ cursor: "pointer", fontSize: "24px" }}
-                          onClick={(e) => { openCreditMenu(e); setSelectedMerchant(val.merchant_id) }}
+                          onClick={(e) => { openCreditMenu(e); setSelectedMerchant(val) }}
                         >
                           <FaPlus />
                         </p>

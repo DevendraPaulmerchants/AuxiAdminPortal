@@ -246,10 +246,10 @@ const paginatedList = pagesData?.filter((list) => {
                 {paginatedList?.length > 0 ? (
                   paginatedList?.map((val, id) => {
                     return <tr key={id}>
-                      <td>XXXX{val.id?.slice(-4)}<MdContentCopy
+                      <td>XXXX{val.order_id?.slice(-4)}<MdContentCopy
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleCopy(val.id)}
-                        title="Copy ID"
+                        onClick={() => handleCopy(val.order_id)}
+                        title="Copy Order ID"
                       /></td>
                       <td>XXXX{val.customer_id?.slice(-4)}</td>
                       <td>{val.customer_name}</td>

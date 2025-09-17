@@ -25,7 +25,7 @@ function CustomerDetails({ close, selectedCustomer }) {
                 <h2>Customer Details:</h2>
                 <div className={style.list_details}>
                     <h4 className={style.merchant_name}>Name:<span>{selectedCustomer?.full_name || selectedCustomer?.first_name}</span></h4>
-                    <h4 className={style.merchant_name}>Email:<span>{selectedCustomer?.email}</span></h4>
+                    {selectedCustomer?.email && <h4 className={style.merchant_name}>Email:<span>{selectedCustomer?.email}</span></h4>}
                     <h4 className={style.merchant_name}>Mobile:<span>{selectedCustomer?.phone}</span></h4>
                     <h4 className={style.merchant_name}>KYC Level:<span>{selectedCustomer?.kyc_level}</span></h4>
                     <h4 className={style.merchant_name}>KYC Status:<span>{selectedCustomer?.kyc_status}</span></h4>
@@ -51,7 +51,7 @@ function CustomerDetails({ close, selectedCustomer }) {
                         <h4 className={style.merchant_name} key={wallet_type.id}>Avl. {wallet_type.wallet_type}:
                             {wallet_type.wallet_type !== 'FUND' && <span>{wallet_type.metal_quantity || 0} gm </span>
                             }
-                            {wallet_type.wallet_type === 'FUND' && <span>{wallet_type.metal_quantity}</span>
+                            {wallet_type.wallet_type === 'FUND' && <span>&#8377; {wallet_type.balance}</span>
                             }
                         </h4>
                     ))}

@@ -5,7 +5,6 @@ import style1 from "./Merchants.module.css";
 import { GoEye } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import Switch from '@mui/material/Switch';
-import AddMerchants from './AddMerchants';
 import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';

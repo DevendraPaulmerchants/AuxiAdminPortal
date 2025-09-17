@@ -12,12 +12,12 @@ import { useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { dateFormat } from '../../helperFunction/helper';
+import { MdContentCopy } from 'react-icons/md';
 
 
 function CustomerList() {
     const { token } = useContextData();
     const { state } = useLocation();
-
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,8 +27,9 @@ function CustomerList() {
     const [selectedMerchant, setSelectedMerchant] = useState("");
     const [accountStatus, setAccountStatus] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
-
-    const rowsPerPage = 8;
+    const [openDetailPage, setOpenDetailPage] = useState(false);
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const rowsPerPage = 10;
 
     const fetchCustomers = async () => {
         setIsLoading(true)
@@ -88,11 +89,12 @@ function CustomerList() {
     //     return list.first_name?.toLowerCase().includes(searchText.toLowerCase())
     // })
     //     : [];
+
     const filteredList = customer?.filter((list) => {
-    const name = list?.first_name?.toLowerCase() || '';
-    const id = String(list?.id || '').toLowerCase();
-    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
-  }) || [];
+        const name = list?.first_name?.toLowerCase() || '';
+        const id = String(list?.id || '').toLowerCase();
+        return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+    }) || [];
 
     const totalPages = Math.ceil(filteredList.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -106,9 +108,6 @@ function CustomerList() {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-    const [openDetailPage, setOpenDetailPage] = useState(false);
-    const [selectedCustomer, setSelectedCustomer] = useState(null);
-
     const openDPage = (val) => {
         setOpenDetailPage(true);
         setSelectedCustomer(val)
@@ -116,6 +115,56 @@ function CustomerList() {
     const closeDPage = () => {
         setOpenDetailPage(false);
         setSelectedCustomer(null);
+    }
+    // ------------ Copy the CustomerId ---------------------------
+    const handleCopy = async (text) => {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                alert('Text copied to clipboard successfully.');
+            } else {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+
+                textArea.style.position = 'fixed';
+                textArea.style.top = 0;
+                textArea.style.left = 0;
+                textArea.style.opacity = 0;
+
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    alert('Text copied to clipboard successfully.');
+                } else {
+                    throw new Error('Fallback copy command was unsuccessful.');
+                }
+
+                document.body.removeChild(textArea);
+            }
+        } catch (err) {
+            console.error('Error copying text: ', err);
+        }
+    };
+    // -------------- Change the Account status of the Customer ---------------
+    const changeStatusOfCustomer=(id,status)=>{
+        const accStatus=status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        fetch(`${APIPATH}/api/v1/admin/merchants/customers/${id}`,{
+            headers: {
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                method: 'PATCH',
+                body:JSON.stringify({account_status:accStatus}),
+                mode: 'cors'
+        })
+        .then((res)=>res.json())
+        .then((data)=>{
+            alert(data.message);
+            fetchCustomers();
+        })
     }
 
     return (
@@ -198,7 +247,11 @@ function CustomerList() {
                                 {paginatedList.length > 0 ? (
                                     paginatedList.map((val, id) => (
                                         <tr key={id}>
-                                            <td>XXXX{(val.customer_id || val.id).slice(-4)}</td>
+                                            <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => handleCopy(val.customer_id)}
+                                                title="Copy Customer Id"
+                                            /></td>
                                             <td>{val.full_name || val.first_name}</td>
                                             {/* <td>{val.email}</td> */}
                                             <td>{val.phone}</td>
@@ -206,7 +259,9 @@ function CustomerList() {
                                             <td>{dateFormat(val.created_at)}</td>
                                             <td>{val.kyc_status}</td>
                                             <td>
-                                                <Switch checked={val.account_status === 'ACTIVE'} />
+                                                <Switch checked={val.account_status === 'ACTIVE'}
+                                                 onClick={()=>changeStatusOfCustomer(val.customer_id,val.account_status)}
+                                                />
                                             </td>
                                             <td>
                                                 <p style={{ cursor: "pointer" }}

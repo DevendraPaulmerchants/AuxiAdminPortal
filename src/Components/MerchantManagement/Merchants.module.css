@@ -1,12 +1,14 @@
 @keyframes fadeInOut {
     0% {
         opacity: 0.6;
-        max-width: 10%;
+        width: 10%;
+        max-height: 50%;
     }
 
     100% {
         opacity: 1;
-        max-width: 100%;
+        width: 75%;
+        max-height: 90%;
     }
 }
 
@@ -18,8 +20,6 @@
     left: 0;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(1px);
-    /* animation: fadeInOut 0.5s linear; */
-    /* transition: opacity 0.3s ease, transform 0.3s ease; */
 
 }
 
@@ -32,18 +32,16 @@
     padding: 0px 1rem 10px;
     border-radius: 5px;
     width: 75%;
-    max-width: 1000px;
+    height: fit-content;
     max-height: 90%;
     overflow-y: scroll;
     scrollbar-width: none;
-    animation: fadeInOut 0.4s linear;
-    /* transition: opacity 0.3s ease, transform 0.3s ease; */
-
+    animation: fadeInOut 0.3s ease-in-out;
 }
 
 .add_merchants_form_container::-webkit-scrollbar {
     display: none;
-    /* For Chrome, Safari, Edge */
+
 }
 
 .add_merchants_header {
@@ -118,7 +116,6 @@
 }
 
 .name_label_input_contaner textarea {
-    /* border: 1px solid rgba(205, 133, 63, 1); */
     border: 1px solid rgba(38, 38, 38, 0.4);
     outline: none;
     border-radius: 5px;
@@ -330,6 +327,7 @@ hr {
     flex-wrap: wrap;
     margin-bottom: 2rem;
 }
+
 .merchant_name {
     font-weight: 500;
     width: 250px;

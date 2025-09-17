@@ -83,7 +83,7 @@ function CreditTransaction() {
 
  const paginatedList = pagesData?.filter((list) => {
   const name = list?.customer_name?.toLowerCase() || '';
-  const id = String(list?.customer_id || '').toLowerCase();
+  const id = String(list?.order_id || '').toLowerCase();
   const listStatus = list?.status?.toLowerCase() || '';
 
   const matchesSearch =
@@ -239,10 +239,10 @@ function CreditTransaction() {
                 {paginatedList?.length > 0 ? (
                   paginatedList?.map((val, id) => {
                     return <tr key={id}>
-                      <td>XXXX{val.id?.slice(-4)}
+                      <td>XXXX{val.order_id?.slice(-4)}
                         <MdContentCopy
                           style={{ cursor: "pointer" }}
-                          onClick={() => handleCopy(val.id)}
+                          onClick={() => handleCopy(val.order_id)}
                           title="Copy ID"
                         />
                       </td>

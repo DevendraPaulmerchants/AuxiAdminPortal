@@ -107,70 +107,85 @@ function PendingMerchantDetails() {
 
     return <>
         <div className={style1.merchants_parent}>
-                <div className={style.add_merchants_header} style={{background:'transparent'}}>
-                    <button className='back_button' onClick={() => navigate(-1)}><IoMdArrowRoundBack /></button>
-                </div>
-                {isloading ? <div className={style.loader_container}><div className={style.loader_item}>
-                    <img src='/gold-coin.png' alt='loading...' />
-                </div></div> :
-                    <>
-                        <div className={style.list_details}>
-                            <h4 className={style.merchant_name}>Merchant`s Name:<span>{selectedMerchant?.merchant_name}</span></h4>
-                            <h4 className={style.merchant_name}> Primary person name:<span>{selectedMerchant?.primary_person_name}</span></h4>
-                            <h4 className={style.merchant_name}>Primary person email:<span>{selectedMerchant?.primary_person_email}</span></h4>
-                            <h4 className={style.merchant_name}>Primary person mobile:<span>{selectedMerchant?.primary_person_mobile}</span></h4>
-                            <h4 className={style.merchant_name}>Scheme Name:<span>
-                                <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
-                                    {selectedMerchant?.scheme_name}
-                                </Link>
+            <div className={style.add_merchants_header} style={{ background: 'transparent' }}>
+                <button className='back_button' onClick={() => navigate(-1)}><IoMdArrowRoundBack /></button>
+            </div>
+            {isloading ? <div className={style.loader_container}><div className={style.loader_item}>
+                <img src='/gold-coin.png' alt='loading...' />
+            </div></div> :
+                <>
+                    <div className={style.list_details}>
+                        <h4 className={style.merchant_name}>Merchant`s Name:<span>{selectedMerchant?.merchant_name}</span></h4>
+                        <h4 className={style.merchant_name}>Owner Details:
+                            <span>{selectedMerchant?.owner_name}</span>
+                            <span>{selectedMerchant?.owner_email}</span>
+                            <span>{selectedMerchant?.owner_mobile}</span>
+                        </h4>
+                        <h4 className={style.merchant_name}>Contact Person Details:
+                            <span>{selectedMerchant?.primary_person_name}</span>
+                            <span>{selectedMerchant?.primary_person_email}</span>
+                            <span>{selectedMerchant?.primary_person_mobile}</span>
+                        </h4>
+                        <h4 className={style.merchant_name}>Scheme Name:<span>
+                            <Link to='/scheme_list' state={{ schemeName: selectedMerchant?.scheme_name }}>
+                                {selectedMerchant?.scheme_name}
+                            </Link>
+                        </span>
+                        </h4>
+                        <h4 className={style.merchant_name}>Primary Address:
+                            <span>
+                                <p>{selectedMerchant?.address_street}</p>
+                                {" "}{selectedMerchant?.address_district},
+                                {" "}{selectedMerchant?.address_state},
+                                {" "}{selectedMerchant?.address_pincode}
                             </span>
+                        </h4>
+                        <h4 className={style.merchant_name}>Communication Address:
+                            <span>
+                                <p>{selectedMerchant?.communication_address_street}</p>
+                                {" "}{selectedMerchant?.communication_address_district},
+                                {" "}{selectedMerchant?.communication_address_state},
+                                {" "}{selectedMerchant?.communication_address_pincode}
+                            </span>
+                        </h4>
+                    </div>
+                    <h2 className={style.uploaded_docement_title}>Uploaded Document</h2>
+                    <div className={style.merchant_details_document}>
+                        {selectedMerchant?.kyc_documents?.map((doc, id) => (
+                            <h4 key={doc.id}>{doc?.document_type} :
+                                <div className={style.merchant_document_image}>
+                                    <img src={doc?.document_url} alt=''
+                                        onClick={() => {
+                                            setShowImageUrl(doc?.document_url);
+                                            setShowImage(doc);
+                                        }}
+                                    />
+                                    <p className={`${style.document_kyc_status} ${style[doc?.kyc_status?.toLowerCase()]}`} title={doc?.kyc_status}>
+                                        {doc?.kyc_status === "VERIFIED" && "✅"}
+                                        {doc?.kyc_status === "REJECTED" && "❌"}
+                                        {doc?.kyc_status === "PENDING" && "🕓"}
+                                    </p>
+                                </div>
                             </h4>
-                            <h4 className={style.merchant_name}>Address:
-                                <span>
-                                    <p>{selectedMerchant?.address_street}</p>
-                                    {" "}{selectedMerchant?.address_district},
-                                    {" "}{selectedMerchant?.address_state},
-                                    {" "}{selectedMerchant?.address_pincode}
-                                </span>
-                            </h4>
-                        </div>
-                        <h2 className={style.uploaded_docement_title}>Uploaded Document</h2>
-                        <div className={style.merchant_details_document}>
-                            {selectedMerchant?.kyc_documents?.map((doc, id) => (
-                                <h4 key={doc.id}>{doc?.document_type} :
-                                    <div className={style.merchant_document_image}>
-                                        <img src={doc?.document_url} alt=''
-                                            onClick={() => {
-                                                setShowImageUrl(doc?.document_url);
-                                                setShowImage(doc);
-                                            }}
-                                        />
-                                        <p className={`${style.document_kyc_status} ${style[doc?.kyc_status?.toLowerCase()]}`}>
-                                            {doc?.kyc_status === "VERIFIED" && "✅"}
-                                            {doc?.kyc_status === "REJECTED" && "❌"}
-                                            {doc?.kyc_status === "PENDING" && "🕓"}
-                                        </p>
-                                    </div>
-                                </h4>
-                            ))}
-                        </div>
-                        <div className={style.add_merchats_btn_container}>
-                            <button className={style.primary_login_btn}
-                                onClick={() => setIsUpdateClicked(true)}
-                            >
-                                Update Details
-                            </button>
-                            <button className={style.primary_login_btn}
-                                onClick={() => { openverifyandrejectKycpage() }}
-                            // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
-                            //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
-                            // }
-                            >
-                                {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
-                        </div>
+                        ))}
+                    </div>
+                    <div className={style.add_merchats_btn_container}>
+                        <button className={style.primary_login_btn}
+                            onClick={() => setIsUpdateClicked(true)}
+                        >
+                            Update Details
+                        </button>
+                        <button className={style.primary_login_btn}
+                            onClick={() => { openverifyandrejectKycpage() }}
+                        // disabled={selectedMerchant?.kyc_documents[0].kyc_status === 'PENDING'
+                        //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
+                        // }
+                        >
+                            {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
+                    </div>
 
-                    </>
-                }
+                </>
+            }
         </div>
         {showImage && <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "500px", width: "600px" }}>

@@ -25,7 +25,7 @@ function MetalDetails({ close, selectedMetal }) {
                 <div className={style1.customer_detail_container}>
                     <h2>Merchant & Customer Details:</h2>
                     <div className={style1.details_container}>
-                        <h4 className={style.merchant_name}>Merchnat Name:
+                        <h4 className={style.merchant_name}>Merchant Name:
                             <span>
                                 {selectedMetal?.merchant_name}
                             </span>
@@ -59,7 +59,7 @@ function MetalDetails({ close, selectedMetal }) {
                         <div className={style1.new_rate_details}>
                             <div className={style1.rate_value}>
                                 <p>Exchange rate(per gram):</p>
-                                <p>₹ {parseFloat(selectedMetal?.metal_price_per_gram).toFixed(2)}</p>
+                                <p>₹ {parseFloat(selectedMetal?.exchange_rate_per_gram).toFixed(2)}</p>
                             </div>
                             <div className={style1.rate_value}>
                                 <p>Applied Margin({selectedMetal?.platform_margin}%):</p>

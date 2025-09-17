@@ -15,7 +15,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const creditData = {
-        merchant_id: selectedMerchant,
+        merchant_id: selectedMerchant.merchant_id,
         amount: parseInt(creditsPoint),
         description: description,
         transaction_type: transactionType,
@@ -59,11 +59,10 @@ function AddCredits({ close, selectedMerchant, updateList }) {
             document.body.style.overflow = 'auto';
         };
     }, []);
-    return <>
-        <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+    return <div className={style.add_merchants_parent}>
+            <div className={style.add_merchants_form_container}>
                 <div className={style.add_merchants_header}>
-                    <h2>Add credit to merchants</h2>
+                    <h2>Request credit for {selectedMerchant?.merchant_name}</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
                 <form onSubmit={(e) => addCredit(e)}>
@@ -117,7 +116,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    
 }
 
 export default AddCredits;

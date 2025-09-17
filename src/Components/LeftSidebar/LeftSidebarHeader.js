@@ -58,11 +58,11 @@ import { VscKey } from "react-icons/vsc";
                 name: "Exchange", path: '/exchange', icon: <MdOutlineAccountBalanceWallet title='Exchange Rate' />,
             },
             {
-                name: "Apply Margin & GST", path: "/applied_margin", icon: <RiPercentLine title='Applied Margin' />
+                name: "Apply Margin & GST", path: "/applied_margin", icon: <RiPercentLine title='Apply Margin & GST' />
             },
 
             {
-                name: "Auxi Rates", path: '/auxi_rates', icon: <TbCurrencyDollar title='Auxi Rates' />,
+                name: "Final Metal Rates", path: '/auxi_rates', icon: <TbCurrencyDollar title='Final Metal Rates' />,
             },
         ]
     },
