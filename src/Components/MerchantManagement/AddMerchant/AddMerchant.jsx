@@ -115,8 +115,10 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
 
         gst_no: gstNumber,
         pan_no: panNumber,
+
         business_type: bussinessType,
         business_nature: businessNature,
+        
         scheme_id: schemeId
     }
 

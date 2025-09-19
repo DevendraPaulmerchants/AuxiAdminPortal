@@ -31,10 +31,15 @@ function CustomerList() {
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const rowsPerPage = 10;
 
+    const [direction, setDirection] = useState('');
+    const [cursors, setCursors] = useState('');
+    const [nextCursor, setNextCursor] = useState('');
+    const [prevCursor, setPrevCursor] = useState('');
+
     const fetchCustomers = async () => {
         setIsLoading(true)
         try {
-            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&account_status=${accountStatus}&start_date=${startDate}&end_date=${endDate}`;
+            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&account_status=${accountStatus}&start_date=${startDate}&end_date=${endDate}&direction=${direction}&cursor=${cursors}`;
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -45,6 +50,8 @@ function CustomerList() {
             });
             const result = await response.json();
             setCustomer(result.data);
+            setNextCursor(result.hasNextPage ? result.nextCursor : '');
+            setPrevCursor(result.hasPrevPage ? result.prevCursor : '');
             setIsLoading(false)
         } catch (error) {
             console.error("Error fetching customers:", error);
@@ -56,7 +63,23 @@ function CustomerList() {
 
     useEffect(() => {
         fetchCustomers();
-    }, [startDate, endDate, selectedMerchant, accountStatus, token]);
+    }, [startDate, endDate, selectedMerchant, accountStatus, token, cursors, direction]);
+
+    const handleNext = () => {
+        if (nextCursor) {
+            setCursors(nextCursor);
+            setDirection('next');
+            setCurrentPage(prev => prev + 1);
+        }
+    };
+
+    const handlePrev = () => {
+        if (prevCursor) {
+            setCursors(prevCursor);
+            setDirection('prev');
+            setCurrentPage(prev => prev - 1);
+        }
+    };
 
     // Merchant List ----------------------------
     useEffect(() => {
@@ -96,17 +119,17 @@ function CustomerList() {
         return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
     }) || [];
 
-    const totalPages = Math.ceil(filteredList.length / rowsPerPage);
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const paginatedList = filteredList.slice(startIndex, startIndex + rowsPerPage);
+    // const totalPages = Math.ceil(filteredList.length / rowsPerPage);
+    // const startIndex = (currentPage - 1) * rowsPerPage;
+    // const paginatedList = filteredList.slice(startIndex, startIndex + rowsPerPage);
 
-    const handlePrev = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
+    // const handlePrev = () => {
+    //     if (currentPage > 1) setCurrentPage(currentPage - 1);
+    // };
 
-    const handleNext = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-    };
+    // const handleNext = () => {
+    //     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    // };
 
     const openDPage = (val) => {
         setOpenDetailPage(true);
@@ -149,22 +172,22 @@ function CustomerList() {
         }
     };
     // -------------- Change the Account status of the Customer ---------------
-    const changeStatusOfCustomer=(id,status)=>{
-        const accStatus=status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
-        fetch(`${APIPATH}/api/v1/admin/merchants/customers/${id}`,{
+    const changeStatusOfCustomer = (id, status) => {
+        const accStatus = status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+        fetch(`${APIPATH}/api/v1/admin/merchants/customers/${id}`, {
             headers: {
-                    'Authorization': `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                method: 'PATCH',
-                body:JSON.stringify({account_status:accStatus}),
-                mode: 'cors'
+                'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            method: 'PATCH',
+            body: JSON.stringify({ account_status: accStatus }),
+            mode: 'cors'
         })
-        .then((res)=>res.json())
-        .then((data)=>{
-            alert(data.message);
-            fetchCustomers();
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                alert(data.message);
+                fetchCustomers();
+            })
     }
 
     return (
@@ -244,8 +267,8 @@ function CustomerList() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedList.length > 0 ? (
-                                    paginatedList.map((val, id) => (
+                                {filteredList.length > 0 ? (
+                                    filteredList.map((val, id) => (
                                         <tr key={id}>
                                             <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy
                                                 style={{ cursor: "pointer" }}
@@ -260,7 +283,7 @@ function CustomerList() {
                                             <td>{val.kyc_status}</td>
                                             <td>
                                                 <Switch checked={val.account_status === 'ACTIVE'}
-                                                 onClick={()=>changeStatusOfCustomer(val.customer_id,val.account_status)}
+                                                    onClick={() => changeStatusOfCustomer(val.customer_id, val.account_status)}
                                                 />
                                             </td>
                                             <td>
@@ -284,17 +307,11 @@ function CustomerList() {
                             </tbody>
                         </table>
                     </div>
-                    {paginatedList.length > 0 &&
-                        <div className={style.pagination_parent}>
-                            <button onClick={handlePrev} disabled={currentPage === 1}>
-                                &lt;
-                            </button>
-                            <span className={style.pagination_parent_pageno}>{currentPage}</span>
-                            <button onClick={handleNext} disabled={currentPage === totalPages}>
-                                &gt;
-                            </button>
-                        </div>
-                    }
+                    <div className={style.pagination_parent}>
+                        <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
+                        <span className={style.pagination_parent_pageno}>{currentPage}</span>
+                        <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
+                    </div>
                 </>
             }
             {openDetailPage && <CustomerDetails close={closeDPage} selectedCustomer={selectedCustomer} />}

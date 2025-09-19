@@ -6,7 +6,6 @@ import { DataProvider } from './Components/Context/Context';
 import NewLogIn from './Components/LogIn/NewLogIn';
 import NewHome from './Components/Home/NewHome';
 import Loader from './Components/Loader/Loader';
-import ScrollToTop from './Components/ScrollToTop/ScrollToTop';
 
 // Lazy-loaded components
 const Layout = lazy(() => import('./Components/Layout/Layout'));

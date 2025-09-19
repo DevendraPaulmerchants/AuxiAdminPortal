@@ -62,8 +62,8 @@ function MetalDetails({ close, selectedMetal }) {
                                 <p>₹ {parseFloat(selectedMetal?.exchange_rate_per_gram).toFixed(2)}</p>
                             </div>
                             <div className={style1.rate_value}>
-                                <p>Applied Margin({selectedMetal?.platform_margin}%):</p>
-                                <p>₹ {parseFloat(selectedMetal?.platform_profit).toFixed(2)}</p>
+                                <p>Applied Margin({selectedMetal?.margin_percentage_exchange_rate}%):</p>
+                                <p>₹ {parseFloat(selectedMetal?.margin_amount_exchange_rate).toFixed(2)}</p>
                             </div>
                             <div className={style1.rate_value}>
                                 <p>Final Rate(per gram):</p>
