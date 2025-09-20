@@ -42,7 +42,7 @@ function CustomerReports() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const url = `${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}`;
+        const url = `${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
         const res = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -13,9 +13,6 @@ import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CreditsReports() {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [])
     const { token } = useContextData();
     const [creditsData, setCreditsData] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -34,7 +31,7 @@ function CreditsReports() {
         setIsLoading(true);
         const fetchData = async () => {
             try {
-                const url = `${APIPATH}/api/v1/admin/reports/credit-ledger?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}`;
+                const url = `${APIPATH}/api/v1/admin/reports/credit-ledger?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
                 const res = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,

@@ -92,7 +92,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Payment Reference Id* </label>
-                            <input type='text' required placeholder='Enter merchant name' maxLength={200} value={referenceId}
+                            <input type='text' required placeholder='Enter Payment Reference Id' maxLength={200} value={referenceId}
                                 onChange={(e) => setReferenceId(e.target.value)}
                             />
                         </div>
