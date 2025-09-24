@@ -182,7 +182,7 @@ function MerchantsList() {
                                                     onChange={() => changeStatusOfSelectedMerchant(val.merchant_id, val.status)}
                                                 />
                                             </td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p className={style1.action_button}
                                                 onClick={() => selectedMerchant(val.merchant_id)}
                                             ><GoEye /></p></td>
                                         </tr>

@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useContextData } from '../Context/Context';
-import styles from './NewHome.module.css'; 
+import styles from './NewHome.module.css';
 import style1 from "../Admin/Admin.module.css";
-import style2 from "../MerchantManagement/Merchants.module.css"
+import style2 from "../MerchantManagement/Merchants.module.css";
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 import { APIPATH } from '../apiPath/apipath';
 import { useNavigate } from 'react-router-dom';
 
 
 const NewHome = () => {
     const { token } = useContextData();
-    const [report, setReport] = useState(null); 
+    const [report, setReport] = useState(null);
     const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
     const [endDate, setEndDate] = useState('');
     const [merchant, setMerchant] = useState(null);
     const [selectedmerchant, setSelectedMerchant] = useState(null);
-    const [isLoading, setIsLoading] = useState(true); 
-    const [error, setError] = useState(null); 
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -111,20 +113,23 @@ const NewHome = () => {
                 </div>
                 <div>
                     <label htmlFor="End Date">End Date: </label>
-                    <input type="date" value={endDate} min={startDate} 
-                    max={new Date().toISOString().split('T')[0]} 
-                    disabled={!startDate}
+                    <input type="date" value={endDate} min={startDate}
+                        max={new Date().toISOString().split('T')[0]}
+                        disabled={!startDate}
                         onChange={(e) => setEndDate(e.target.value)} />
                 </div>
-                <select onChange={(e) => setSelectedMerchant(e.target.value)} className={styles.select}>
-                    <option value="" disabled>---: Merchant :---</option>
-                    <option value="">All</option>
-                    {merchant?.map((merchant) => (
-                        <option key={merchant.id} value={merchant.id}>
-                            {merchant.merchant_name}
-                        </option>
+                <Select 
+                    placeholder="Select Merchant"
+                    sx={{width: 200 }}
+                    onChange={(e, value) => setSelectedMerchant(value)}
+                >
+                    <Option value="">All</Option>
+                    {merchant?.map((m) => (
+                        <Option key={m.id} value={m.id}>
+                            {m.merchant_name}
+                        </Option>
                     ))}
-                </select>
+                </Select>
             </div>
             {isLoading ? <div className={style2.loader_container}>
                 <div className={style2.loader_item}></div></div> :
@@ -248,46 +253,46 @@ const NewHome = () => {
                         <table>
                             <tbody>
                                 <tr className={styles.row_hover}
-                                    // onClick={(e) => {
-                                    //     navigate(`/credits_transactions`, { state: '' })
-                                    // }}
-                                    >
+                                // onClick={(e) => {
+                                //     navigate(`/credits_transactions`, { state: '' })
+                                // }}
+                                >
                                     <td><h2 className={styles.value}>Total</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                    // onClick={(e) => {
-                                    //     navigate(`/credits_transactions`, { state: 'CREDIT' })
-                                    // }}
-                                    >
+                                // onClick={(e) => {
+                                //     navigate(`/credits_transactions`, { state: 'CREDIT' })
+                                // }}
+                                >
                                     <td><h2 className={styles.value}>Sell</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                    // onClick={(e) => {
-                                    //     navigate(`/credits_transactions`, { state: 'DEBIT' })
-                                    // }}
-                                    >
+                                // onClick={(e) => {
+                                //     navigate(`/credits_transactions`, { state: 'DEBIT' })
+                                // }}
+                                >
                                     <td><h2 className={styles.value}>Buy</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                    // onClick={(e) => {
-                                    //     navigate(`/metal_logs`, { state: 'TRANSFER' })
-                                    // }}
-                                    >
+                                // onClick={(e) => {
+                                //     navigate(`/metal_logs`, { state: 'TRANSFER' })
+                                // }}
+                                >
                                     <td><h2 className={styles.value}>Transfer</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                    // onClick={(e) => {
-                                    //     navigate(`/metal_logs`, { state: 'CONVERSION' })
-                                    // }}
-                                    >
+                                // onClick={(e) => {
+                                //     navigate(`/metal_logs`, { state: 'CONVERSION' })
+                                // }}
+                                >
                                     <td><h2 className={styles.value}>Conversion</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.amount?.toFixed(2) || 0}</h2></td>
@@ -314,7 +319,7 @@ const NewHome = () => {
                                     }}
                                 >
                                     <td><h2 className={styles.value}>Sell</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.gold?.sell_gold_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.sell_gold_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.sell_gold_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
@@ -323,7 +328,7 @@ const NewHome = () => {
                                     }}
                                 >
                                     <td><h2 className={styles.value}>Transfer</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.gold?.transfer_gold_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.transfer_gold_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.gold?.transfer_gold_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                             </tbody>
@@ -340,7 +345,7 @@ const NewHome = () => {
                                     }}
                                 >
                                     <td><h2 className={styles.value}>Buy</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.silver?.buy_silver_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.buy_silver_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.buy_silver_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
@@ -349,7 +354,7 @@ const NewHome = () => {
                                     }}
                                 >
                                     <td><h2 className={styles.value}>Sell</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.silver?.sell_silver_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.sell_silver_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.sell_silver_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
@@ -357,7 +362,7 @@ const NewHome = () => {
                                         navigate(`/silver_transactions`, { state: 'TRANSFER' })
                                     }}>
                                     <td><h2 className={styles.value}>Transfer</h2></td>
-                                    <td><h2 className={styles.value}>{report?.metal_widget?.silver?.transfer_silver_quantity || 0}g</h2></td>
+                                    <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.transfer_silver_quantity || 0).toFixed(4)}g</h2></td>
                                     <td><h2 className={styles.value}>{(report?.metal_widget?.silver?.transfer_silver_amount || 0)?.toFixed(2)}</h2></td>
                                 </tr>
                             </tbody>

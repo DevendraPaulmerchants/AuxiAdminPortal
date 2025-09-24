@@ -240,8 +240,8 @@ function SilverTransaction() {
               </thead>
               <tbody>
                 {paginatedList?.length > 0 ? (
-                  paginatedList?.map((val, id) => {
-                    return <tr key={id}>
+                  paginatedList?.map((val) => {
+                    return <tr key={val.id}>
                       <td>XXXX{val.order_id?.slice(-4)}<MdContentCopy
                         style={{ cursor: "pointer" }}
                         onClick={() => handleCopy(val.order_id)}
@@ -253,12 +253,12 @@ function SilverTransaction() {
                       <td>{val.order_type}</td>
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
-                      <td>
-                        {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
-                        {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
-                        {val.order_status === "FAILED" && <FcCancel title='Failed' />}
+                      <td title={val.order_status}>
+                        {val.order_status === "COMPLETED" && <FcOk  />}
+                        {val.order_status === "PENDING" && <FcFlashOn  />}
+                        {val.order_status === "FAILED" && <FcCancel />}
                       </td>
-                      <td><p style={{ cursor: "pointer" }}>
+                      <td><p className={styles.action_button}>
                         <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />
                       </p></td>
                     </tr>

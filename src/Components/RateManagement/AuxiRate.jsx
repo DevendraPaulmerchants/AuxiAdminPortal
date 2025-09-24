@@ -96,19 +96,19 @@ function AuxiRate() {
                             </thead>
                             <tbody>
                                 {paginatedList.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.map((val) => {
+                                        return <tr key={val.id}>
                                             <td>{val?.metal_type}</td>
                                             <td>{val?.unit}</td>
-                                            <td>{val?.original_rate?.toFixed(2)}</td>
+                                            <td>{parseFloat(val?.original_rate)?.toFixed(2)}</td>
                                             <td>
-                                                <p>{val?.buy_rate?.toFixed(2)} (Exc. GST)</p>
+                                                <p>{parseFloat(val?.buy_rate)?.toFixed(2)} (Exc. GST)</p>
                                                 <p>{(parseFloat(val?.buy_rate) + parseFloat(val?.buy_gst_amount)).toFixed(2)} (Inc. GST)</p>
                                             </td>
-                                            <td>{val?.sell_rate?.toFixed(2)}</td>
-                                            <td>{val.transfer_rate?.toFixed(2)}</td>
+                                            <td>{parseFloat(val?.sell_rate)?.toFixed(2)}</td>
+                                            <td>{parseFloat(val.transfer_rate)?.toFixed(2)}</td>
                                             <td>
-                                                <p>{val?.conversion_rate?.toFixed(2)} (Exc. GST)</p>
+                                                <p>{parseFloat(val?.conversion_rate)?.toFixed(2)} (Exc. GST)</p>
                                                 <p>{(parseFloat(val?.conversion_rate) + parseFloat(val?.conversion_gst_amount)).toFixed(2)} (Inc. GST)</p>
                                                 
                                             </td>

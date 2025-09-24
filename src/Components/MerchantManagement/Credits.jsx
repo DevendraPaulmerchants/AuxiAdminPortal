@@ -140,7 +140,7 @@ function Credits() {
                       </td>
                       <td>
                         <p
-                          style={{ cursor: "pointer", fontSize: "24px" }}
+                          className={style1.action_button}
                           onClick={(e) => { openCreditMenu(e); setSelectedMerchant(val) }}
                         >
                           <FaPlus />

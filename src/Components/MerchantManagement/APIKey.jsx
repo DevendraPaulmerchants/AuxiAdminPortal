@@ -177,7 +177,7 @@ function APIKey() {
                             <span className={`${style1.api_key_icon} ${style1.api_key_block}`}><MdBlock /></span>
                           </p>
                         </td>
-                        <td><p style={{ cursor: "pointer", fontSize: "18px" }}
+                        <td><p className={style1.action_button}
                         onClick={()=>handleDeleteAPIKey()}
                         ><MdDelete /></p></td>
                       </tr>

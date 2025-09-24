@@ -11,14 +11,6 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function Bank() {
-     useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
-
     const { token } = useContextData();
     const [bankList, setBankList] = useState(null);
     const [selectedBank, setSelectedBank] = useState(null);
@@ -145,8 +137,8 @@ function Bank() {
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.map((val) => {
+                                        return <tr key={val.id}>
                                             <td>{val.account_holder_name}</td>
                                             <td>{val.bank_name}</td>
                                             <td>{val.branch_name}</td>
@@ -160,16 +152,16 @@ function Bank() {
                                                     }}
                                                 />
                                             </td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p
                                                 onClick={() => {
                                                     setSelectedBank(val);
                                                     setIsNewBankClick(true);
                                                 }}
-                                            ><MdEdit /></p></td>
+                                            ><MdEdit className={style1.action_button}  /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

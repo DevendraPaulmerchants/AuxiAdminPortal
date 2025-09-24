@@ -114,7 +114,7 @@
     bottom: 0;
     left: 28px;
     width: 2px;
-    height: calc(100% - 47px);
+    height: calc(100% - 42.5px);
     background: #8D9F9B;
 }
 
@@ -185,6 +185,7 @@
     width: 100%;
 }
 
+
 .sidebar_logout_btn {
     display: flex;
     align-items: center;
@@ -200,8 +201,11 @@
     font-size: 16px;
     font-weight: 600;
     border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
 }
-
+.sidebar_logout_btn:hover, .sidebar_logout_btn_icon_only:hover {
+    transform: scale(1.1);
+}
 .sidebar_logout_btn_icon_only {
     cursor: pointer;
     color: #8D9F9B;

@@ -12,14 +12,6 @@ import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function MerchantsTDSReports() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-
-    }, [])
 
     const { token } = useContextData();
     const [creditsData, setCreditsData] = useState([]);
@@ -144,8 +136,7 @@ function MerchantsTDSReports() {
         }
     }
 
-    return <>
-        <div className={style.merchants_parent}>
+    return <div className={style.merchants_parent}>
             {isloading ? <div className={styles.loader_container}><div className={styles.loader_item}></div></div> :
                 <>
                     <div className={style.merchants_parent_subheader}>
@@ -188,7 +179,7 @@ function MerchantsTDSReports() {
                             </select>
                         </div>
                         <div className={style1.transaction_record_download}>
-                            <IoMdDownload title='Download Records' onClick={downloadRecords} />
+                            <IoMdDownload title='Download Records' className={styles.action_button} onClick={downloadRecords} />
                         </div>
                     </div>
                     <div className={style.table_wrapper}>
@@ -252,7 +243,7 @@ function MerchantsTDSReports() {
                 </>
             }
         </div>
-    </>
+   
 }
 
 export default MerchantsTDSReports;

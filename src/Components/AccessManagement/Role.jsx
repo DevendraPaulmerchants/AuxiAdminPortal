@@ -10,13 +10,7 @@ import AddNewRole from './AddNewRole';
 import { dateFormat } from '../../helperFunction/helper';
 
 function Role() {
-      useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
+ 
     const { token } = useContextData();
     const [roleList, setRoleList] = useState(null);
     const [selectedRole, setSelectedRole] = useState(null);
@@ -144,9 +138,9 @@ function Role() {
 
                                             <td>{dateFormat(val.created_at)}</td>
                                             <td>{dateFormat(val.updated_at)}</td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p 
                                                 onClick={() => setSelectedRole(val)}
-                                            ><MdEdit /></p></td>
+                                            ><MdEdit className={style1.action_button} /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>

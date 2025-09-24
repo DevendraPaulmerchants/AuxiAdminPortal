@@ -102,8 +102,8 @@ function Global() {
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.slice(-2).map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.slice(-2).map((val) => {
+                                        return <tr key={val.id}>
                                             <td>{val?.metal_type}</td>
                                             {/* <td>
                                                 <p>Buy:- {val?.buy_platform_charge_fee}</p>
@@ -124,7 +124,7 @@ function Global() {
                                                 <p>Conversion:- {val?.conversion_gst}</p>
                                             </td>
                                             <td>{dateAndTimeFormat(val.updated_at)}</td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p className={style1.action_button}
                                                 onClick={() => {
                                                     setSelectedGlobal(val);
                                                     setIsNewGlobalClick(true);

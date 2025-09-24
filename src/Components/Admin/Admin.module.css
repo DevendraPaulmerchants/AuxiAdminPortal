@@ -30,12 +30,12 @@
     gap: 10px;
 }
 
-.add_merchants_and_filter button {
+/* .add_merchants_and_filter button {
     padding: 5px 10px;
     cursor: pointer;
     width: fit-content;
     font-weight: 500;
-}
+} */
 
 .search_input_field input {
     border: none;
@@ -80,6 +80,14 @@
 
 .merchants_list_container tbody tr:last-child td {
     border-bottom: none;
+}
+.merchants_list_container tbody tr {
+    transition: all .3s ease-in-out;
+}
+.merchants_list_container tbody tr:hover {
+    background: rgba(38, 38, 38, 0.2);
+    transform: scale(1.01);
+    /* background: rgb(153, 209, 208,0.3); */
 }
 
 .pagination_parent {

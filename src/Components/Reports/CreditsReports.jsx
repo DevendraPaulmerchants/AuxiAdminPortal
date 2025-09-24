@@ -176,7 +176,7 @@ function CreditsReports() {
                             </select>
                         </div>
                         <div className={style1.transaction_record_download}>
-                            <IoMdDownload title='Download Records' onClick={downloadRecords} />
+                            <IoMdDownload title='Download Records' className={styles.action_button} onClick={downloadRecords} />
                         </div>
                     </div>
                     <div className={style.table_wrapper}>

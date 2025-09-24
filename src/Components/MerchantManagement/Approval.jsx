@@ -8,13 +8,6 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 function Approval() {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
   const { token } = useContextData();
   const [merchantPendingCreditList, setMerchantPendingCreditList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,8 +57,7 @@ function Approval() {
     navigate(`/requested_credits/${Id}`);
   }
 
-  return <>
-    <div className={style.merchants_parent}>
+  return <div className={style.merchants_parent}>
       <div className={style.merchants_parent_subheader}>
         <div className={style.search_input_field}>
           <input
@@ -119,8 +111,8 @@ function Approval() {
                       <td>{val.payment_status || "Pending"}</td>
                       <td>{val.approval_status || "Pending"}</td>
                       <td>
-                        <p style={{ cursor: "pointer", fontSize: "24px" }}
-                          onClick={() => { selectedCreditList(val.id); }}>
+                        <p className={style1.action_button}
+                          onClick={() => { selectedCreditList(val.id)}}>
                           <GoEye />
                         </p>
                       </td>
@@ -145,7 +137,7 @@ function Approval() {
       )}
     </div>
 
-  </>
+ 
 }
 
 export default Approval;

@@ -10,13 +10,6 @@ import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
 
 function UPI() {
-    useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
 
     const { token } = useContextData();
     const [UPIList, setUPIList] = useState(null);
@@ -153,16 +146,16 @@ function UPI() {
                                                     }}
                                                 />
                                             </td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p
                                                 onClick={() => {
                                                     setSelectedUPI(val);
                                                     setIsNewUPIClick(true);
                                                 }}
-                                            ><MdEdit /></p></td>
+                                            ><MdEdit className={style1.action_button}  /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="6" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

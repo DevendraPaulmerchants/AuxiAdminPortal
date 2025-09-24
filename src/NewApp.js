@@ -7,7 +7,6 @@ import NewLogIn from './Components/LogIn/NewLogIn';
 import NewHome from './Components/Home/NewHome';
 import Loader from './Components/Loader/Loader';
 
-// Lazy-loaded components
 const Layout = lazy(() => import('./Components/Layout/Layout'));
 const MerchantsList = lazy(() => import('./Components/MerchantManagement/MerchantsList'));
 const MerchantDetails = lazy(() => import('./Components/MerchantManagement/MerchantDetails'));

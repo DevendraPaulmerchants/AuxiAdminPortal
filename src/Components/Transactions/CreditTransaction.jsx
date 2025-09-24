@@ -17,7 +17,7 @@ import { useLocation } from 'react-router-dom';
 function CreditTransaction() {
 
   const { token } = useContextData();
-  const {state}=useLocation();
+  const { state } = useLocation();
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isloading, setIsLoading] = useState(false);
@@ -28,7 +28,7 @@ function CreditTransaction() {
   const [endDate, setEndDate] = useState('');
   const [direction, setDirection] = useState("");
   const [transactionType, setTransactionType] = useState(state || "");
-  const [accountStatus,setAccountStatus]=useState('');
+  const [accountStatus, setAccountStatus] = useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
@@ -81,20 +81,20 @@ function CreditTransaction() {
     }
   };
 
- const paginatedList = pagesData?.filter((list) => {
-  const name = list?.customer_name?.toLowerCase() || '';
-  const id = String(list?.order_id || '').toLowerCase();
-  const listStatus = list?.status?.toLowerCase() || '';
+  const paginatedList = pagesData?.filter((list) => {
+    const name = list?.customer_name?.toLowerCase() || '';
+    const id = String(list?.order_id || '').toLowerCase();
+    const listStatus = list?.status?.toLowerCase() || '';
 
-  const matchesSearch =
-    name.includes(searchText.toLowerCase()) ||
-    id.includes(searchText.toLowerCase());
+    const matchesSearch =
+      name.includes(searchText.toLowerCase()) ||
+      id.includes(searchText.toLowerCase());
 
-  const matchesStatus =
-    !accountStatus || listStatus === accountStatus.toLowerCase();
+    const matchesStatus =
+      !accountStatus || listStatus === accountStatus.toLowerCase();
 
-  return matchesSearch && matchesStatus;
-}) || [];
+    return matchesSearch && matchesStatus;
+  }) || [];
 
 
   const closeDetailsPage = () => {
@@ -237,8 +237,8 @@ function CreditTransaction() {
               </thead>
               <tbody>
                 {paginatedList?.length > 0 ? (
-                  paginatedList?.map((val, id) => {
-                    return <tr key={id}>
+                  paginatedList?.map((val) => {
+                    return <tr key={val.id}>
                       <td>XXXX{val.order_id?.slice(-4)}
                         <MdContentCopy
                           style={{ cursor: "pointer" }}
@@ -253,9 +253,11 @@ function CreditTransaction() {
                       <td>{val.transaction_type}</td>
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>
-                        {val.status === "COMPLETED" && <FcOk title='Completed' />}
-                        {val.status === "PENDING" && <FcClock title='Pending' />}
-                        {val.status === "FAILED" && <FcCancel title='Failed' />}
+                        <p className={styles.action_button} title={val.status}>
+                          {val.status === "COMPLETED" && <FcOk />}
+                          {val.status === "PENDING" && <FcClock />}
+                          {val.status === "FAILED" && <FcCancel />}
+                        </p>
                       </td>
                     </tr>
                   })

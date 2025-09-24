@@ -2,13 +2,13 @@
     0% {
         opacity: 0.6;
         width: 10%;
-        max-height: 50%;
+        /* max-height: 50%; */
     }
 
     100% {
         opacity: 1;
         width: 75%;
-        max-height: 90%;
+        /* max-height: 90%; */
     }
 }
 
@@ -20,7 +20,6 @@
     left: 0;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(1px);
-
 }
 
 .add_merchants_form_container {
@@ -32,7 +31,6 @@
     padding: 0px 1rem 10px;
     border-radius: 5px;
     width: 75%;
-    height: fit-content;
     max-height: 90%;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -160,6 +158,21 @@
     padding: 5px 20px;
     width: 100%;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.primary_login_btn:hover {
+    transform: scale(1.05);
+}
+
+.action_button {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.action_button:hover {
+    transform: scale(1.5);
 }
 
 .merchant_details_page_table {

@@ -8,14 +8,6 @@ import UpdateMetal from './UpdateMetal';
 import { useContextData } from '../Context/Context';
 
 function Metal() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, [])
-
     const { token } = useContextData();
     const [metalList, setmetalList] = useState(null);
     const [selectedMetal, setSelectedMetal] = useState(null);
@@ -118,8 +110,8 @@ function Metal() {
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.map((val) => {
+                                        return <tr key={val.id}>
                                             <td>{val?.metal_type}</td>
                                             <td>{val?.total_physical_weight}</td>
                                             <td>{val?.digital_equivalent_weight}</td>
@@ -129,7 +121,7 @@ function Metal() {
                                             <td>{val?.storage_location}</td>
                                             <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
                                             <td>
-                                                <p style={{ cursor: "pointer", fontSize: "16px" }}
+                                                <p className={style1.action_button}
                                                     onClick={(e) => { openCreditMenu(e); setSelectedMetal(val) }}
                                                 >
                                                     <IoEye />
@@ -138,7 +130,7 @@ function Metal() {
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="9" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

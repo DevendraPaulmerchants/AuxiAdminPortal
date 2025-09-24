@@ -109,7 +109,7 @@ const SideBar = ({ open, handleLogOut }) => {
             <div className={style.sidebar_logout_btn_container}>
                 {!open ? <button className={style.sidebar_logout_btn_icon_only}
                     onClick={handleLogOut}
-                ><MdLogout /></button> :
+                ><MdLogout title='LogOut' /></button> :
                     <button className={style.sidebar_logout_btn}
                         onClick={handleLogOut}
                     >

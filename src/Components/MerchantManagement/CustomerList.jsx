@@ -287,7 +287,7 @@ function CustomerList() {
                                                 />
                                             </td>
                                             <td>
-                                                <p style={{ cursor: "pointer" }}
+                                                <p className={style1.action_button}
                                                     onClick={() => {
                                                         openDPage(val);
                                                     }}
@@ -299,7 +299,7 @@ function CustomerList() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="7" style={{ textAlign: "center" }}>
+                                        <td colSpan="8" style={{ textAlign: "center" }}>
                                             No Data Found
                                         </td>
                                     </tr>

@@ -9,13 +9,6 @@ import { useContextData } from '../Context/Context';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function MerchantMargin() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, []);
 
     const { token } = useContextData();
     const location=useLocation();
@@ -109,7 +102,7 @@ function MerchantMargin() {
                                     <th>Scheme Name</th>
                                     <th>Gold Margin(%)</th>
                                     <th>Silver Margin(%)</th>
-                                    <th>Platinum Margin(%)</th>
+                                    {/* <th>Platinum Margin(%)</th> */}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -143,16 +136,16 @@ function MerchantMargin() {
                                                 </td>
                                             ))}
 
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p 
                                                 onClick={() => {
                                                     setSelectedmerchantMargin(val);
                                                     setIsNewmerchantMarginClick(true);
                                                 }}
-                                            ><MdEdit /></p></td>
+                                            ><MdEdit className={style1.action_button} /></p></td>
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="4" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

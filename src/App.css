@@ -1,5 +1,5 @@
 * {
-  font-family: "Poppins", serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   margin: 0;
   padding: 0;
@@ -37,4 +37,13 @@
 
 .react-datepicker__navigation-icon {
   position: unset !important;
+}
+
+/* ------------ Joy button ------ */
+.css-lbfu2t-JoyMenuButton-root {
+    border: transparent !important;
+}
+
+.css-lbfu2t-JoyMenuButton-root:hover {
+    background: transparent !important;
 }

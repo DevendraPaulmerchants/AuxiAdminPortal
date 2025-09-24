@@ -28,7 +28,7 @@ function GoldTransaction() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [transactionType, setTransactionType] = useState(state || "");
-  const [accountStatus,setAccountStatus]=useState('');
+  const [accountStatus, setAccountStatus] = useState('');
   const [direction, setDirection] = useState('');
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
@@ -82,20 +82,20 @@ function GoldTransaction() {
     }
   };
 
-const paginatedList = pagesData?.filter((list) => {
-  const name = list?.customer_name?.toLowerCase() || '';
-  const id = String(list?.customer_id || '').toLowerCase();
-  const listStatus = list?.order_status?.toLowerCase() || '';
+  const paginatedList = pagesData?.filter((list) => {
+    const name = list?.customer_name?.toLowerCase() || '';
+    const id = String(list?.customer_id || '').toLowerCase();
+    const listStatus = list?.order_status?.toLowerCase() || '';
 
-  const matchesSearch =
-    name.includes(searchText.toLowerCase()) ||
-    id.includes(searchText.toLowerCase());
+    const matchesSearch =
+      name.includes(searchText.toLowerCase()) ||
+      id.includes(searchText.toLowerCase());
 
-  const matchesStatus =
-    !accountStatus || listStatus === accountStatus.toLowerCase();
+    const matchesStatus =
+      !accountStatus || listStatus === accountStatus.toLowerCase();
 
-  return matchesSearch && matchesStatus;
-}) || [];
+    return matchesSearch && matchesStatus;
+  }) || [];
 
 
   const closeDetailsPage = () => {
@@ -244,8 +244,8 @@ const paginatedList = pagesData?.filter((list) => {
               </thead>
               <tbody>
                 {paginatedList?.length > 0 ? (
-                  paginatedList?.map((val, id) => {
-                    return <tr key={id}>
+                  paginatedList?.map((val) => {
+                    return <tr key={val.id}>
                       <td>XXXX{val.order_id?.slice(-4)}<MdContentCopy
                         style={{ cursor: "pointer" }}
                         onClick={() => handleCopy(val.order_id)}
@@ -257,18 +257,18 @@ const paginatedList = pagesData?.filter((list) => {
                       <td>{val.order_type}</td>
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
-                      <td>
-                        {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
-                        {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
-                        {val.order_status === "FAILED" && <FcCancel title='Failed' />}
+                      <td title={val.order_status}>
+                        {val.order_status === "COMPLETED" && <FcOk />}
+                        {val.order_status === "PENDING" && <FcFlashOn />}
+                        {val.order_status === "FAILED" && <FcCancel />}
                       </td>
-                      <td><p style={{ cursor: "pointer" }}>
+                      <td><p className={styles.action_button}>
                         <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />
                       </p></td>
                     </tr>
                   })
                 ) : <tr>
-                  <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
+                  <td colSpan="9" style={{ textAlign: "center" }}>No Data Found</td>
                 </tr>
                 }
               </tbody>

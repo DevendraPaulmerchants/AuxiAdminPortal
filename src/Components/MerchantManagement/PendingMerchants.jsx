@@ -130,7 +130,7 @@ function PendingMerchants() {
                                             <td>
                                                 <Switch checked={val.status === "active"} />
                                             </td>
-                                            <td><p style={{ cursor: "pointer" }}
+                                            <td><p className={style1.action_button}
                                                 onClick={() => selectedMerchant(val.merchant_id, val.verification_status)}
                                             ><GoEye /></p></td>
                                         </tr>

@@ -76,8 +76,7 @@ function Support() {
     navigate(`/support/${Id}`);
   }
 
-  return <>
-    <div className={style.merchants_parent}>
+  return <div className={style.merchants_parent}>
       <div className={style.merchants_parent_subheader}>
         <div className={style.search_input_field}>
           <input
@@ -156,10 +155,10 @@ function Support() {
                     <td>{val.priority}</td>
                     <td>{val.status}</td>
                     <td>
-                      <p style={{ cursor: "pointer", fontSize: "24px" }}
+                      <p 
                         onClick={() => { selectedSupportList(val.ticketId); }}
                       >
-                        <GoEye title='see details' />
+                        <GoEye title='see details' className={style1.action_button}  />
                       </p>
                     </td>
                   </tr>
@@ -182,8 +181,6 @@ function Support() {
         </>
       )}
     </div>
-
-  </>
 }
 
 export default Support;
