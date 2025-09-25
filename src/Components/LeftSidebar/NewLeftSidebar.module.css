@@ -85,12 +85,6 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
-.sidebar_item_parent p {
-    color: #8D9F9B;
-    font-size: 18px;
-    font-weight: 500;
-}
-
 .sidebar_item {
     display: flex;
     align-items: center;
@@ -261,4 +255,16 @@
 
 .sidebar_logout_btn_text {
     margin-bottom: 3px;
+}
+.drop_icon {
+    color: #8D9F9B;
+    font-size: 18px;
+    font-weight: 500;
+    transition: transform 0.3s ease-in-out;
+}
+.rotateby_0 {
+    transform: rotate(0deg);
+}
+.rotateby_180 {
+    transform: rotate(-180deg);
 }

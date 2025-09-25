@@ -234,7 +234,7 @@ function CustomerReports() {
                         {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
                         {val.order_status === "FAILED" && <FcCancel title='Failed' />}
                       </td>
-                      <td><p style={{ cursor: "pointer" }}>
+                      <td><p className={styles.action_button}>
                         <IoEye onClick={() => handleMoreDetails(val)} />
                       </p></td>
                     </tr>

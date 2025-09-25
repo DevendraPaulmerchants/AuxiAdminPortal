@@ -85,7 +85,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label htmlFor='bankName'>Bank Name</label>
+                            <label htmlFor='bankName'>Bank Name*</label>
                             <input 
                             type='text' 
                             required 
@@ -98,7 +98,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                     </div>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label htmlFor="branchName">Branch Name</label>
+                            <label htmlFor="branchName">Branch Name*</label>
                             <input
                                 id="branchName"
                                 type='text'
@@ -110,7 +110,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label htmlFor='accountNumber'>Account Number</label>
+                            <label htmlFor='accountNumber'>Account Number*</label>
                             <input 
                             type='text' 
                             required 
@@ -124,7 +124,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                     </div>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label htmlFor='IfscCode'>IFSC Code</label>
+                            <label htmlFor='IfscCode'>IFSC Code*</label>
                             <input 
                             type='text' 
                             required 
@@ -137,8 +137,8 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                             {!isIFSC && <p className={style.not_valid_text}>Please write valid IFSC Code..</p>}
                         </div>
                         <div className={style.name_label_input_contaner}>
-                            <label htmlFor='selectType'>Select Type</label>
-                            <select value={accountType} onChange={(e) => setAccountType(e.target.value)}>
+                            <label htmlFor='selectType'>Select Type*</label>
+                            <select value={accountType} required onChange={(e) => setAccountType(e.target.value)}>
                                 <option value="" disabled>Select A/C Type</option>
                                 <option value="savings">Saving</option>
                                 <option value="current">Current</option>

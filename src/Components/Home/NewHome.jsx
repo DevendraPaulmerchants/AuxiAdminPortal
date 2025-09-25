@@ -118,24 +118,26 @@ const NewHome = () => {
                         disabled={!startDate}
                         onChange={(e) => setEndDate(e.target.value)} />
                 </div>
-                <Select 
-                    placeholder="Select Merchant"
-                    sx={{width: 200 }}
-                    onChange={(e, value) => setSelectedMerchant(value)}
-                >
-                    <Option value="">All</Option>
-                    {merchant?.map((m) => (
-                        <Option key={m.id} value={m.id}>
-                            {m.merchant_name}
-                        </Option>
-                    ))}
-                </Select>
+                <div>
+                    <Select
+                        placeholder="Select Merchant"
+                        sx={{ width: 200 }}
+                        onChange={(e, value) => setSelectedMerchant(value)}
+                    >
+                        <Option value="">All</Option>
+                        {merchant?.map((m) => (
+                            <Option key={m.id} value={m.id}>
+                                {m.merchant_name}
+                            </Option>
+                        ))}
+                    </Select>
+                </div>
             </div>
             {isLoading ? <div className={style2.loader_container}>
                 <div className={style2.loader_item}></div></div> :
                 <div className={styles.grid}>
                     <div className={styles.card}>
-                        <p className={styles.label}><span className={styles.label_icon}>🧑‍💼</span> Merchant</p>
+                        <p className={styles.label}>🧑‍💼 Merchant</p>
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ALL";

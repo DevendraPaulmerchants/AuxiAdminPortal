@@ -128,8 +128,8 @@ function AddNewRefreshKey({ close, selectedRow, updateList }) {
                     </div>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
-                            <label>Description* </label>
-                            <textarea type='text' required placeholder='Enter bank holder name' minLength={3} maxLength={30} value={description}
+                            <label>Description </label>
+                            <textarea type='text' required placeholder='Enter bank holder name' minLength={3} maxLength={300} value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>

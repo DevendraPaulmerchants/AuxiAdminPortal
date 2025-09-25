@@ -6,15 +6,10 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { MdEdit } from 'react-icons/md';
 import AddNewRefreshKey from './AddNewRefreshKey';
+import { dateAndTimeFormat, dateFormat } from '../../helperFunction/helper';
 
 function AutoRefreshList() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, [])
+
     const { token } = useContextData();
     const [searchText, setSearchText] = useState("");
     const [merchantList, setMerchantList] = useState(null);
@@ -123,26 +118,21 @@ function AutoRefreshList() {
                                             <tr key={id} className={style1.full_width_row}>
                                                 <td>{val.key}</td>
                                                 <td>
-                                                    <p style={{ width: '200px', wordBreak: 'break-word' }}>
-                                                        {val?.value}
-                                                    </p>
+                                                    {val?.value}
                                                 </td>
-                                                <td><p style={{ width: '100px' }}>
+                                                <td>
                                                     {val?.time_unit}
-                                                </p>
                                                 </td>
-                                                <td><p style={{ width: '200px' }}>
+                                                <td>
                                                     {val?.description}
-                                                </p>
                                                 </td>
-                                                <td>{val?.updated_at?.split("T")[0]}</td>
+                                                <td>{dateFormat(val?.updated_at)}</td>
                                                 <td>{val?.updated_by}</td>
                                                 <td>
-                                                    <p
-                                                        className={style1.edit_icon}
+                                                    <p className={style1.action_button}
                                                         onClick={() => setSelectedRow(val)}
                                                     >
-                                                        <MdEdit />
+                                                        <MdEdit  />
                                                     </p>
                                                 </td>
                                             </tr>

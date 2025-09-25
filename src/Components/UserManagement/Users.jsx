@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
 import style from "../Admin/Admin.module.css";
-// import style1 from "../Merchants/Merchants.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import Switch from '@mui/material/Switch';
 import AddUser from "./AddNewUser";
@@ -12,14 +11,6 @@ import { dateFormat } from "../../helperFunction/helper";
 // import AddNewuser from "./Newuser";
 
 const Users = () => {
-     useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-
-    }, [])
     const {token}=useContextData();
     const [searchText, setSearchText] = useState("");
     const [userList, setuserList] = useState(null);
@@ -130,13 +121,13 @@ const Users = () => {
                                         {/* <td>{val.last_login_at?.split("T")[0]}</td> */}
                                         {/* <td>{val.created_at.split("T")[0]}</td> */}
                                         {/* <td>{val.updated_at.split("T")[0]}</td> */}
-                                        <td><p style={{ cursor: "pointer" }}
+                                        <td><p className={style1.action_button}
                                             onClick={() => setSelecteduser(val)}
                                         ><MdEdit /></p></td>
                                     </tr>
                                 })
                             ) : <tr>
-                                <td colSpan="7" style={{ textAlign: "center" }}>No Data Found</td>
+                                <td colSpan="8" style={{ textAlign: "center" }}>No Data Found</td>
                             </tr>
                             }
                         </tbody>

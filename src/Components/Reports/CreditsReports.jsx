@@ -197,8 +197,8 @@ function CreditsReports() {
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.map((val) => {
+                                        return <tr key={val.id}>
                                             <td>XXXX{val.order_id?.slice(-4)}</td>
                                             <td>{dateAndTimeFormat(val.created_at)}</td>
                                             <td>{val.merchant_name}</td>
@@ -208,11 +208,13 @@ function CreditsReports() {
                                             <td>{val.description}</td>
                                             <td>{val.remaining_credits}</td>
                                             <td>
+                                                <p >
                                                 {val.status === "COMPLETED" && <FcOk title='Completed' />}
                                                 {val.status === "PENDING" && <FcFlashOn title='Pending' />}
                                                 {val.status === "FAILED" && <FcCancel title='Failed' />}
+                                                </p>
                                             </td>
-                                            <td><p style={{ cursor: "pointer" }}>
+                                            <td><p className={styles.action_button}>
                                                 <IoEye />
                                             </p></td>
                                         </tr>

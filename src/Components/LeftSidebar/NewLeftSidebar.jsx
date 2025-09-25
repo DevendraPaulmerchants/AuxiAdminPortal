@@ -42,7 +42,7 @@ const SideBar = ({ open, handleLogOut }) => {
                                     <span className={style.sidebar_icon}>{item.icon}</span>
                                     <span className={open ? style.sidebar_item_name : style.sidebar_item_name_collapsed}>{item.name}</span>
                                 </div>
-                                <p>{openDropdown === item.name ? <FiChevronDown /> : <FiChevronRight />}</p>
+                                <p className={`${openDropdown === item.name ? style.rotateby_180:style.rotateby_0} ${style.drop_icon}`}><FiChevronDown /></p>
                             </div>
                         ) : (
                             <NavLink
@@ -81,7 +81,7 @@ const SideBar = ({ open, handleLogOut }) => {
                                     <span className={style.sidebar_icon}>{item.icon}</span>
                                     <span className={open ? style.sidebar_item_name : style.sidebar_item_name_collapsed}>{item.name}</span>
                                 </div>
-                                <p>{openDropdown === item.name ? <FiChevronDown /> : <FiChevronRight />}</p>
+                                <p className={`${openDropdown === item.name ? style.rotateby_180:style.rotateby_0} ${style.drop_icon}`}><FiChevronDown /></p>
                             </div>
                         ) : (
                             <NavLink
