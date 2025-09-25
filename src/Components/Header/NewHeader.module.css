@@ -11,7 +11,12 @@
 .header_collapse_icon {
     cursor: pointer;
     color: #1F342F;
+    transition: transform 0.3s ease-in-out;
 }
+.header_collapse_icon:hover {
+  transform: scale(1.2);
+}
+
 .header_logo_container {
     display: flex;
     align-items: center;

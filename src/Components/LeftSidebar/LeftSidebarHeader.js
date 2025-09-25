@@ -88,7 +88,7 @@ import { VscKey } from "react-icons/vsc";
             { name: "Credits Report", path: '/credits-report', icon: <TbReportMoney title='Credits Report' /> },
         ]
     },
-    { name: "Users", path: '/user_list', icon: <HiOutlineUsers title='Portal Users' /> },
+    { name: "Portal Users", path: '/user_list', icon: <HiOutlineUsers title='Portal Users' /> },
     // {
     //     name: "Env Setup",
     //     path: "/refresh_rate",

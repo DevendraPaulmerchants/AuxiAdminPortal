@@ -135,7 +135,7 @@ const NewHome = () => {
                 <div className={style2.loader_item}></div></div> :
                 <div className={styles.grid}>
                     <div className={styles.card}>
-                        <p className={styles.label}>🧑‍💼 Merchant</p>
+                        <p className={styles.label}><span className={styles.label_icon}>🧑‍💼</span> Merchant</p>
                         <div className={styles.value_container}
                             onClick={(e) => {
                                 const active = "ALL";

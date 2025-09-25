@@ -38,7 +38,7 @@ const SideBar = ({ open, handleLogOut }) => {
                     <div className={`${style.sidebar_item_container} ${openDropdown === item.name ? style.horizontal_line : ''}`} key={i}>
                         {item.path === '--' ? (
                             <div className={`${style.sidebar_item_parent}`} onClick={() => handleDropdownClick(item.name)}>
-                                <div className={style.sidebar_item}>
+                                <div className={style.sidebar_item_without_route}>
                                     <span className={style.sidebar_icon}>{item.icon}</span>
                                     <span className={open ? style.sidebar_item_name : style.sidebar_item_name_collapsed}>{item.name}</span>
                                 </div>
@@ -77,7 +77,7 @@ const SideBar = ({ open, handleLogOut }) => {
                     <div className={`${style.sidebar_item_container} ${openDropdown === item.name ? style.horizontal_line : ''}`} key={i}>
                         {item.path === '--' ? (
                             <div className={`${style.sidebar_item_parent}`} onClick={() => handleDropdownClick(item.name)}>
-                                <div className={style.sidebar_item}>
+                                <div className={style.sidebar_item_without_route}>
                                     <span className={style.sidebar_icon}>{item.icon}</span>
                                     <span className={open ? style.sidebar_item_name : style.sidebar_item_name_collapsed}>{item.name}</span>
                                 </div>

@@ -77,6 +77,12 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    transition: transform .3s ease-in-out, background .3s ease-in-out;
+}
+
+.sidebar_item_parent:hover {
+    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar_item_parent p {
@@ -90,9 +96,23 @@
     align-items: center;
     gap: 10px;
     padding: 5px 0px 5px 20px;
-    /* cursor: pointer; */
     color: #8D9F9B;
     text-decoration: none;
+    transition: transform .3s ease-in-out;
+}
+
+.sidebar_item_without_route {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0px 5px 20px;
+    color: #8D9F9B;
+    text-decoration: none;
+}
+
+.sidebar_item:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar_item_more {
@@ -120,6 +140,11 @@
 
 .sidebar_icon {
     font-size: 18px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar_icon:hover {
+    transform: scale(1.5);
 }
 
 .sidebar_item_name {
@@ -165,6 +190,13 @@
     color: #8D9F9B;
     text-decoration: none;
     position: relative;
+    transition: transform .3s ease-in-out, background .3s ease-in-out;
+}
+
+.sub_item:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+
 }
 
 .sub_item::before {
@@ -203,10 +235,14 @@
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
 }
-.sidebar_logout_btn:hover, .sidebar_logout_btn_icon_only:hover {
+
+.sidebar_logout_btn:hover,
+.sidebar_logout_btn_icon_only:hover {
     transform: scale(1.1);
 }
+
 .sidebar_logout_btn_icon_only {
+    transition: transform 0.3s ease-in-out;
     cursor: pointer;
     color: #8D9F9B;
     background: #8D9F9B33;
