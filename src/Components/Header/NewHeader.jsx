@@ -32,9 +32,12 @@ const NewHeader = ({ handleOpen, handleLogOut }) => {
                                 <p className={style.user_role}>Admin</p>
                             </pre>
                         </MenuButton>
-                        <Menu>
-                            <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
-
+                        <Menu sx={{
+                            padding:'0'
+                        }}>
+                            <MenuItem onClick={handleLogOut} sx={{
+                                padding:'0px 15px'
+                            }}>LogOut</MenuItem>
                         </Menu>
                     </Dropdown>
                 </div>

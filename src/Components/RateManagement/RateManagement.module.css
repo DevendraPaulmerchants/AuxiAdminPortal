@@ -1,0 +1,16 @@
+.metal_and_rate {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.metal_and_rate h3 {
+    width: 100px;
+}
+.metal_and_rate input {
+    outline: none;
+    border: 1px solid rgba(38, 38, 38, 0.4);
+    border-radius: 5px;
+    padding: 5px 5px 5px 10px;
+    width: 80%;
+    color: #000;
+}

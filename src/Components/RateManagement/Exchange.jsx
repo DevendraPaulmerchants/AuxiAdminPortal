@@ -5,11 +5,13 @@ import style1 from "../MerchantManagement/Merchants.module.css";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
+import AddNewRate from './AddNewRate';
 
 function Exchange() {
     const { token } = useContextData();
     const [exchangeList, setexchangeList] = useState(null);
     const [searchText, setSearchText] = useState("");
+    const [addManual, setAddManual] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 15;
@@ -43,7 +45,7 @@ function Exchange() {
     // Ensure exchangeList is always an array for filtering
     const safeExchangeList = Array.isArray(exchangeList) ? exchangeList : [];
 
-    const filteredList = safeExchangeList.filter((list) => list.source_name?.toLowerCase().includes(searchText.toLowerCase()));
+    const filteredList = safeExchangeList.filter((list) => list.metalType?.toLowerCase().includes(searchText.toLowerCase()));
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
@@ -56,21 +58,28 @@ function Exchange() {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-    return (
+    return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                <div className={style.search_input_field}>
+                {/* <div className={style.search_input_field}>
                     <input type='text' placeholder='Search by metal name...' maxLength={12} value={searchText}
                         onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                     <IoSearch />
-                </div>
+                </div> */}
                 <div>
                     <p>Metal rates fetched from the official source</p>
                 </div>
-                <div className={style.add_merchants_and_filter}>
+                <div className={style.add_merchants_and_filter} style={{ width: '300px' }}>
+                    <button className={style1.primary_login_btn}
+                        onClick={() => {
+                            console.log("Add manually");
+                            setAddManual(true)
+                        }}
+                    >Add Manually</button>
                     <button className={style1.primary_login_btn}
                         onClick={() => getexchangeLIst()}
                     >Refresh</button>
+
                 </div>
             </div>
             {isLoading ? <div className={style1.loader_container}>
@@ -94,31 +103,40 @@ function Exchange() {
                             </thead>
                             <tbody>
                                 {paginatedList ? (
-                                    // paginatedList?.map((val, id) => {
-                                    //     return 
-                                    <>
-                                        <tr >
-                                            <td>Gold</td>
-                                            <td>{exchangeList?.source}</td>
-                                            <td>{exchangeList?.source_url}</td>
-                                            <td>{exchangeList?.Purity}</td>
-                                            <td>gm</td>
-                                            <td>{exchangeList?.GoldRatePerGram}</td>
-                                            <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
-                                            {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
+                                    paginatedList?.map((val)=>(
+                                        <tr key={val.id} >
+                                            <td>{val.metalType}</td>
+                                            <td>{val.exchangeRate?.source_name}</td>
+                                            <td>{val.exchangeRate?.source_url}</td>
+                                            <td>{val.exchangeRate?.purity}</td>
+                                            <td>{val.exchangeRate?.unit}</td>
+                                            <td>{val.exchangeRate?.exchange_rate_to_inr}</td>
+                                            {/* <td>{val.exchangeRate?.RateDate} {exchangeList?.RateTime}</td> */}
+                                            <td>{dateAndTimeFormat(val.exchangeRate?.fetched_at)}</td>
                                         </tr>
-                                        <tr >
-                                            <td>Silver</td>
-                                            <td>{exchangeList?.source}</td>
-                                            <td>{exchangeList?.source_url}</td>
-                                            <td>{exchangeList?.Purity}</td>
-                                            <td>gm</td>
-                                            <td>{exchangeList?.SilverRatePerGram}</td>
-                                            <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
-                                            {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
-                                        </tr>
-                                    </>
-                                    // })
+                                    ))
+                                    // <>
+                                    //     <tr >
+                                    //         <td>Gold</td>
+                                    //         <td>{exchangeList?.source}</td>
+                                    //         <td>{exchangeList?.source_url}</td>
+                                    //         <td>{exchangeList?.Purity}</td>
+                                    //         <td>gm</td>
+                                    //         <td>{exchangeList?.GoldRatePerGram}</td>
+                                    //         <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
+                                    //         {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
+                                    //     </tr>
+                                    //     <tr >
+                                    //         <td>Silver</td>
+                                    //         <td>{exchangeList?.source}</td>
+                                    //         <td>{exchangeList?.source_url}</td>
+                                    //         <td>{exchangeList?.Purity}</td>
+                                    //         <td>gm</td>
+                                    //         <td>{exchangeList?.SilverRatePerGram}</td>
+                                    //         <td>{exchangeList?.RateDate} {exchangeList?.RateTime}</td>
+                                    //         {/* <td>{dateAndTimeFormat(val?.fetched_at)}</td> */}
+                                    //     </tr>
+                                    // </>
                                 ) : <tr>
                                     <td colSpan="7">No Data Found</td>
                                 </tr>
@@ -136,7 +154,9 @@ function Exchange() {
                 </>
             }
         </div>
-    )
+        {addManual && <AddNewRate close={()=>setAddManual(false)}/>}
+    </>
+    
 }
 
 export default Exchange;

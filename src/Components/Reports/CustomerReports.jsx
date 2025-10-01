@@ -14,14 +14,6 @@ import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function CustomerReports() {
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, [])
-
   const { token } = useContextData();
   const [creditsData, setCreditsData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -42,7 +34,7 @@ function CustomerReports() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const url = `${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
+        const url = `${APIPATH}/api/v1/admin/reports/customer-transactions?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
         const res = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -97,7 +89,8 @@ function CustomerReports() {
   const paginatedList = creditsData?.filter((list) => {
     const name = list?.customer_name?.toLowerCase() || '';
     const id = String(list?.order_id || '').toLowerCase();
-    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+    const custId=String(list?.customer_id || '').toLowerCase();
+    return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase()) || custId.includes(searchText.toLowerCase());
   }) || [];
 
   // Pagination Logic Next button ------------------------------------
@@ -156,14 +149,14 @@ function CustomerReports() {
         <>
           <div className={style.merchants_parent_subheader}>
             <div className={style.search_input_field}>
-              <input type='text' placeholder='Search by customer' maxLength={12} value={searchText}
+              <input type='text' placeholder='Search by orderId/customerId' maxLength={20} value={searchText}
                 onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
               <IoSearch />
             </div>
             <div className={style1.start_date_and_end_date}>
-              <div>
+              {/* <div>
                 <p>Filter:</p>
-              </div>
+              </div> */}
               <div>
                 <DatePicker className={style1.date_input}
                   placeholderText='Select start date'
@@ -201,9 +194,9 @@ function CustomerReports() {
             <table className={style.merchants_list_container}>
               <thead>
                 <tr>
-                  <th>Txn. Id</th>
+                  <th>Order Id</th>
                   <th>Date & Time</th>
-                  <th>Customer Name</th>
+                  <th>Customer Id</th>
                   <th>Merchant Name</th>
                   <th>Txn. Type</th>
                   <th>Metal</th>
@@ -217,11 +210,11 @@ function CustomerReports() {
               </thead>
               <tbody>
                 {paginatedList?.length > 0 ? (
-                  paginatedList?.map((val, id) => {
-                    return <tr key={id}>
+                  paginatedList?.map((val) => {
+                    return <tr key={val.id}>
                       <td>XXXX{val.order_id?.slice(-4)}</td>
                       <td>{dateAndTimeFormat(val.created_at)}</td>
-                      <td>{val.customer_name}</td>
+                      <td>{val.customer_id}</td>
                       <td>{val.merchant_name}</td>
                       <td>{val.order_type}</td>
                       <td>{val.metal_type}</td>
@@ -234,9 +227,9 @@ function CustomerReports() {
                         {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
                         {val.order_status === "FAILED" && <FcCancel title='Failed' />}
                       </td>
-                      <td><p className={styles.action_button}>
+                      <td><button className={styles.action_button}>
                         <IoEye onClick={() => handleMoreDetails(val)} />
-                      </p></td>
+                      </button></td>
                     </tr>
                   })
                 ) : <tr>

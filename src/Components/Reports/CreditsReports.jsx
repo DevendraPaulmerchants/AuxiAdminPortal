@@ -31,7 +31,7 @@ function CreditsReports() {
         setIsLoading(true);
         const fetchData = async () => {
             try {
-                const url = `${APIPATH}/api/v1/admin/reports/credit-ledger?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
+                const url = `${APIPATH}/api/v1/admin/reports/credit-ledger?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
                 const res = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -86,6 +86,7 @@ function CreditsReports() {
         const id = String(list?.order_id || '').toLowerCase();
         return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
     }) || [];
+    
     // ------------------ Pagination Logic and Next Button ------------------
     const handleNext = () => {
         if (nextCursor) {
@@ -132,20 +133,19 @@ function CreditsReports() {
         }
     }
 
-    return <>
-        <div className={style.merchants_parent}>
+    return <div className={style.merchants_parent}>
             {isloading ? <div className={styles.loader_container}><div className={styles.loader_item}></div></div> :
                 <>
                     <div className={style.merchants_parent_subheader}>
                         <div className={style.search_input_field}>
-                            <input type='text' placeholder='Search by Merchant' maxLength={12} value={searchText}
+                            <input type='text' placeholder='Search by OrderId' maxLength={20} value={searchText}
                                 onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                             <IoSearch />
                         </div>
                         <div className={style1.start_date_and_end_date}>
-                            <div>
+                            {/* <div>
                                 <p>Filter:</p>
-                            </div>
+                            </div> */}
                             <div>
                                 <DatePicker className={style1.date_input}
                                     placeholderText='Select start date'
@@ -183,7 +183,7 @@ function CreditsReports() {
                         <table className={style.merchants_list_container}>
                             <thead>
                                 <tr>
-                                    <th>Txn. Id</th>
+                                    <th>Order Id</th>
                                     <th>Date & Time</th>
                                     <th>Merchant Name</th>
                                     <th>Type</th>
@@ -235,7 +235,7 @@ function CreditsReports() {
                 </>
             }
         </div>
-    </>
+    
 }
 
 export default CreditsReports

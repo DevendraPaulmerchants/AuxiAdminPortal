@@ -7,7 +7,7 @@ const IST_TIMEZONE = "Asia/Kolkata";
 export const dateAndTimeFormat = (str) => {
   if (!str) return "";
   const utcDate = new Date(str); // backend UTC date
-  const istDate = toZonedTime(utcDate, IST_TIMEZONE); // convert to IST
+  const istDate = toZonedTime(utcDate, IST_TIMEZONE); 
   return format(istDate, "dd MMM yyyy HH:mm:ss");
 };
 

@@ -12,6 +12,7 @@ const MerchantsList = lazy(() => import('./Components/MerchantManagement/Merchan
 const MerchantDetails = lazy(() => import('./Components/MerchantManagement/MerchantDetails'));
 const PendingMerchants = lazy(() => import('./Components/MerchantManagement/PendingMerchants'));
 const PendingMerchantDetails = lazy(() => import('./Components/MerchantManagement/PendingMerchantDetails'));
+const PayoutRequest =lazy(()=>import('./Components/MerchantManagement/PayoutRequest'))
 const CustomerList = lazy(() => import('./Components/MerchantManagement/CustomerList'));
 const Credits = lazy(() => import('./Components/MerchantManagement/Credits'));
 const CreditDetails = lazy(() => import('./Components/MerchantManagement/CreditDetails'));
@@ -82,11 +83,13 @@ function App() {
                   <Route path="/approved-merchants/:merchantId" element={<MerchantDetails />} />
                   <Route path="/pending_merchants" element={<PendingMerchants />} />
                   <Route path="/pending_merchants/:Id" element={<PendingMerchantDetails />} />
-                  <Route path='/customer_list' element={<CustomerList />} />
                   <Route path='/approved_credits' element={<Credits />} />
                   <Route path='/requested_credits' element={<Approval />} />
                   <Route path='/requested_credits/:id' element={<CreditDetails />} />
                   <Route path='/merchant_api' element={<APIKey />} />
+                  {/* ------------- Customer Services --------- */}
+                  <Route path='/customer_list' element={<CustomerList />} />
+                  <Route path='/payout_request' element={<PayoutRequest/>}/>
                   {/* Users */}
                   <Route path='/user_list' element={<Users />} />
                   {/* Transactions */}

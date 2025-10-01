@@ -13,9 +13,10 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { dateFormat } from '../../helperFunction/helper';
 import { MdContentCopy } from 'react-icons/md';
+import PayoutForm from './PayoutForm';
 
 
-function CustomerList() {
+function PayoutRequest() {
     const { token } = useContextData();
     const { state } = useLocation();
     const [customer, setCustomer] = useState([]);
@@ -29,7 +30,7 @@ function CustomerList() {
     const [isLoading, setIsLoading] = useState(true);
     const [openDetailPage, setOpenDetailPage] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const rowsPerPage = 10;
+    // const rowsPerPage = 10;
 
     const [direction, setDirection] = useState('');
     const [cursors, setCursors] = useState('');
@@ -39,7 +40,7 @@ function CustomerList() {
     const fetchCustomers = async () => {
         setIsLoading(true)
         try {
-            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&account_status=${accountStatus}&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}`;
+            const url = `${APIPATH}/api/v1/admin/transactions/withdraw-requests?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}&limit=null`;
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -49,6 +50,7 @@ function CustomerList() {
                 mode: 'cors'
             });
             const result = await response.json();
+            console.log(result.data)
             setCustomer(result.data);
             setNextCursor(result.hasNextPage ? result.nextCursor : '');
             setPrevCursor(result.hasPrevPage ? result.prevCursor : '');
@@ -181,7 +183,7 @@ function CustomerList() {
                 <div className={style.search_input_field}>
                     <input
                         type="text"
-                        placeholder="Search by customer name.."
+                        placeholder="Search by customerId"
                         maxLength={12}
                         value={searchText}
                         onChange={(e) => {
@@ -240,14 +242,13 @@ function CustomerList() {
                         <table className={style.merchants_list_container}>
                             <thead>
                                 <tr>
+                                    <th>Order Id</th>
                                     <th>Customer Id</th>
-                                    <th>Name</th>
-                                    {/* <th>Email</th> */}
-                                    <th>Mobile</th>
-                                    <th>Merchant Name</th>
+                                    <th>Acc No./UPI</th>
+                                    <th>IFSC</th>
                                     <th>Create At</th>
-                                    <th>KYC Status</th>
-                                    <th>A/C Status</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
                                     <th>More</th>
                                 </tr>
                             </thead>
@@ -255,30 +256,30 @@ function CustomerList() {
                                 {filteredList.length > 0 ? (
                                     filteredList.map((val) => (
                                         <tr key={val.id}>
-                                            <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy
+                                            <td>XXXX{(val.order_id).slice(-4)}<MdContentCopy
                                                 style={{ cursor: "pointer" }}
-                                                onClick={() => handleCopy(val.customer_id)}
+                                                onClick={() => handleCopy(val.order_id)}
                                                 title="Copy Customer Id"
                                             /></td>
-                                            <td>{val.full_name || val.first_name}</td>
-                                            {/* <td>{val.email}</td> */}
-                                            <td>{val.phone}</td>
-                                            <td>{val.merchant_name}</td>
+                                            <td>XXXX{(val.customer_id || val.id)}</td>
+                                            <td>{val.account_number || val.upi}</td>
+                                            <td>{val.ifsc_code}</td>
                                             <td>{dateFormat(val.created_at)}</td>
-                                            <td>{val.kyc_status}</td>
-                                            <td>
+                                            <td>{val.amount}</td>
+                                            <td>{val.status}</td>
+                                            {/* <td>
                                                 <Switch checked={val.account_status === 'ACTIVE'}
                                                     onClick={() => changeStatusOfCustomer(val.customer_id, val.account_status)}
                                                 />
-                                            </td>
+                                            </td> */}
                                             <td>
-                                                <p className={style1.action_button}
+                                                <button className={style1.action_button}
                                                     onClick={() => {
                                                         openDPage(val);
                                                     }}
                                                 >
                                                     <IoMdEye />
-                                                </p>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))
@@ -299,9 +300,9 @@ function CustomerList() {
                     </div>
                 </>
             }
-            {openDetailPage && <CustomerDetails close={closeDPage} selectedCustomer={selectedCustomer} />}
+            {openDetailPage && <PayoutForm close={closeDPage} selectedCustomer={selectedCustomer} />}
         </div>
     );
 }
 
-export default CustomerList;
+export default PayoutRequest;

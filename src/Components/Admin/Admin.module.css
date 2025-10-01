@@ -1,8 +1,18 @@
+@keyframes opacity_0to_100 {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .merchants_parent {
     height: calc(100vh - 8rem);
     background: rgba(72, 193, 181, 0.08);
     border-radius: 5px;
     padding: 1rem;
+    animation:opacity_0to_100 0.6s ease-out ;
 }
 
 .merchants_parent_subheader {
@@ -40,6 +50,7 @@
 .search_input_field input {
     border: none;
     outline: none;
+    min-width: 200px;
 }
 
 .merchants_list_container {

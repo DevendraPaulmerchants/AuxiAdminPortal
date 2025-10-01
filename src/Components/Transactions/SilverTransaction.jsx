@@ -171,7 +171,7 @@ function SilverTransaction() {
 
       <div className={style.merchants_parent_subheader}>
         <div className={style.search_input_field}>
-          <input type='text' placeholder='Search by customer' maxLength={12} value={searchText}
+          <input type='text' placeholder='Search by customer' maxLength={20} value={searchText}
             onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
           <IoSearch />
         </div>

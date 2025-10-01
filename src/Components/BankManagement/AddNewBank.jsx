@@ -103,7 +103,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                                 id="branchName"
                                 type='text'
                                 required
-                                placeholder='Enter descriptions'
+                                placeholder='Enter Branch name'
                                 maxLength={150}
                                 value={branchName}
                                 onChange={(e) => setBranchName(e.target.value)}
@@ -114,7 +114,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                             <input 
                             type='text' 
                             required 
-                            placeholder='Enter descriptions' 
+                            placeholder='Enter Account number' 
                             minLength={8} 
                             maxLength={18} 
                             value={accountNumber}
@@ -128,7 +128,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                             <input 
                             type='text' 
                             required 
-                            placeholder='Enter descriptions' 
+                            placeholder='Enter IFSC' 
                             minLength={11} 
                             maxLength={11} 
                             value={ifscCode}

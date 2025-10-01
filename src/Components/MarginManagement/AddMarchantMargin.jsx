@@ -105,8 +105,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
     }
 
 
-    return <>
-        <div className={style.add_merchants_parent}>
+    return <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
                     {selectedAccount ? <h2>Edit Existing Scheme</h2> : <h2>Create New Scheme</h2>}
@@ -228,7 +227,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    
 }
 
 export default AddMarchantMargin;

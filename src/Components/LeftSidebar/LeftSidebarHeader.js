@@ -14,7 +14,7 @@ import { RxDashboard } from "react-icons/rx";
 import { TbCurrencyDollar, TbCurrencyDollarOff, TbFileDollar, TbReportMoney, TbUserSearch } from "react-icons/tb";
 import { VscKey } from "react-icons/vsc";
 
- export const sidebarItems = [
+export const sidebarItems = [
     { name: "Dashboard", path: '/', icon: <RxDashboard title='Dashboard' /> },
     {
         name: "Merchant Management", path: '--', icon: <HiOutlineBuildingOffice title='Merchant Management' />,
@@ -23,9 +23,17 @@ import { VscKey } from "react-icons/vsc";
             { name: "Pending Merchant List", path: '/pending_merchants', icon: <RiUserSearchLine title="Pending Merchant List" /> },
             { name: "Merchant`s Credit", path: '/approved_credits', icon: <MdOutlineAccountBalanceWallet title="Merchant`s Credit" /> },
             { name: "Pending Credit Request", path: '/requested_credits', icon: <TbCurrencyDollarOff title="Pending Credit Request" /> },
-            { name: "Customers", path: "/customer_list", icon: <FiUsers title='Customer List' /> },
+            // { name: "Customers", path: "/customer_list", icon: <FiUsers title='Customer List' /> },
             { name: "API Key", path: '/merchant_api', icon: <VscKey title="API Key" /> },
         ]
+    },
+    {
+        name: 'Customer Services', path: '--', icon: <FiUsers title='Customer Services' />,
+        subItems: [
+            { name: 'Customer List', path: '/customer_list', icon: <FiUsers title='Customer List' /> },
+            { name: 'Payout Request', path: '/payout_request', icon: <FiUsers title='Payout Request' /> },
+        ]
+
     },
     {
         name: "Transactions", path: '--', icon: <BiTransferAlt title='Transactions' />,

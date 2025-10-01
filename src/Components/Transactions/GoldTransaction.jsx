@@ -38,7 +38,7 @@ function GoldTransaction() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const url = `${APIPATH}/api/v1/admin/transactions/metal?order_type=${transactionType}&metal_type=GOLD&start_date=${startDate}&end_date=${endDate}&direction=${direction}&cursor=${cursors}&download=false`;
+        const url = `${APIPATH}/api/v1/admin/transactions/metal?order_type=${transactionType}&metal_type=GOLD&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}&download=false`;
         const res = await fetch(url, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -175,7 +175,7 @@ function GoldTransaction() {
 
       <div className={style.merchants_parent_subheader}>
         <div className={style.search_input_field}>
-          <input type='text' placeholder='Search by customer' maxLength={12} value={searchText}
+          <input type='text' placeholder='Search by customer' maxLength={20} value={searchText}
             onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
           <IoSearch />
         </div>

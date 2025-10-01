@@ -32,6 +32,7 @@
     border-radius: 5px;
     width: 75%;
     max-height: 90%;
+    max-width: 1000px;
     overflow-y: scroll;
     scrollbar-width: none;
     animation: fadeInOut 0.3s ease-in-out;
@@ -166,6 +167,9 @@
 }
 
 .action_button {
+    border: none;
+    background: transparent;
+    outline: none;
     cursor: pointer;
     font-size: 20px;
     transition: transform 0.3s ease;
@@ -211,6 +215,15 @@
     border: 1px solid rgba(38, 38, 38, 0.5);
     position: relative;
 }
+.merchant_document_image img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    transition: transform 0.4s ease-in-out;
+}
+.merchant_document_image img:hover {
+   transform: scale(1.2);
+}
 
 .document_kyc_status {
     position: absolute;
@@ -233,12 +246,6 @@
 
 .verified {
     color: green;
-}
-
-.merchant_document_image img {
-    height: 100%;
-    width: 100%;
-    object-fit: fill;
 }
 
 .loader_container {

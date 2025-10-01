@@ -34,7 +34,7 @@ function MerchantsTDSReports() {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const url = `${APIPATH}/api/v1/admin/reports/merchant-transactions?start_date=${startDate}&end_date=${endDate}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
+                const url = `${APIPATH}/api/v1/admin/reports/merchant-transactions?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&download=false&merchant_id=${selectedMerchant}&direction=${direction}&cursor=${cursors}`;
                 const res = await fetch(url, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -141,14 +141,14 @@ function MerchantsTDSReports() {
                 <>
                     <div className={style.merchants_parent_subheader}>
                         <div className={style.search_input_field}>
-                            <input type='text' placeholder='Search by merchant' maxLength={12} value={searchText}
+                            <input type='text' placeholder='Search by orderId' maxLength={20} value={searchText}
                                 onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
                             <IoSearch />
                         </div>
                         <div className={style1.start_date_and_end_date}>
-                            <div>
+                            {/* <div>
                                 <p>Filter:</p>
-                            </div>
+                            </div> */}
                             <div>
                                 <DatePicker className={style1.date_input}
                                     placeholderText='Select start date'
@@ -186,7 +186,7 @@ function MerchantsTDSReports() {
                         <table className={style.merchants_list_container}>
                             <thead>
                                 <tr>
-                                    <th>Txn. Id</th>
+                                    <th>Order Id</th>
                                     <th>Date & Time</th>
                                     <th>Merchant Name</th>
                                     <th>Customer Name</th>
@@ -203,8 +203,8 @@ function MerchantsTDSReports() {
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
-                                    paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                    paginatedList?.map((val) => {
+                                        return <tr key={val.id}>
                                             <td>XXXX{val.order_id?.slice(-4)}</td>
                                             <td>{dateAndTimeFormat(val.created_at)}</td>
                                             <td>{val.merchant_name}</td>

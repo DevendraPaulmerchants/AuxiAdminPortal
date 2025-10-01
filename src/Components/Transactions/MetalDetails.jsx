@@ -143,7 +143,7 @@ function MetalDetails({ close, selectedMetal }) {
                 </div>
                 {/* ------------- Platform Details --------- */}
                 <div className={style1.customer_detail_container}>
-                    <h2>Profit Sharing Brakdown:</h2>
+                    <h2>Profit Sharing Breakdown:</h2>
                     <div className={style1.details_container}>
                         <div className={style1.details_container}>
                             <div className={style1.rate_value}>

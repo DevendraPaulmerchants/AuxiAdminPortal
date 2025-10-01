@@ -42,10 +42,12 @@ function ReportsDetails() {
                             <div className={styles.customer_details_label}>Full Name</div>
                             <div className={styles.customer_details_value}>{state?.customer_name}</div>
                         </div>
-                        <div className={styles.customer_details_row}>
-                            <div className={styles.customer_details_label}>Email</div>
-                            <div className={styles.customer_details_value}>{state?.customer_email}</div>
-                        </div>
+                        {state?.customer_email &&
+                            <div className={styles.customer_details_row}>
+                                <div className={styles.customer_details_label}>Email</div>
+                                <div className={styles.customer_details_value}>{state?.customer_email}</div>
+                            </div>
+                        }
                         <div className={styles.customer_details_row}>
                             <div className={styles.customer_details_label}>Phone Number</div>
                             <div className={styles.customer_details_value}>{state?.customer_phone}</div>
