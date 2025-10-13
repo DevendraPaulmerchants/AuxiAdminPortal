@@ -6,6 +6,7 @@ import style1 from "../Admin/Admin.module.css"
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
+import { AiFillEdit } from 'react-icons/ai';
 
 // import AddMerchant from './AddMerchant/AddMerchant';
 const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
@@ -139,7 +140,7 @@ function MerchantDetails() {
                             <button className={style.primary_login_btn}
                                 onClick={() => setIsUpdateClicked(true)}
                             >
-                                Update Details
+                              <AiFillEdit />  Update Details
                             </button>
                             <button className={style.primary_login_btn}>
                                 {selectedMerchant?.kyc_status ? "✅ KYC Verified" : " ❌ Not Verified"}</button>

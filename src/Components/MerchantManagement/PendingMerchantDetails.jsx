@@ -8,6 +8,7 @@ import { useContextData } from '../Context/Context';
 import ApproveKYC from './KycApprove';
 import ApproveThisDocument from './DocumentApprove';
 import AddMerchant from './AddMerchant/AddMerchant';
+import { AiFillEdit } from 'react-icons/ai';
 
 function PendingMerchantDetails() {
     const { token } = useContextData();
@@ -173,7 +174,7 @@ function PendingMerchantDetails() {
                         <button className={style.primary_login_btn}
                             onClick={() => setIsUpdateClicked(true)}
                         >
-                            Update Details
+                            <AiFillEdit /> Update Details
                         </button>
                         <button className={style.primary_login_btn}
                             onClick={() => { openverifyandrejectKycpage() }}
@@ -181,7 +182,8 @@ function PendingMerchantDetails() {
                         //     && selectedMerchant?.kyc_documents[1].kyc_status === 'PENDING'
                         // }
                         >
-                            {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}                            </button>
+                            {selectedMerchant?.kyc_status ? "✅ KYC Verified" : "Verify KYC"}
+                        </button>
                     </div>
 
                 </>

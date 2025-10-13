@@ -37,9 +37,10 @@ function CustomerList() {
     const [prevCursor, setPrevCursor] = useState('');
 
     const fetchCustomers = async () => {
+        // if(searchText?.length < 10) return;
         setIsLoading(true)
         try {
-            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&account_status=${accountStatus}&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}`;
+            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&phone=${searchText}&account_status=${accountStatus}&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}`;
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -50,6 +51,7 @@ function CustomerList() {
             });
             const result = await response.json();
             setCustomer(result.data);
+            console.log(result.data);
             setNextCursor(result.hasNextPage ? result.nextCursor : '');
             setPrevCursor(result.hasPrevPage ? result.prevCursor : '');
             setIsLoading(false)
@@ -62,8 +64,10 @@ function CustomerList() {
     };
 
     useEffect(() => {
+      if (searchText.length === 10 || searchText.length === 0) {
         fetchCustomers();
-    }, [startDate, endDate, selectedMerchant, accountStatus, token, cursors, direction]);
+    }
+    }, [startDate, endDate, selectedMerchant, accountStatus, token, cursors, direction,searchText]);
 
     const handleNext = () => {
         if (nextCursor) {
@@ -109,11 +113,11 @@ function CustomerList() {
     }, [token])
 
 
-    const filteredList = customer?.filter((list) => {
-        const name = list?.first_name?.toLowerCase() || '';
-        const id = String(list?.customer_id || '').toLowerCase();
-        return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
-    }) || [];
+    // const filteredList = customer?.filter((list) => {
+    //     const name = list?.first_name?.toLowerCase() || '';
+    //     const id = String(list?.customer_id || '').toLowerCase();
+    //     return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+    // }) || [];
 
 
     const openDPage = (val) => {
@@ -181,12 +185,12 @@ function CustomerList() {
                 <div className={style.search_input_field}>
                     <input
                         type="text"
-                        placeholder="Search by customer name.."
+                        placeholder="Search by mobile no."
                         maxLength={12}
                         value={searchText}
                         onChange={(e) => {
                             setSearchText(e.target.value);
-                            setCurrentPage(1);
+                            // setCurrentPage(1);
                         }}
                     />
                     <IoSearch />
@@ -252,8 +256,8 @@ function CustomerList() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {filteredList.length > 0 ? (
-                                    filteredList.map((val) => (
+                                {customer.length > 0 ? (
+                                    customer.map((val) => (
                                         <tr key={val.id}>
                                             <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy
                                                 style={{ cursor: "pointer" }}

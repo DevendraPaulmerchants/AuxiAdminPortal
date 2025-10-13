@@ -6,6 +6,7 @@ import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 import AddNewRate from './AddNewRate';
+import { MdOutlineAdd, MdRefresh } from 'react-icons/md';
 
 function Exchange() {
     const { token } = useContextData();
@@ -69,16 +70,16 @@ function Exchange() {
                 <div>
                     <p>Metal rates fetched from the official source</p>
                 </div>
-                <div className={style.add_merchants_and_filter} style={{ width: '300px' }}>
+                <div className={style.add_merchants_and_filter} style={{ width: '350px' }}>
                     <button className={style1.primary_login_btn}
                         onClick={() => {
                             console.log("Add manually");
                             setAddManual(true)
                         }}
-                    >Add Manually</button>
+                    ><MdOutlineAdd /> Add Manually</button>
                     <button className={style1.primary_login_btn}
                         onClick={() => getexchangeLIst()}
-                    >Refresh</button>
+                    ><MdRefresh  />Refresh</button>
 
                 </div>
             </div>
@@ -102,7 +103,7 @@ function Exchange() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedList ? (
+                                {paginatedList?.length > 0 ? (
                                     paginatedList?.map((val)=>(
                                         <tr key={val.id} >
                                             <td>{val.metalType}</td>

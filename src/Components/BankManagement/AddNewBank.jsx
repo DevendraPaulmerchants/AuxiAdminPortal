@@ -66,7 +66,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
-                    <h2>Add New Bank</h2>
+                    <h2>{selectedAccount ? 'Edit Bank Information':'Add New Bank Information'}</h2>
                     <h3><IoMdClose onClick={close} /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
@@ -151,7 +151,7 @@ function AddNewBank({ close, selectedAccount,updateList }) {
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}>
-                                {selectedAccount ? "Update Bank" : "Add bank"}
+                                {selectedAccount ? "Update Bank" : "Add New bank"}
                             </button>
                         </div>
                     }

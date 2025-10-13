@@ -11,24 +11,35 @@ import { useContextData } from '../../Context/Context';
 import BusinessDetails from './BusinessDetails';
 import DocumentNumberVerification from './DocumentNumberVerification';
 import { CamelCase } from '../../InputValidation/InputValidation';
+import { RiUserAddLine } from 'react-icons/ri';
 
 function AddMerchant({ close, selectedMerchant, updateList }) {
     const { token } = useContextData();
     // Organition Document Verification -------------------
-    const [panNumber, setPANnumber] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number || '');
-    const [isValidPAN, setIsValidPAN] = useState(selectedMerchant?.kyc_documents?.[0]?.document_number ? true : false);
+    const [panNumber, setPANnumber] = useState( '');
+    const [isValidPAN, setIsValidPAN] = useState(selectedMerchant ? true : false);
     const [panData, setPanData] = useState(null);
-    const [gstNumber, setGSTNumber] = useState(selectedMerchant?.kyc_documents?.[1]?.document_number || '');
+    const [gstNumber, setGSTNumber] = useState('');
     const [isvalidGst, setIsvalidGst] = useState(true);
+       // Business Document ------------------------------
+    const [panDocument, setPanDocument] = useState();
+    const [previewPAN, setPreviewPAN] = useState( '')
+    const [bussinessDocument, setBussinessDocument] = useState();
+    const [previewBuDoc, setPreviewBUDoc] = useState('');
+    const [msmeCertificate, setMSMEDocument] = useState();
+    const [previewMSME, setPreviewMSME] = useState('');
 
     useEffect(() => {
         if (selectedMerchant?.kyc_documents) {
             selectedMerchant.kyc_documents.forEach((doc) => {
                 if (doc.document_type === 'GST') {
                     setGSTNumber(doc.document_number);
+                    setPreviewBUDoc(doc.document_url);
+                    setPreviewMSME(doc.document_url);
                 }
                 if (doc.document_type === 'PAN') {
                     setPANnumber(doc.document_number);
+                    setPreviewPAN(doc.document_url);
                 }
             });
         }
@@ -66,13 +77,8 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     const [businessNature, setBusinessNature] = useState("");
     const [schemeId, setSchemeId] = useState(selectedMerchant?.scheme_id || "");
 
-    // Business Document ------------------------------
-    const [panDocument, setPanDocument] = useState();
-    const [previewPAN, setPreviewPAN] = useState(selectedMerchant?.kyc_documents?.[1]?.document_url || '')
-    const [bussinessDocument, setBussinessDocument] = useState();
-    const [previewBuDoc, setPreviewBUDoc] = useState(selectedMerchant?.kyc_documents?.[0]?.document_url || '');
-    const [msmeCertificate, setMSMEDocument] = useState();
-    const [previewMSME, setPreviewMSME] = useState(selectedMerchant?.kyc_documents?.[0]?.document_url || '');
+ 
+
     // Preview Document ---------------------
     const [selectedUrl, setSelectedUrl] = useState('');
     const [maxView, setMaxView] = useState(false);
@@ -239,7 +245,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
                             <img src='/gold-coin.png' alt='Gold loading...' />
                         </div></div> :
                             <div className={style.add_merchats_btn_container}>
-                                <button className={style.primary_login_btn}>
+                                <button className={style.primary_login_btn}><RiUserAddLine />
                                     {selectedMerchant ? 'Update Merchant' : 'Create Merchant'}
                                 </button>
                             </div>

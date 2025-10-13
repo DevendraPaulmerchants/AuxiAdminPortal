@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import style from "../MerchantManagement/Merchants.module.css";
 import { IoMdClose } from "react-icons/io";
 import { useMask } from "@react-input/mask";
@@ -15,7 +15,9 @@ function AddUser({ close, updateList, selecteduser }) {
             document.body.style.overflow = 'auto';
         };
     }, []);
+
     console.log('selected user: ',selecteduser)
+
     const [name, setName] = useState(selecteduser?.name || "");
     const [userEmail, setUserEmail] = useState(selecteduser?.email || "");
     const [isValidEmail, setIsValidEmail] = useState(true);
@@ -58,8 +60,8 @@ function AddUser({ close, updateList, selecteduser }) {
                 setIsLoading(false)
             })
     }, [])
+    
     // Get all Permissions according to role ------------------------------------------------------
-
     useEffect(() => {
         if (!roleId) return;
         fetch(`${APIPATH}/api/v1/admin/permissions?id=${roleId}`, {
@@ -225,7 +227,10 @@ function AddUser({ close, updateList, selecteduser }) {
                         <img src='/gold-coin.png' alt='Gold loading...' />
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
-                            <button className={style.primary_login_btn}>{selecteduser ? "Update" : "Add"}</button>
+                            <button className={style.primary_login_btn}>
+                                {/* {selecteduser ? "Update" : "Add"} */}
+                                Submit
+                                </button>
                         </div>
                     }
                 </form>
@@ -234,4 +239,4 @@ function AddUser({ close, updateList, selecteduser }) {
     )
 }
 
-export default AddUser;
+export default memo(AddUser);

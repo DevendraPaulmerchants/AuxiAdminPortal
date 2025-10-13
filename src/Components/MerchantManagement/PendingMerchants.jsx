@@ -9,6 +9,7 @@ import FilterMerchants from './FilterMerchants';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import { dateFormat } from '../../helperFunction/helper';
+import { MdOutlineAdd } from 'react-icons/md';
 const AddMerchant = lazy(() => import('./AddMerchant/AddMerchant'));
 
 function PendingMerchants() {
@@ -92,7 +93,7 @@ function PendingMerchants() {
                     <p>Review and verify the listed merchants.</p>
                 </div>
                 <div className={style.add_merchants_and_filter}>
-                    <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}>Add Merchant</button>
+                    <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}><MdOutlineAdd />Add Merchant</button>
                     {/* <button onClick={openFilteredForm} className={style1.primary_login_btn} style={{ padding: "0px 40px" }}>Filter</button> */}
                 </div>
             </div>

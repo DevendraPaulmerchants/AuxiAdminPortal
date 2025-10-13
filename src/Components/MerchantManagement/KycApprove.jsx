@@ -89,8 +89,7 @@ function ApproveKYC({ close,merchantId,updateList,docId}) {
     //     }).finally(()=>setIsLoading(false))
     // }
 
-    return <>
-        <div className={style.add_merchants_parent}>
+    return  <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
                 <div className={style.add_merchants_header}>
                     <h2>Approve/Reject the KYC of this merchant</h2>
@@ -123,7 +122,7 @@ function ApproveKYC({ close,merchantId,updateList,docId}) {
                 </form>
             </div>
         </div>
-    </>
+    
 }
 
 export default ApproveKYC;

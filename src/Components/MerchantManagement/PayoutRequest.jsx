@@ -261,7 +261,7 @@ function PayoutRequest() {
                                                 onClick={() => handleCopy(val.order_id)}
                                                 title="Copy Customer Id"
                                             /></td>
-                                            <td>XXXX{(val.customer_id || val.id)}</td>
+                                            <td>{(val.customer_id || val.id)}</td>
                                             <td>{val.account_number || val.upi}</td>
                                             <td>{val.ifsc_code}</td>
                                             <td>{dateFormat(val.created_at)}</td>

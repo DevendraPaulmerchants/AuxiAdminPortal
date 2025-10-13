@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IoSearch } from "react-icons/io5";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdOutlineAdd } from "react-icons/md";
 import style from "../Admin/Admin.module.css";
 // import style1 from "../Merchants/Merchants.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
@@ -111,7 +111,7 @@ function Bank() {
                 <div className={style.add_merchants_and_filter}>
                     <button className={style1.primary_login_btn}
                         onClick={() => setIsNewBankClick(true)}
-                    >Add New Bank</button>
+                    ><MdOutlineAdd />Add New Bank</button>
                 </div>
             </div>
             {isLoading ? <div className={style1.loader_container}>

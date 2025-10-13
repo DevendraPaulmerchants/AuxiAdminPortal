@@ -65,7 +65,7 @@ function AddNewUPI({ close, selectedAccount, updateList }) {
         <div className={style.add_merchants_parent}>
             <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
-                    <h2>Add New UPI</h2>
+                    <h2>{selectedAccount ? 'Edit UPI Details':'Add New UPI'}</h2>
                     <h3 ><IoMdClose onClick={close} /></h3>
                 </div>
                 <form onSubmit={(e) => addPermission(e)}>
@@ -99,7 +99,7 @@ function AddNewUPI({ close, selectedAccount, updateList }) {
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}>
-                                {selectedAccount ? "Update UPI" : "Add UPI"}
+                                {selectedAccount ? "Update UPI" : "Add New UPI"}
                             </button>
                         </div>
                     }
