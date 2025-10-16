@@ -256,7 +256,7 @@ function CustomerList() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {customer.length > 0 ? (
+                                {customer?.length > 0 ? (
                                     customer.map((val) => (
                                         <tr key={val.id}>
                                             <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy

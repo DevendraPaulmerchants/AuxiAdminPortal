@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
-import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
+import { FcCancel, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
 import { MdContentCopy } from 'react-icons/md';
 import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
@@ -88,7 +88,7 @@ function CreditsReports() {
         const id = String(list?.order_id || '').toLowerCase();
         return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
     }) || [];
-    
+
     // ------------------ Pagination Logic and Next Button ------------------
     const handleNext = () => {
         if (nextCursor) {
@@ -215,6 +215,7 @@ function CreditsReports() {
                                                 <p >
                                                 {val.status === "COMPLETED" && <FcOk title='Completed' />}
                                                 {val.status === "PENDING" && <FcFlashOn title='Pending' />}
+                                                {val.order_status === 'PROCESSING' && <FcSportsMode />}
                                                 {val.status === "FAILED" && <FcCancel title='Failed' />}
                                                 </p>
                                             </td>
@@ -239,7 +240,7 @@ function CreditsReports() {
                 </>
             }
         </div>
-    
+
 }
 
 export default CreditsReports

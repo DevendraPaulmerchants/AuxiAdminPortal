@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
-import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
+import { FcCancel, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
 import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
@@ -225,6 +225,7 @@ function MerchantsTDSReports() {
                                             <td>
                                                 {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
                                                 {val.order_status === "PENDING" && <FcFlashOn title='Pending' />}
+                                                 {val.order_status === 'PROCESSING' && <FcSportsMode />}
                                                 {val.order_status === "FAILED" && <FcCancel title='Failed' />}
                                             </td>
                                             {/* <td><p style={{ cursor: "pointer" }}>
@@ -248,7 +249,7 @@ function MerchantsTDSReports() {
                 </>
             }
         </div>
-   
+
 }
 
 export default MerchantsTDSReports;

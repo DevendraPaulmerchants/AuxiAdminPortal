@@ -6,6 +6,7 @@ import { handleLogOut } from '../../helperFunction/helper';
 
 function Layout() {
     const [open, setOpen] = useState(true);
+
     const handleOpen = () => {
         setOpen(!open);
     };

@@ -77,7 +77,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     const [businessNature, setBusinessNature] = useState("");
     const [schemeId, setSchemeId] = useState(selectedMerchant?.scheme_id || "");
 
- 
+
 
     // Preview Document ---------------------
     const [selectedUrl, setSelectedUrl] = useState('');
@@ -89,7 +89,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     useEffect(() => {
         if (panData === null) return;
         console.log("Fetching PAN data for address", panData);
-        setStreet(`${panData?.address?.street_name} ${panData?.address?.locality} ${panData?.address?.building_name}` || '');
+        setStreet(`${panData?.address?.building_name} ${panData?.address?.street_name} ${panData?.address?.locality}` || '');
         setStateName(panData?.address?.state || '');
         setDistrictName(CamelCase(panData?.address?.city) || '');
         setPinCode(panData?.address?.pincode || '');
@@ -124,7 +124,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
 
         business_type: bussinessType,
         business_nature: businessNature,
-        
+
         scheme_id: schemeId
     }
 

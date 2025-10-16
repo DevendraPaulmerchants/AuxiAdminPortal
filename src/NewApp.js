@@ -61,11 +61,12 @@ function App() {
   }, []);
 
   const handleLogIn = () => setIsAuthenticated(true);
-  
-  const handleLogOut = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem("token");
-  };
+
+  // const handleLogOut = () => {
+  //   setIsAuthenticated(false);
+  //   window.location.reload();
+  //   localStorage.removeItem("token");
+  // };
 
   return (
     <div className="App">
@@ -76,7 +77,7 @@ function App() {
               {!isAuthenticated ? (
                 <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
               ) : (
-                <Route element={<Layout handleLogOut={handleLogOut} />}>
+                <Route element={<Layout  />}>
                   <Route path="/" element={<NewHome />} />
                   {/* Merchant Services */}
                   <Route path="/approved-merchants" element={<MerchantsList />} />
