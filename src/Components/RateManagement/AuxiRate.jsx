@@ -103,7 +103,7 @@ function AuxiRate() {
                                             <td>{parseFloat(val?.original_rate)?.toFixed(2)}</td>
                                             <td>
                                                 <p>{parseFloat(val?.buy_rate)?.toFixed(2)} (Exc. GST)</p>
-                                                <p>{(parseFloat(val?.buy_rate) + parseFloat(val?.buy_gst_amount)).toFixed(2)} (Inc. GST)</p>
+                                                <p>{(parseFloat(val?.inclusive_gst_buy_rate).toFixed(2))} (Inc. GST)</p>
                                             </td>
                                             <td>{parseFloat(val?.sell_rate)?.toFixed(2)}</td>
                                             <td>{parseFloat(val.transfer_rate)?.toFixed(2)}</td>

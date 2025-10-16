@@ -61,6 +61,7 @@ function App() {
   }, []);
 
   const handleLogIn = () => setIsAuthenticated(true);
+  
   const handleLogOut = () => {
     setIsAuthenticated(false);
     localStorage.removeItem("token");
@@ -69,7 +70,6 @@ function App() {
   return (
     <div className="App">
       <DataProvider>
-
         <Router>
           <Suspense fallback={<Loader />}>
             <Routes>

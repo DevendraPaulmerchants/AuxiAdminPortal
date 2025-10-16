@@ -11,9 +11,10 @@ import { Switch } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { dateFormat } from '../../helperFunction/helper';
-import { MdContentCopy } from 'react-icons/md';
+import { dateAndTimeFormat, dateFormat } from '../../helperFunction/helper';
+import { MdContentCopy, MdEdit } from 'react-icons/md';
 import PayoutForm from './PayoutForm';
+import { capitalizeWord } from '../InputValidation/InputValidation';
 
 
 function PayoutRequest() {
@@ -40,7 +41,7 @@ function PayoutRequest() {
     const fetchCustomers = async () => {
         setIsLoading(true)
         try {
-            const url = `${APIPATH}/api/v1/admin/transactions/withdraw-requests?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}&limit=null`;
+            const url = `${APIPATH}/api/v1/admin/transactions/withdraw-requests?start_date=${startDate ? startDate : ''}&end_date=${endDate ? endDate : ''}&direction=${direction}&cursor=${cursors}&limit=null`;
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -118,9 +119,9 @@ function PayoutRequest() {
     }) || [];
 
 
-    const openDPage = (val) => {
+    const openDPage = (order_Id) => {
         setOpenDetailPage(true);
-        setSelectedCustomer(val)
+        setSelectedCustomer(order_Id)
     }
     const closeDPage = () => {
         setOpenDetailPage(false);
@@ -248,8 +249,9 @@ function PayoutRequest() {
                                     <th>IFSC</th>
                                     <th>Create At</th>
                                     <th>Amount</th>
+                                    <th>Updated At</th>
                                     <th>Status</th>
-                                    <th>More</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -264,21 +266,22 @@ function PayoutRequest() {
                                             <td>{(val.customer_id || val.id)}</td>
                                             <td>{val.account_number || val.upi}</td>
                                             <td>{val.ifsc_code}</td>
-                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{dateAndTimeFormat(val.created_at)}</td>
                                             <td>{val.amount}</td>
-                                            <td>{val.status}</td>
-                                            {/* <td>
-                                                <Switch checked={val.account_status === 'ACTIVE'}
-                                                    onClick={() => changeStatusOfCustomer(val.customer_id, val.account_status)}
-                                                />
-                                            </td> */}
+                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
+                                            <td>{capitalizeWord(val.status)}</td>
                                             <td>
                                                 <button className={style1.action_button}
                                                     onClick={() => {
-                                                        openDPage(val);
+                                                        if (val.status === "PENDING") {
+                                                            openDPage(val.order_id);
+                                                        }
+                                                        else { 
+                                                            alert("You can only process pending requests.");
+                                                        }
                                                     }}
                                                 >
-                                                    <IoMdEye />
+                                                    <MdEdit />
                                                 </button>
                                             </td>
                                         </tr>
@@ -300,7 +303,7 @@ function PayoutRequest() {
                     </div>
                 </>
             }
-            {openDetailPage && <PayoutForm close={closeDPage} selectedCustomer={selectedCustomer} />}
+            {openDetailPage && <PayoutForm close={closeDPage} order_Id={selectedCustomer} updateList={fetchCustomers} />}
         </div>
     );
 }

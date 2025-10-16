@@ -36,16 +36,17 @@ const NewLogIn = ({ handleLogIn }) => {
             .then((data) => {
                 console.log(data);
                 setToken(data?.data?.access?.token);
-                if (data.statusCode === 401) {
+                if (data.statusCode === 200) {
                     alert(data.message);
+                    handleLogIn();
                     return;
                 }
+                alert(data.message);
                 handleLogIn();
             })
             .catch((err) => {
                 console.error(err);
                 alert(err);
-                return;
             })
             .finally(() => {
                 setIsLoading(false)

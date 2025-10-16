@@ -52,6 +52,7 @@ function CreditsReports() {
         };
         fetchData();
     }, [token, selectedMerchant, startDate, endDate, cursors, direction]);
+
     // ------------------ Merchant List ------------------
     useEffect(() => {
         const fetchMerchant = async () => {
@@ -80,6 +81,7 @@ function CreditsReports() {
         };
         fetchMerchant();
     }, [token])
+
     // ------------------ Search and Pagination Logic ------------------
     const paginatedList = creditsData?.filter((list) => {
         const name = list?.merchant_name?.toLowerCase() || '';
@@ -95,6 +97,7 @@ function CreditsReports() {
             setCurrentPage(prev => prev + 1);
         }
     };
+
     // ------------------ Previous Button Logic and Back Button ------------------
     const handlePrev = () => {
         if (prevCursor) {
@@ -103,6 +106,7 @@ function CreditsReports() {
             setCurrentPage(prev => prev - 1);
         }
     };
+
     // ------------------ Download Records Logic ------------------
     const downloadRecords = async () => {
         if (creditsData?.length === 0) {
@@ -192,7 +196,7 @@ function CreditsReports() {
                                     <th>Description</th>
                                     <th>Remaining Balance</th>
                                     <th>Status</th>
-                                    <th>More</th>
+                                    {/* <th>More</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,9 +218,9 @@ function CreditsReports() {
                                                 {val.status === "FAILED" && <FcCancel title='Failed' />}
                                                 </p>
                                             </td>
-                                            <td><p className={styles.action_button}>
+                                            {/* <td><p className={styles.action_button}>
                                                 <IoEye />
-                                            </p></td>
+                                            </p></td> */}
                                         </tr>
                                     })
                                 ) : <tr>

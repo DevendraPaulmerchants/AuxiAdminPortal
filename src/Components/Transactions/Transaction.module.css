@@ -110,3 +110,8 @@
 .rate_value p:last-child {
   font-weight: 600;
 }
+.metal_details_main_container {
+  border-radius: 10px;
+  margin-bottom: 15px;
+  padding: 5px 10px;
+}

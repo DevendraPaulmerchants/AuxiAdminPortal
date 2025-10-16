@@ -18,3 +18,8 @@ export const dateFormat = (str) => {
   const istDate = toZonedTime(utcDate, IST_TIMEZONE);
   return format(istDate, "dd MMM yyyy");
 };
+
+// -------- handle Logout ------------
+export const handleLogOut = () => {
+    localStorage.removeItem("token");
+  };

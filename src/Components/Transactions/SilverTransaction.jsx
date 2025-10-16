@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
 import { useLocation } from 'react-router-dom';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
-import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
+import { FcAlarmClock, FcCancel, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
 
 function SilverTransaction() {
 
@@ -247,15 +247,17 @@ function SilverTransaction() {
                         onClick={() => handleCopy(val.order_id)}
                         title="Copy ID"
                       /></td>
-                      <td>XXXX{val.customer_id?.slice(-4)}</td>
+                      <td>{val.customer_id}</td>
                       <td>{val.customer_name}</td>
                       <td>{parseFloat(val.metal_quantity_grams)}</td>
                       <td>{val.order_type}</td>
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
                       <td title={val.order_status}>
+                        {/* {val.order_status} */}
                         {val.order_status === "COMPLETED" && <FcOk  />}
-                        {val.order_status === "PENDING" && <FcFlashOn  />}
+                        {val.order_status === 'PROCESSING' && <FcSportsMode />}
+                        {val.order_status === "PENDING" && <FcAlarmClock  />}
                         {val.order_status === "FAILED" && <FcCancel />}
                       </td>
                       <td><p className={styles.action_button}>

@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import NewHeader from '../Header/NewHeader';
 import SideBar from '../LeftSidebar/NewLeftSidebar';
 import { Outlet} from 'react-router-dom';
+import { handleLogOut } from '../../helperFunction/helper';
 
-function Layout({ handleLogOut }) {
+function Layout() {
     const [open, setOpen] = useState(true);
     const handleOpen = () => {
         setOpen(!open);

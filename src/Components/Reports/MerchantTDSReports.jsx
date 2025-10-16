@@ -11,6 +11,7 @@ import { FcCancel, FcFlashOn, FcOk } from 'react-icons/fc';
 import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
+
 function MerchantsTDSReports() {
 
     const { token } = useContextData();
@@ -55,6 +56,7 @@ function MerchantsTDSReports() {
         };
         fetchData();
     }, [token, selectedMerchant, startDate, endDate, cursors, direction]);
+
     // ------------------ Merchant List ------------------
     useEffect(() => {
         const fetchMerchant = async () => {
@@ -83,6 +85,7 @@ function MerchantsTDSReports() {
         };
         fetchMerchant();
     }, [token])
+
     // ---------- Search Logic -------------------------------------
     const paginatedList = creditsData?.filter((list) => {
         const name = list?.merchant_name?.toLowerCase() || '';
@@ -98,6 +101,7 @@ function MerchantsTDSReports() {
             setCurrentPage(prev => prev + 1);
         }
     };
+
     // Pagination Logic Previous button ------------------------------------
     const handlePrev = () => {
         if (prevCursor && currentPage > 1) {
@@ -106,6 +110,7 @@ function MerchantsTDSReports() {
             setCurrentPage(prev => prev - 1);
         }
     };
+
     //------------- Downaload MerchantTDS Reports ------------------------------------
     const downloadRecords = async () => {
         if (creditsData?.length === 0) {

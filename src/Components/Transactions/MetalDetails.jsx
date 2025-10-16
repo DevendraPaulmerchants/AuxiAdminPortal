@@ -21,6 +21,7 @@ function MetalDetails({ close, selectedMetal }) {
                     <h2>Metal/Customer Details</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
+                <div className={style1.metal_details_main_container}>
                 {/* -------------- Customer Details -------------- */}
                 <div className={style1.customer_detail_container}>
                     <h2>Merchant & Customer Details:</h2>
@@ -160,6 +161,7 @@ function MetalDetails({ close, selectedMetal }) {
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

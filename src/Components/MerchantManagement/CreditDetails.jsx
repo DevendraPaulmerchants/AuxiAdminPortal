@@ -61,7 +61,7 @@ function CreditDetails() {
         <div className={style1.merchants_parent}>
             <div className={style1.credit_details_and_chat}>
                 <div className={style1.credit_details_container} style={{ width: '100%' }}>
-                    <div className={style.add_merchants_header}>
+                    <div className={style.add_merchants_header} style={{background:'transparent'}}>
                         <button className='back_button'
                             onClick={() => {
                                 navigate(-1)

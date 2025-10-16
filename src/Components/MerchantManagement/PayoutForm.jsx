@@ -5,17 +5,18 @@ import { useContextData } from '../Context/Context';
 import { useNavigate } from 'react-router-dom';
 import { APIPATH } from '../apiPath/apipath';
 
-function PayoutForm({ close, creditId }) {
+function PayoutForm({ close, order_Id,updateList }) {
     const { token } = useContextData()
     const [rfNumber, setRfNumber] = useState('');
     const [pgStatus,setPgStatus]=useState('')
     const [approvalDescription, setApprovalDescription] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [approvalStatus, setApprovalStatus] = useState("");
+    // const [approvalStatus, setApprovalStatus] = useState("");
 
     const approvalData = {
-        comment: approvalDescription,
-        status: approvalStatus,
+        reference_id: rfNumber,
+        failure_reason: approvalDescription,
+        status: pgStatus,
     }
     const navigate = useNavigate();
 
@@ -23,25 +24,25 @@ function PayoutForm({ close, creditId }) {
         e.preventDefault();
         console.log(approvalData);
         setIsLoading(true);
-        // fetch(`${APIPATH}/api/v1/admin/merchants/credits/requests/${creditId}/approve`, {
-        //     headers: {
-        //         'Authorization': `Barear ${token}`,
-        //         'Content-Type': "Application/json"
-        //     },
-        //     method: "PATCH",
-        //     body: JSON.stringify(approvalData),
-        //     mode: "cors"
-        // })
-        //     .then((res) => res.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //         alert(data.message);
-        //         close();
-        //         navigate("/approved_credits");
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     }).finally(() => setIsLoading(false))
+        fetch(`${APIPATH}/api/v1/admin/transactions/withdraw-requests/${order_Id}`, {
+            headers: {
+                'Authorization': `Barear ${token}`,
+                'Content-Type': "Application/json"
+            },
+            method: "PATCH",
+            body: JSON.stringify(approvalData),
+            mode: "cors"
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                alert(data.message);
+                close();
+                updateList();
+            })
+            .catch((err) => {
+                console.error(err);
+            }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -63,7 +64,7 @@ function PayoutForm({ close, creditId }) {
                             <label>Gateway Status*</label>
                             <select required value={pgStatus} onChange={(e)=>setPgStatus(e.target.value)}>
                                 <option value="" disabled>Select Status</option>
-                                <option value="SUCCESS">Success</option>
+                                <option value="COMPLETED">Success</option>
                                 <option value="FAILED">Failed</option>
                             </select>
                         </div>

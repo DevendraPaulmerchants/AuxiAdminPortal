@@ -10,7 +10,7 @@ import { MdContentCopy } from 'react-icons/md';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
-import { FcCancel, FcClock, FcOk } from 'react-icons/fc';
+import { FcCancel, FcClock, FcOk, FcSportsMode } from 'react-icons/fc';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 import { useLocation } from 'react-router-dom';
 
@@ -82,7 +82,7 @@ function CreditTransaction() {
   };
 
   const paginatedList = pagesData?.filter((list) => {
-    const name = list?.customer_name?.toLowerCase() || '';
+    const name = list?.merchant_name?.toLowerCase() || '';
     const id = String(list?.order_id || '').toLowerCase();
     const listStatus = list?.status?.toLowerCase() || '';
 
@@ -239,12 +239,14 @@ function CreditTransaction() {
                 {paginatedList?.length > 0 ? (
                   paginatedList?.map((val) => {
                     return <tr key={val.id}>
-                      <td>XXXX{val.order_id?.slice(-4)}
-                        <MdContentCopy
+                      <td>
+                        {/* XXXX{val.order_id?.slice(-4)} */}
+                        {val.order_id}
+                        {/* <MdContentCopy
                           style={{ cursor: "pointer" }}
                           onClick={() => handleCopy(val.order_id)}
                           title="Copy ID"
-                        />
+                        /> */}
                       </td>
                       <td>{val.merchant_name}</td>
                       <td>{parseFloat(val.amount)}</td>
@@ -255,6 +257,7 @@ function CreditTransaction() {
                       <td>
                         <p className={styles.action_button} title={val.status}>
                           {val.status === "COMPLETED" && <FcOk />}
+                           {val.order_status === 'PROCESSING' && <FcSportsMode />}
                           {val.status === "PENDING" && <FcClock />}
                           {val.status === "FAILED" && <FcCancel />}
                         </p>
