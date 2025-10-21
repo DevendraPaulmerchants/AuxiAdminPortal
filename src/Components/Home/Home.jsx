@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import style1 from "../Admin/Admin.module.css";
+import style2 from "../MerchantManagement/Merchants.module.css";
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
 const Home = () => {
-  const { token } = useContextData();
+  const { token,merchantList } = useContextData();
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [merchant, setMerchant] = useState(null);
+  // const [merchant, setMerchant] = useState(null);
   const [selectedmerchant, setSelectedMerchant] = useState(null);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Home = () => {
         console.log(result);
         setData(result.data); // Adjust based on the API response structure
       } catch (err) {
-        setError(err.message);
+        console.error(err.message);
       } finally {
         setIsLoading(false);
       }
@@ -61,35 +61,6 @@ const Home = () => {
   
     fetchData();
   }, [selectedmerchant, startDate, endDate]); // Dependency array includes selectedmerchant, startDate, and endDate
-  // Merchant List ----------------------------
-  useEffect(() => {
-    const fetchMerchant = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`${APIPATH}/api/v1/admin/merchant/list`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`, 
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const result = await response.json();
-        // Assuming the API returns an array of data
-        console.log(result)
-        setMerchant(result.data); // Adjust based on the API response structure
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMerchant();
-  }, [])
 
   return (
     <div className={style1.merchants_parent}>
@@ -102,18 +73,14 @@ const Home = () => {
             onChange={(e) => setEndDate(e.target.value)} />
           <select onChange={(e) => setSelectedMerchant(e.target.value)} className={styles.select}>
             <option value="">All Merchants</option>
-            {merchant?.map((merchant) => (
+            {merchantList?.map((merchant) => (
               <option key={merchant.merchant_id} value={merchant.merchant_id}>
                 {merchant.merchant_name}
               </option>
             ))}
           </select>
         </div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : (
+        {isLoading ?<div className={style2.loader_container}><div className={style2.loader_item}></div></div> :
           <div className={styles.grid}>
             <div className={styles.card}>
               <p className={styles.label}>Total Revenue</p>
@@ -152,7 +119,7 @@ const Home = () => {
               <h2 className={styles.value}>{data?.new_merchant || 0}</h2>
             </div>
           </div>
-        )}
+        }
       </div>
     </div>
   );

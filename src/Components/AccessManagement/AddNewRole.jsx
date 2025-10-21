@@ -16,6 +16,7 @@ function AddNewRole({ close, selectedRole, updateList }) {
             document.body.style.overflow = 'auto';
         };
     }, []);
+
     const { token } = useContextData();
     const [name, setName] = useState(selectedRole?.name || "")
     const [description, setDescription] = useState(selectedRole?.description || "");
@@ -98,9 +99,8 @@ function AddNewRole({ close, selectedRole, updateList }) {
     }
 
 
-    return <>
-        <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+    return  <div className={style.add_merchants_parent}>
+            <div className={style.add_merchants_form_container} >
                 <div className={style.add_merchants_header}>
                     {/* <h2>Add Department</h2> */}
                     <h2> {selectedRole ? "Update Department" : "Add Department"}</h2>
@@ -110,13 +110,13 @@ function AddNewRole({ close, selectedRole, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label> Department Name* </label>
-                            <input type='text' required placeholder='Enter Name' minLength={3} maxLength={30} value={name}
+                            <input type='text' required placeholder='Enter Department Name' minLength={3} maxLength={30} value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </div>
                         <div className={style.name_label_input_contaner}>
                             <label>Descriptions* </label>
-                            <textarea type='text' required placeholder='Enter descriptions' maxLength={200} value={description}
+                            <textarea type='text' required placeholder='Short Description of Department ' maxLength={200} value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
                         </div>
@@ -152,7 +152,7 @@ function AddNewRole({ close, selectedRole, updateList }) {
                 </form>
             </div>
         </div>
-    </>
+    
 }
 
 export default AddNewRole; 

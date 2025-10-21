@@ -36,7 +36,7 @@ function CustomerDetails({ close, selectedCustomer }) {
             <div className={style1.customer_detail_container}>
                 <h2>Merchant Details:</h2>
                 <div className={style.list_details}>
-                    <h4 className={style.merchant_name}>Name:<span>{selectedCustomer?.merchant_name}</span></h4>
+                    <h4 className={style.merchant_name} style={{width:'100%'}}>Name:<span>{selectedCustomer?.merchant_name}</span></h4>
                     {selectedCustomer?.agent_name &&
                         <h4 className={style.merchant_name}>Agent Name:<span>{selectedCustomer?.agent_name}</span></h4>
                     }

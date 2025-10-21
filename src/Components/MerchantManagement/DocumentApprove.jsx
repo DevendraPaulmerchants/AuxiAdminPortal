@@ -45,9 +45,8 @@ function ApproveThisDocument({ close,docId,merchantId,updateList}) {
         }).finally(()=>setIsLoading(false))
     }
 
-    return <>
-        <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+    return  <div className={style.add_merchants_parent}>
+            <div className={style.add_merchants_form_container}>
                 <div className={style.add_merchants_header}>
                     <h2>Approve credits for the merchant</h2>
                     <h3 onClick={close}><IoMdClose /></h3>
@@ -77,7 +76,7 @@ function ApproveThisDocument({ close,docId,merchantId,updateList}) {
                 </form>
             </div>
         </div>
-    </>
+    
 }
 
 export default ApproveThisDocument;

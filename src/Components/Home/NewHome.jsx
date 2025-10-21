@@ -10,11 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 const NewHome = () => {
-    const { token } = useContextData();
+    const { token,merchantList } = useContextData();
     const [report, setReport] = useState(null);
     const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
     const [endDate, setEndDate] = useState('');
-    const [merchant, setMerchant] = useState(null);
     const [selectedmerchant, setSelectedMerchant] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -70,35 +69,6 @@ const NewHome = () => {
         fetchData();
     }, [selectedmerchant, startDate, endDate, token]);
 
-    // Merchant List ----------------------------
-    useEffect(() => {
-        const fetchMerchant = async () => {
-            try {
-                setIsLoading(true);
-                const response = await fetch(`${APIPATH}/api/v1/admin/merchants/list`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log(result)
-                setMerchant(result.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchMerchant();
-    }, [token])
-
     const navigate = useNavigate();
 
     return (
@@ -125,7 +95,7 @@ const NewHome = () => {
                         onChange={(e, value) => setSelectedMerchant(value)}
                     >
                         <Option value="">All</Option>
-                        {merchant?.map((m) => (
+                        {merchantList?.map((m) => (
                             <Option key={m.id} value={m.id}>
                                 {m.merchant_name}
                             </Option>

@@ -14,6 +14,7 @@ const NewLogIn = ({ handleLogIn }) => {
     const [password, setPassword] = useState();
     const [showPass, setShowPass] = useState(false);
     const [isloading, setIsLoading] = useState(false);
+    
     const navigate = useNavigate();
     const newUser = {
         email: email,
@@ -42,7 +43,7 @@ const NewLogIn = ({ handleLogIn }) => {
                     return;
                 }
                 alert(data.message);
-                handleLogIn();
+                return;
             })
             .catch((err) => {
                 console.error(err);

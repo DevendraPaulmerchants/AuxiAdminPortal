@@ -90,7 +90,7 @@ function ApproveKYC({ close,merchantId,updateList,docId}) {
     // }
 
     return  <div className={style.add_merchants_parent}>
-            <div className={style.add_merchants_form_container} style={{ height: "fit-content" }}>
+            <div className={style.add_merchants_form_container}>
                 <div className={style.add_merchants_header}>
                     <h2>Approve/Reject the KYC of this merchant</h2>
                     <h3 onClick={close}><IoMdClose /></h3>

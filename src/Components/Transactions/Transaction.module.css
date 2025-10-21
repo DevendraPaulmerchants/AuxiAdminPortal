@@ -38,13 +38,10 @@
   box-shadow: 0 0 15px rgba(38, 38, 38, 0.3);
   border-radius: 10px;
   margin-bottom: 15px;
-  padding: 5px 10px;
+  padding: 16px;
   /* background-color:#3c7388; */
 }
 
-.customer_detail_container:nth-child(odd) {
-  /* background-color: #14f1f1; */
-}
 
 .customer_detail_container h2 {
   color: rgba(38, 38, 38, 0.6);

@@ -18,14 +18,14 @@ import { capitalizeWord } from '../InputValidation/InputValidation';
 
 
 function PayoutRequest() {
-    const { token } = useContextData();
+    const { token,merchantList } = useContextData();
     const { state } = useLocation();
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [merchantList, setMerchantList] = useState(null);
+    // const [merchantList, setMerchantList] = useState(null);
     const [selectedMerchant, setSelectedMerchant] = useState("");
     const [accountStatus, setAccountStatus] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
@@ -84,40 +84,13 @@ function PayoutRequest() {
         }
     };
 
-    // Merchant List ----------------------------
-    useEffect(() => {
-        if (!customer) return;
-        const fetchMerchant = async () => {
-            try {
-                const response = await fetch(`${APIPATH}/api/v1/admin/merchants/list`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log(result)
-                setMerchantList(result.data);
-            } catch (err) {
-                console.error("Error fetching merchant list:", err);
-            }
-        };
-        fetchMerchant();
-    }, [token])
-
-
+    // ----------- Search Logic -------------------------------------
     const filteredList = customer?.filter((list) => {
         const name = list?.first_name?.toLowerCase() || '';
         const id = String(list?.customer_id || '').toLowerCase();
-        return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase());
+        const orderId= String(list?.order_id || '').toLowerCase();
+        return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase()) || orderId.includes(searchText.toLowerCase());
     }) || [];
-
 
     const openDPage = (order_Id) => {
         setOpenDetailPage(true);
@@ -184,7 +157,7 @@ function PayoutRequest() {
                 <div className={style.search_input_field}>
                     <input
                         type="text"
-                        placeholder="Search by customerId"
+                        placeholder="Search by OrderId/customerId"
                         maxLength={12}
                         value={searchText}
                         onChange={(e) => {

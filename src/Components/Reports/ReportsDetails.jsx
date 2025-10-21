@@ -12,8 +12,8 @@ function ReportsDetails() {
     const { state } = useLocation();
 
     const [isDownloadClicked, setIsDownloadClicked] = useState(false);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
     const closeDownloadConfirmation = () => {
         setIsDownloadClicked(false);
     }
@@ -26,11 +26,13 @@ function ReportsDetails() {
                         navigate(-1);
                     }}
                 />
-                <FaRegShareFromSquare title='Send Invoice'
-                    onClick={() => {
-                        setIsDownloadClicked(true);
-                    }}
-                />
+                {state?.customer_email &&
+                    <FaRegShareFromSquare title='Send Invoice'
+                        onClick={() => {
+                            setIsDownloadClicked(true);
+                        }}
+                    />
+                }
             </p>
             <div className={styles.reports_details_container}>
 
@@ -95,10 +97,12 @@ function ReportsDetails() {
                             <div className={styles.customer_details_label}>Date & Time</div>
                             <div className={styles.customer_details_value}>{dateAndTimeFormat(state?.created_at)}</div>
                         </div>
-                        <div className={styles.customer_details_row}>
-                            <div className={styles.customer_details_label}>Payment Mode</div>
-                            <div className={styles.customer_details_value}>{state?.payment_mode}</div>
-                        </div>
+                        {state?.payment_mode &&
+                            <div className={styles.customer_details_row}>
+                                <div className={styles.customer_details_label}>Payment Mode</div>
+                                <div className={styles.customer_details_value}>{state?.payment_mode}</div>
+                            </div>
+                        }
                         <div className={styles.customer_details_row}>
                             <div className={styles.customer_details_label}>Status</div>
                             <div className={styles.customer_details_value}>{state?.order_status}</div>

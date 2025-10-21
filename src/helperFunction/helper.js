@@ -24,3 +24,4 @@ export const handleLogOut = () => {
   window.location.href = '/login';
     localStorage.removeItem("token");
   };
+ 

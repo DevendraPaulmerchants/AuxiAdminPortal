@@ -240,13 +240,13 @@ function CreditTransaction() {
                   paginatedList?.map((val) => {
                     return <tr key={val.id}>
                       <td>
-                        {/* XXXX{val.order_id?.slice(-4)} */}
-                        {val.order_id}
-                        {/* <MdContentCopy
+                        XXXX{val.order_id?.slice(-4)}
+                        {/* {val.order_id} */}
+                        <MdContentCopy
                           style={{ cursor: "pointer" }}
                           onClick={() => handleCopy(val.order_id)}
                           title="Copy ID"
-                        /> */}
+                        />
                       </td>
                       <td>{val.merchant_name}</td>
                       <td>{parseFloat(val.amount)}</td>

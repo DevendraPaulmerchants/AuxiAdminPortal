@@ -85,10 +85,12 @@ function SilverTransaction() {
  const paginatedList = pagesData?.filter((list) => {
   const name = list?.customer_name?.toLowerCase() || '';
   const id = String(list?.customer_id || '').toLowerCase();
+  const orderId = String(list?.order_id || '').toLowerCase();
   const listStatus = list?.order_status?.toLowerCase() || '';
 
   const matchesSearch =
     name.includes(searchText.toLowerCase()) ||
+    orderId.includes(searchText.toLowerCase()) ||
     id.includes(searchText.toLowerCase());
 
   const matchesStatus =
@@ -171,7 +173,7 @@ function SilverTransaction() {
 
       <div className={style.merchants_parent_subheader}>
         <div className={style.search_input_field}>
-          <input type='text' placeholder='Search by customer' maxLength={20} value={searchText}
+          <input type='text' placeholder='Search by customerId/Orderid' maxLength={20} value={searchText}
             onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
           <IoSearch />
         </div>

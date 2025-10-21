@@ -16,28 +16,26 @@ import { MdContentCopy } from 'react-icons/md';
 
 
 function CustomerList() {
-    const { token } = useContextData();
+    const { token,merchantList } = useContextData();
     const { state } = useLocation();
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [merchantList, setMerchantList] = useState(null);
+    // const [merchantList, setMerchantList] = useState(null);
     const [selectedMerchant, setSelectedMerchant] = useState("");
     const [accountStatus, setAccountStatus] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
     const [openDetailPage, setOpenDetailPage] = useState(false);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const rowsPerPage = 10;
-
     const [direction, setDirection] = useState('');
     const [cursors, setCursors] = useState('');
     const [nextCursor, setNextCursor] = useState('');
     const [prevCursor, setPrevCursor] = useState('');
 
     const fetchCustomers = async () => {
-        // if(searchText?.length < 10) return;
         setIsLoading(true)
         try {
             const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&phone=${searchText}&account_status=${accountStatus}&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}`;
@@ -84,34 +82,6 @@ function CustomerList() {
             setCurrentPage(prev => prev - 1);
         }
     };
-
-    // Merchant List ----------------------------
-    useEffect(() => {
-        if (!customer) return;
-        const fetchMerchant = async () => {
-            try {
-                const response = await fetch(`${APIPATH}/api/v1/admin/merchants/list`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log(result)
-                setMerchantList(result.data);
-            } catch (err) {
-                console.error("Error fetching merchant list:", err);
-            }
-        };
-        fetchMerchant();
-    }, [token])
-
 
     // const filteredList = customer?.filter((list) => {
     //     const name = list?.first_name?.toLowerCase() || '';
