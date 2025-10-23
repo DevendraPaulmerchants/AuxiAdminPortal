@@ -12,7 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
 import { useLocation } from 'react-router-dom';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
-import { FcAlarmClock, FcCancel, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
+import { FcAlarmClock, FcCancel, FcClock, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
 
 function SilverTransaction() {
 
@@ -27,7 +27,7 @@ function SilverTransaction() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [transactionType, setTransactionType] = useState(state || "");
-  const [accountStatus,setAccountStatus]=useState('');
+  const [accountStatus, setAccountStatus] = useState('');
   const [direction, setDirection] = useState("");
   const [cursors, setCursors] = useState('');
   const [nextCursor, setNextCursor] = useState('');
@@ -82,22 +82,22 @@ function SilverTransaction() {
     }
   };
 
- const paginatedList = pagesData?.filter((list) => {
-  const name = list?.customer_name?.toLowerCase() || '';
-  const id = String(list?.customer_id || '').toLowerCase();
-  const orderId = String(list?.order_id || '').toLowerCase();
-  const listStatus = list?.order_status?.toLowerCase() || '';
+  const paginatedList = pagesData?.filter((list) => {
+    // const name = list?.customer_name?.toLowerCase() || '';
+    const id = String(list?.customer_id || '').toLowerCase();
+    const orderId = String(list?.order_id || '').toLowerCase();
+    const listStatus = list?.order_status?.toLowerCase() || '';
 
-  const matchesSearch =
-    name.includes(searchText.toLowerCase()) ||
-    orderId.includes(searchText.toLowerCase()) ||
-    id.includes(searchText.toLowerCase());
+    const matchesSearch =
+      // name.includes(searchText.toLowerCase()) ||
+      orderId.includes(searchText.toLowerCase()) ||
+      id.includes(searchText.toLowerCase());
 
-  const matchesStatus =
-    !accountStatus || listStatus === accountStatus.toLowerCase();
+    const matchesStatus =
+      !accountStatus || listStatus === accountStatus.toLowerCase();
 
-  return matchesSearch && matchesStatus;
-}) || [];
+    return matchesSearch && matchesStatus;
+  }) || [];
 
 
   const downloadRecords = async () => {
@@ -247,7 +247,7 @@ function SilverTransaction() {
                       <td>XXXX{val.order_id?.slice(-4)}<MdContentCopy
                         style={{ cursor: "pointer" }}
                         onClick={() => handleCopy(val.order_id)}
-                        title="Copy ID"
+                        title="Copy Id"
                       /></td>
                       <td>{val.customer_id}</td>
                       <td>{val.customer_name}</td>
@@ -257,10 +257,10 @@ function SilverTransaction() {
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
                       <td title={val.order_status}>
                         {/* {val.order_status} */}
-                        {val.order_status === "COMPLETED" && <FcOk  />}
-                        {val.order_status === 'PROCESSING' && <FcSportsMode />}
-                        {val.order_status === "PENDING" && <FcAlarmClock  />}
-                        {val.order_status === "FAILED" && <FcCancel />}
+                        {val.order_status === "COMPLETED" && <FcOk fontSize={24} />}
+                        {val.order_status === 'PROCESSING' && <FcSportsMode fontSize={24} />}
+                        {val.order_status === "PENDING" && <FcClock fontSize={24} />}
+                        {val.order_status === "FAILED" && <FcCancel fontSize={24} />}
                       </td>
                       <td><p className={styles.action_button}>
                         <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />

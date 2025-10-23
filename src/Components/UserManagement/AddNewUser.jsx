@@ -9,15 +9,6 @@ import { useContextData } from '../Context/Context';
 
 function AddUser({ close, updateList, selecteduser }) {
     const { token } = useContextData();
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, []);
-
-    console.log('selected user: ',selecteduser)
-
     const [name, setName] = useState(selecteduser?.name || "");
     const [userEmail, setUserEmail] = useState(selecteduser?.email || "");
     const [isValidEmail, setIsValidEmail] = useState(true);
@@ -27,19 +18,27 @@ function AddUser({ close, updateList, selecteduser }) {
     const [roleId, setRoleId] = useState(selecteduser?.role_id || "");
     const [roleName, setRoleName] = useState(selecteduser?.role_name || "");
     const [permissionList, setPermissionList] = useState(null);
-
     const [selectPermission, setSelectPermission] = useState([{
         permissions_names: "",
         permissions_ids: "",
     }
     ])
-
     const [isLoading, setIsLoading] = useState(false);
 
     const inputRef = useMask({
         mask: "+91-__________",
         replacement: { _: /\d/ },
     });
+
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
+
+    console.log('selected user: ', selecteduser)
 
     useEffect(() => {
         fetch(`${APIPATH}/api/v1/admin/departments`, {
@@ -59,8 +58,8 @@ function AddUser({ close, updateList, selecteduser }) {
                 console.log(err);
                 setIsLoading(false)
             })
-    }, [])
-    
+    }, [token])
+
     // Get all Permissions according to role ------------------------------------------------------
     useEffect(() => {
         if (!roleId) return;
@@ -80,12 +79,13 @@ function AddUser({ close, updateList, selecteduser }) {
             .catch((err) => {
                 console.error(err)
             })
-    }, [roleId])
+    }, [roleId, token])
 
     const permissionOptions = permissionList?.map(permission => ({
         value: permission.id,
         label: `${permission.name}`
     }));
+
     const handlePermissionChange = (selectedOptions) => {
         const permissions_names = selectedOptions.map(option => option.label.split(" - ")[0]);
         const permissions_ids = selectedOptions.map(option => option.value);
@@ -103,6 +103,7 @@ function AddUser({ close, updateList, selecteduser }) {
         permissions_ids: selectPermission.permissions_ids,
         permissions_names: selectPermission.permissions_names,
     }
+
     const handleFormData = (e) => {
         e.preventDefault();
         if (!isValidEmail) {
@@ -228,9 +229,8 @@ function AddUser({ close, updateList, selecteduser }) {
                     </div></div> :
                         <div className={style.add_merchats_btn_container}>
                             <button className={style.primary_login_btn}>
-                                {/* {selecteduser ? "Update" : "Add"} */}
                                 Submit
-                                </button>
+                            </button>
                         </div>
                     }
                 </form>

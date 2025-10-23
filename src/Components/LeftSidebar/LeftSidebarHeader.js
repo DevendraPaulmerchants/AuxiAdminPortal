@@ -83,8 +83,8 @@ export const sidebarItems = [
     {
         name: "Roles & Permission", path: '--', icon: <MdOutlineLockPerson title='Role and Permission' />,
         subItems: [
-            { name: "Departments", path: '/departments_list', icon: <HiOutlineBuildingOffice title="Departments List" /> },
             { name: "Permissions", path: '/permissions_list', icon: <RiShieldUserLine title="Permissions List" /> },
+            { name: "Departments", path: '/departments_list', icon: <HiOutlineBuildingOffice title="Departments List" /> },
 
         ]
     },

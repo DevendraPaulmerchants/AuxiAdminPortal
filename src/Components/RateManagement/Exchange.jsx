@@ -155,7 +155,7 @@ function Exchange() {
                 </>
             }
         </div>
-        {addManual && <AddNewRate close={()=>setAddManual(false)}/>}
+        {addManual && <AddNewRate close={()=>setAddManual(false)} updateList={getexchangeLIst} />}
     </>
     
 }

@@ -7,7 +7,7 @@ import { APIPATH } from '../apiPath/apipath';
 import MetalDetails from './MetalDetails';
 import { useContextData } from '../Context/Context';
 import { MdContentCopy } from 'react-icons/md';
-import { FcAlarmClock, FcCancel, FcFlashOn, FcOk, FcSportsMode } from "react-icons/fc";
+import { FcAlarmClock, FcCancel, FcClock, FcFlashOn, FcOk, FcSportsMode } from "react-icons/fc";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from "react-icons/io";
@@ -83,13 +83,13 @@ function GoldTransaction() {
   };
 
   const paginatedList = pagesData?.filter((list) => {
-    const name = list?.customer_name?.toLowerCase() || '';
+    // const name = list?.customer_name?.toLowerCase() || '';
     const orderId = String(list?.order_id || '').toLowerCase();
     const id = String(list?.customer_id || '').toLowerCase();
     const listStatus = list?.order_status?.toLowerCase() || '';
 
     const matchesSearch =
-      name.includes(searchText.toLowerCase()) ||
+      // name.includes(searchText.toLowerCase()) ||
       orderId.includes(searchText.toLowerCase()) ||
       id.includes(searchText.toLowerCase());
 
@@ -251,7 +251,7 @@ function GoldTransaction() {
                       <td>XXXX{val.order_id?.slice(-4)}<MdContentCopy
                         style={{ cursor: "pointer" }}
                         onClick={() => handleCopy(val.order_id)}
-                        title="Copy Order ID"
+                        title="Copy Order Id"
                       /></td>
                       <td>{val.customer_id}</td>
                       <td>{val.customer_name}</td>
@@ -261,10 +261,10 @@ function GoldTransaction() {
                       <td>{parseFloat(val.total_amount_after_tax)?.toFixed(2)}</td>
                       <td title={val.order_status}>
                         {/* {val.order_status} */}
-                        {val.order_status === "COMPLETED" && <FcOk />}
-                        {val.order_status === 'PROCESSING' && <FcSportsMode />}
-                        {val.order_status === "PENDING" && <FcAlarmClock />}
-                        {val.order_status === "FAILED" && <FcCancel />}
+                        {val.order_status === "COMPLETED" && <FcOk fontSize={24} />}
+                        {val.order_status === 'PROCESSING' && <FcSportsMode fontSize={24} />}
+                        {val.order_status === "PENDING" && <FcClock fontSize={24} />}
+                        {val.order_status === "FAILED" && <FcCancel fontSize={24} />}
                       </td>
                       <td><p className={styles.action_button}>
                         <IoEye onClick={() => { setSelectedMetal(val); setOpenMetalPage(true) }} />

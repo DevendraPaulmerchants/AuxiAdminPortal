@@ -18,24 +18,23 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
     // const [margin, setMargin] = useState(selectedAccount?.margin || 0);
     const [schemeName, setSchemeName] = useState(selectedAccount?.name || '')
     // ----------- Gold --------------------------
-    const [goldbuymargin, setGoldbuymargin] = useState(selectedAccount?.metal_margins[0]?.buy_margin || 0);
-    const [goldsellmargin, setGoldsellmargin] = useState(selectedAccount?.metal_margins[0]?.sell_margin || 0);
-    const [goldtransfermargin, setGoldtransfermargin] = useState(selectedAccount?.metal_margins[0]?.transfer_margin || 0);
-    const [goldconversionmargin, setGoldconversionmargin] = useState(selectedAccount?.metal_margins[0]?.conversion_margin || 0);
+    const [goldbuymargin, setGoldbuymargin] = useState(selectedAccount?.metal_margins[0]?.buy_margin || '');
+    const [goldsellmargin, setGoldsellmargin] = useState(selectedAccount?.metal_margins[0]?.sell_margin || '');
+    const [goldtransfermargin, setGoldtransfermargin] = useState(selectedAccount?.metal_margins[0]?.transfer_margin || '');
+    const [goldconversionmargin, setGoldconversionmargin] = useState(selectedAccount?.metal_margins[0]?.conversion_margin || '');
     // ---------------------- Silver ---------------------
-    const [silverbuymargin, setSilverbuymargin] = useState(selectedAccount?.metal_margins[2]?.buy_margin || 0);
-    const [silversellmargin, setSilversellmargin] = useState(selectedAccount?.metal_margins[2]?.sell_margin || 0);
-    const [silvertransfermargin, setSilvertransfermargin] = useState(selectedAccount?.metal_margins[2]?.transfer_margin || 0);
-    const [silverconversionmargin, setSilverconversionmargin] = useState(selectedAccount?.metal_margins[2]?.conversion_margin || 0);
+    const [silverbuymargin, setSilverbuymargin] = useState(selectedAccount?.metal_margins[1]?.buy_margin || '');
+    const [silversellmargin, setSilversellmargin] = useState(selectedAccount?.metal_margins[1]?.sell_margin || '');
+    const [silvertransfermargin, setSilvertransfermargin] = useState(selectedAccount?.metal_margins[1]?.transfer_margin || '');
+    const [silverconversionmargin, setSilverconversionmargin] = useState(selectedAccount?.metal_margins[1]?.conversion_margin || '');
     // ----------- Platinum --------------------------
-    const [platinumbuymargin, setPlatinumbuymargin] = useState(selectedAccount?.metal_margins[1]?.buy_margin || 0);
-    const [platinumsellmargin, setPlatinumsellmargin] = useState(selectedAccount?.metal_margins[1]?.sell_margin || 0);
-    const [platinumtransfermargin, setPlatinumtransfermargin] = useState(selectedAccount?.metal_margins[1]?.transfer_margin || 0);
-    const [platinumconversionmargin, setPlatinumconversionmargin] = useState(selectedAccount?.metal_margins[1]?.conversion_margin || 0);
+    // const [platinumbuymargin, setPlatinumbuymargin] = useState(selectedAccount?.metal_margins[1]?.buy_margin || 0);
+    // const [platinumsellmargin, setPlatinumsellmargin] = useState(selectedAccount?.metal_margins[1]?.sell_margin || 0);
+    // const [platinumtransfermargin, setPlatinumtransfermargin] = useState(selectedAccount?.metal_margins[1]?.transfer_margin || 0);
+    // const [platinumconversionmargin, setPlatinumconversionmargin] = useState(selectedAccount?.metal_margins[1]?.conversion_margin || 0);
 
     const [isLoading, setIsLoading] = useState(false);
 
-    console.log(selectedAccount);
     // const id = metalType === "gold"
     //     ? selectedAccount?.goldMarginId
     //     : metalType === "silver"
@@ -58,13 +57,13 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                 conversion_margin: parseFloat(goldconversionmargin),
                 transfer_margin: parseFloat(goldtransfermargin)
             },
-            {
-                metal_type: "PLATINUM",
-                buy_margin: parseFloat(platinumbuymargin),
-                sell_margin: parseFloat(platinumsellmargin),
-                conversion_margin: parseFloat(platinumconversionmargin),
-                transfer_margin: parseFloat(platinumtransfermargin)
-            },
+            // {
+            //     metal_type: "PLATINUM",
+            //     buy_margin: parseFloat(platinumbuymargin),
+            //     sell_margin: parseFloat(platinumsellmargin),
+            //     conversion_margin: parseFloat(platinumconversionmargin),
+            //     transfer_margin: parseFloat(platinumtransfermargin)
+            // },
             {
                 metal_type: "SILVER",
                 buy_margin: parseFloat(silverbuymargin),
@@ -75,7 +74,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
         ]
     }
 
-    const addPermission = (e) => {
+    const addNewScheme = (e) => {
         e.preventDefault();
         setIsLoading(true);
         const url = selectedAccount ? `${APIPATH}/api/v1/admin/schemes?id=${selectedAccount?.id}`
@@ -111,7 +110,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                     {selectedAccount ? <h2>Edit This Scheme</h2> : <h2>Create New Scheme</h2>}
                     <h3 onClick={close}><IoMdClose /></h3>
                 </div>
-                <form onSubmit={(e) => addPermission(e)}>
+                <form onSubmit={(e) => addNewScheme(e)}>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Schemes Name*</label>
@@ -188,7 +187,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                         </div>
                     </div>
                     {/* ------------------ Platinum Margin ----------- */}
-                    <h2 className={style1.metal_margin_type}>Platinum Margin</h2>
+                    {/* <h2 className={style1.metal_margin_type}>Platinum Margin</h2>
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Buy*</label>
@@ -214,7 +213,7 @@ function AddMarchantMargin({ close, selectedAccount, updateList }) {
                                 onChange={(e) => setPlatinumconversionmargin(e.target.value)}
                             />
                         </div>
-                    </div>
+                    </div> */}
                     {isLoading ? <div className={style.loader_container}><div className={style.loader_item}>
                         <img src='/gold-coin.png' alt='Gold loading...' />
                     </div></div> :

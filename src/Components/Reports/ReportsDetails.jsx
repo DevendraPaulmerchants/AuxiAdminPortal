@@ -10,6 +10,7 @@ import { dateAndTimeFormat } from '../../helperFunction/helper';
 
 function ReportsDetails() {
     const { state } = useLocation();
+    console.log("Report Details State:", state);
 
     const [isDownloadClicked, setIsDownloadClicked] = useState(false);
 

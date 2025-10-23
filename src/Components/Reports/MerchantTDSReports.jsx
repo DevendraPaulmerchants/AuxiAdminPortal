@@ -7,7 +7,7 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { IoMdDownload } from 'react-icons/io';
 import { useContextData } from '../Context/Context';
-import { FcAlarmClock, FcCancel, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
+import { FcAlarmClock, FcCancel, FcClock, FcFlashOn, FcOk, FcSportsMode } from 'react-icons/fc';
 import { APIPATH } from '../apiPath/apipath';
 import { dateAndTimeFormat } from '../../helperFunction/helper';
 
@@ -193,10 +193,10 @@ function MerchantsTDSReports() {
                                             <td>{parseFloat(val.merchant_tds_amount || 0)?.toFixed(2)}</td>
                                             <td>{(parseFloat(val.merchant_profit || 0) - parseFloat(val.merchant_tds_amount || 0))?.toFixed(2)}</td>
                                             <td>
-                                                {val.order_status === "COMPLETED" && <FcOk title='Completed' />}
-                                                {val.order_status === "PENDING" && <FcAlarmClock />}
-                                                 {val.order_status === 'PROCESSING' && <FcSportsMode />}
-                                                {val.order_status === "FAILED" && <FcCancel title='Failed' />}
+                                                {val.order_status === "COMPLETED" && <FcOk title='Completed' fontSize={24} />}
+                                                {val.order_status === "PENDING" && <FcClock title='Pending' fontSize={24} />}
+                                                 {val.order_status === 'PROCESSING' && <FcSportsMode title='Processing' fontSize={24} />}
+                                                {val.order_status === "FAILED" && <FcCancel title='Failed' fontSize={24} />}
                                             </td>
                                             {/* <td><p style={{ cursor: "pointer" }}>
                                             <IoEye />

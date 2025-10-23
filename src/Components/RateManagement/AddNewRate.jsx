@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 
-function AddNewRate({ close }) {
+function AddNewRate({ close,updateList }) {
   const { token } = useContextData()
   const [goldRate, setGoldRate] = useState('');
   const [silverRate, setSilverRate] = useState('');
@@ -37,6 +37,7 @@ function AddNewRate({ close }) {
         console.log(data);
         alert(data.message);
         close();
+        updateList();
         navigate("/exchange");
       })
       .catch((err) => {

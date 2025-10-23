@@ -97,8 +97,8 @@ const Users = () => {
                                 <th>Role Name</th>
                                 <th>Created At</th>
                                 <th>Status</th>
-                                {/* <th>Last LogIn At</th> */}
-                                {/* <th>Updated At</th> */}
+                                <th>Last LogIn At</th>
+                                <th>Updated At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -118,9 +118,9 @@ const Users = () => {
                                                     // handleStatusChange(val.status,val.kyc_status ,val.merchant_agent_users_id)
                                                 }} />
                                         </td>
-                                        {/* <td>{val.last_login_at?.split("T")[0]}</td> */}
+                                        <td>{dateFormat(val.last_login_at)}</td>
+                                        <td>{dateFormat(val.updated_at)}</td>
                                         {/* <td>{val.created_at.split("T")[0]}</td> */}
-                                        {/* <td>{val.updated_at.split("T")[0]}</td> */}
                                         <td><p className={style1.action_button}
                                             onClick={() => setSelecteduser(val)}
                                         ><MdEdit /></p></td>

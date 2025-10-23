@@ -241,11 +241,10 @@ function CreditTransaction() {
                     return <tr key={val.id}>
                       <td>
                         XXXX{val.order_id?.slice(-4)}
-                        {/* {val.order_id} */}
                         <MdContentCopy
                           style={{ cursor: "pointer" }}
                           onClick={() => handleCopy(val.order_id)}
-                          title="Copy ID"
+                          title="Copy OrderId"
                         />
                       </td>
                       <td>{val.merchant_name}</td>
@@ -256,10 +255,10 @@ function CreditTransaction() {
                       <td>{dateAndTimeFormat(val.created_at)}</td>
                       <td>
                         <p className={styles.action_button} title={val.status}>
-                          {val.status === "COMPLETED" && <FcOk />}
-                           {val.order_status === 'PROCESSING' && <FcSportsMode />}
-                          {val.status === "PENDING" && <FcClock />}
-                          {val.status === "FAILED" && <FcCancel />}
+                          {val.status === "COMPLETED" && <FcOk fontSize={24} />}
+                           {val.order_status === 'PROCESSING' && <FcSportsMode fontSize={24} />}
+                          {val.status === "PENDING" && <FcClock fontSize={24} />}
+                          {val.status === "FAILED" && <FcCancel fontSize={24} />}
                         </p>
                       </td>
                     </tr>

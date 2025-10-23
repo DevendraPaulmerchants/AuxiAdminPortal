@@ -28,7 +28,7 @@ function BusinessDetails({
             .catch((err) => {
                 console.error(err)
             })
-    }, []);
+    }, [token]);
     
     return <div className={style.add_merchants_bussiness_address}>
         <h3>Business Details</h3>
