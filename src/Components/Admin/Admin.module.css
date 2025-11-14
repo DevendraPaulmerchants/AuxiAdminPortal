@@ -18,9 +18,15 @@
 .merchants_parent_subheader {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 0.5rem 1rem;
     flex-wrap: wrap;
     padding: 1rem 0;
+}
+.merchants_filters_section {
+    display: flex;
+    gap:10px 1rem;
+    flex-wrap: wrap;
+    /* align-items: center; */
 }
 
 .search_input_field {

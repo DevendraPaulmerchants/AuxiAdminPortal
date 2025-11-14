@@ -74,7 +74,7 @@ function AddMerchant({ close, selectedMerchant, updateList }) {
     const [secpinCode, setsecPinCode] = useState(selectedMerchant?.communication_address_pincode || '');
     // Business Details means type/scheme/nature -------------
     const [bussinessType, setBussinessType] = useState(selectedMerchant?.business_type || "");
-    const [businessNature, setBusinessNature] = useState("");
+    const [businessNature, setBusinessNature] = useState(selectedMerchant?.business_nature ||"");
     const [schemeId, setSchemeId] = useState(selectedMerchant?.scheme_id || "");
 
 

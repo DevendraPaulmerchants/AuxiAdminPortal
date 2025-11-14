@@ -16,7 +16,7 @@ import { MdContentCopy } from 'react-icons/md';
 
 
 function CustomerList() {
-    const { token,merchantList } = useContextData();
+    const { token, merchantList } = useContextData();
     const { state } = useLocation();
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -38,7 +38,7 @@ function CustomerList() {
     const fetchCustomers = async () => {
         setIsLoading(true)
         try {
-            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&phone=${searchText}&account_status=${accountStatus}&start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&direction=${direction}&cursor=${cursors}`;
+            const url = `${APIPATH}/api/v1/admin/merchants/customers?merchant_id=${selectedMerchant}&phone=${searchText}&account_status=${accountStatus}&start_date=${startDate ? startDate : ''}&end_date=${endDate ? endDate : ''}&direction=${direction}&cursor=${cursors}`;
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -62,10 +62,10 @@ function CustomerList() {
     };
 
     useEffect(() => {
-      if (searchText.length === 10 || searchText.length === 0) {
-        fetchCustomers();
-    }
-    }, [startDate, endDate, selectedMerchant, accountStatus, token, cursors, direction,searchText]);
+        if (searchText.length === 10 || searchText.length === 0) {
+            fetchCustomers();
+        }
+    }, [startDate, endDate, selectedMerchant, accountStatus, token, cursors, direction, searchText]);
 
     const handleNext = () => {
         if (nextCursor) {
@@ -152,59 +152,61 @@ function CustomerList() {
     return (
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                <div className={style.search_input_field}>
-                    <input
-                        type="text"
-                        placeholder="Search by mobile no."
-                        maxLength={12}
-                        value={searchText}
-                        onChange={(e) => {
-                            setSearchText(e.target.value);
-                            // setCurrentPage(1);
-                        }}
-                    />
-                    <IoSearch />
-                </div>
-                <div className={style2.start_date_and_end_date}>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            placeholderText='Select start date'
-                            maxDate={new Date()}
-                            selected={startDate}
-                            onChange={(date) => {
-                                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
+                <div className={style.merchants_filters_section}>
+                    <div className={style.search_input_field}>
+                        <input
+                            type="text"
+                            placeholder="Search by mobile no."
+                            maxLength={12}
+                            value={searchText}
+                            onChange={(e) => {
+                                setSearchText(e.target.value);
+                                // setCurrentPage(1);
                             }}
                         />
+                        <IoSearch />
                     </div>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            disabled={!startDate}
-                            minDate={startDate}
-                            maxDate={new Date()}
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
-                            placeholderText='Select end date'
-                        />
+                    <div className={style2.start_date_and_end_date}>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                placeholderText='Select start date'
+                                maxDate={new Date()}
+                                selected={startDate}
+                                onChange={(date) => {
+                                    setStartDate(date?.toLocaleDateString()?.split("T")[0]);
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                disabled={!startDate}
+                                minDate={startDate}
+                                maxDate={new Date()}
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
+                                placeholderText='Select end date'
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className={style.date_filter_container}>
-                    <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
-                        <option value="all" disabled>Select Merchant</option>
-                        <option value="">All</option>
-                        {merchantList?.map((merchant) => (
-                            <option key={merchant.id} value={merchant.id}>
-                                {merchant.merchant_name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className={style.date_filter_container}>
-                    <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)} className={style.select_input}>
-                        <option value="all" disabled>Select A/C Status</option>
-                        <option value="">All</option>
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
-                    </select>
+                    <div className={style.date_filter_container}>
+                        <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
+                            <option value="all" disabled>Select Merchant</option>
+                            <option value="">All</option>
+                            {merchantList?.map((merchant) => (
+                                <option key={merchant.id} value={merchant.id}>
+                                    {merchant.merchant_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className={style.date_filter_container}>
+                        <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)} className={style.select_input}>
+                            <option value="all" disabled>Select A/C Status</option>
+                            <option value="">All</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             {isLoading ? <div className={style1.loader_container}>

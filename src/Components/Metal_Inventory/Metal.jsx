@@ -6,6 +6,7 @@ import Model from "react-modal";
 import { APIPATH } from '../apiPath/apipath';
 import UpdateMetal from './UpdateMetal';
 import { useContextData } from '../Context/Context';
+import { dateAndTimeFormat, dateFormat } from '../../helperFunction/helper';
 
 function Metal() {
     const { token } = useContextData();
@@ -98,14 +99,20 @@ function Metal() {
                             <thead>
                                 <tr>
                                     <th>Metal Type</th>
+                                    <th>Purity</th>
                                     <th>Physical wt.(gm)</th>
                                     <th>Digital wt.(gm)</th>
                                     <th>Available(gm)</th>
+                                    <th>Cost Value for available metal</th>
+                                    <th>W.A.C(Weighted Avg Cost)</th>
+                                    <th>Purchase date</th>
                                     <th>Used(gm)</th>
+                                    <th>Last Updated at</th>
                                     <th>Vault Provider</th>
                                     <th>Location</th>
                                     <th>Insured</th>
-                                    <th>Action</th>
+                                    <th>Insurance Provider</th>
+                                    {/* <th>Action</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,20 +120,26 @@ function Metal() {
                                     paginatedList?.map((val) => {
                                         return <tr key={val.id}>
                                             <td>{val?.metal_type}</td>
-                                            <td>{val?.total_physical_weight}</td>
-                                            <td>{val?.digital_equivalent_weight}</td>
-                                            <td>{val?.available_weight}</td>
-                                            <td>{val.allocated_to_customers}</td>
+                                            <td>{val.purity}</td>
+                                            <td>{parseFloat(val.total_physical_weight).toFixed(6)}</td>
+                                            <td>{parseFloat(val.digital_equivalent_weight).toFixed(6)}</td>
+                                            <td>{parseFloat(val.available_weight).toFixed(6)}</td>
+                                            <td>{parseFloat(val.total_cost_value).toFixed(2)}</td>
+                                            <td>{parseFloat(val.weighted_avg_cost).toFixed(2)}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{parseFloat(val.allocated_to_customers).toFixed(6)}</td>
+                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
                                             <td>{val?.vault_provider}</td>
                                             <td>{val?.storage_location}</td>
                                             <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
-                                            <td>
+                                            <td>{val.insurance_provider}</td>
+                                            {/* <td>
                                                 <p className={style1.action_button}
                                                     onClick={(e) => { openCreditMenu(e); setSelectedMetal(val) }}
                                                 >
                                                     <IoEye />
                                                 </p>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     })
                                 ) : <tr>

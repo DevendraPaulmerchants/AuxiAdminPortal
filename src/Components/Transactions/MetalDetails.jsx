@@ -8,7 +8,7 @@ function MetalDetails({ close, selectedMetal }) {
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
-        console.log(selectedMetal)
+        // console.log(selectedMetal)
         return () => {
             document.body.style.overflow = 'auto';
         };

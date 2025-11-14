@@ -96,7 +96,15 @@
     color: #043848 !important;
     cursor: pointer;
 }
-.form_conatainer button {
+.background_remove_button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #043838;
+    font-weight: 500;
+}
+.form_conatainer_submit_button {
     width: 100%;
     padding: 10px 1rem;
     background: #1F342F;

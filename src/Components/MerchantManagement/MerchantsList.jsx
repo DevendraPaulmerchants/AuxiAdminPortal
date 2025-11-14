@@ -122,20 +122,22 @@ function MerchantsList() {
     return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                <div className={style.search_input_field}>
-                    <input type='text' placeholder='Search by name..' maxLength={12} value={searchText}
-                        onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
-                    <IoSearch />
-                </div>
-                <div>
-                    <label>Filter By Status : </label>
-                    <select className={style.merchants_select} value={merchantStatus}
-                        onChange={(e) => { setMerchantStatus(e.target.value) }}>
-                        <option value="" disabled>Select Status</option>
-                        <option value="all">All</option>
-                        <option value="INACTIVE">Inactive</option>
-                        <option value="ACTIVE">Active</option>
-                    </select>
+                <div className={style.merchants_filters_section}>
+                    <div className={style.search_input_field}>
+                        <input type='text' placeholder='Search by name..' maxLength={12} value={searchText}
+                            onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
+                        <IoSearch />
+                    </div>
+                    <div>
+                        <label>Filter By Status : </label>
+                        <select className={style.merchants_select} value={merchantStatus}
+                            onChange={(e) => { setMerchantStatus(e.target.value) }}>
+                            <option value="" disabled>Select Status</option>
+                            <option value="all">All</option>
+                            <option value="INACTIVE">Inactive</option>
+                            <option value="ACTIVE">Active</option>
+                        </select>
+                    </div>
                 </div>
                 <div className={style.add_merchants_and_filter}>
                     <button onClick={openAddMerchantsForm} className={style1.primary_login_btn}><MdOutlineAdd />Add Merchant</button>

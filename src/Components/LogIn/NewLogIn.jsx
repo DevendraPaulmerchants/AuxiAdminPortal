@@ -5,6 +5,7 @@ import { useState } from "react";
 import { APIPATH } from "../apiPath/apipath";
 import { useNavigate } from "react-router-dom";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
+
 // import PaulLogo from '/AdminLogo.svg';
 
 
@@ -14,7 +15,7 @@ const NewLogIn = ({ handleLogIn }) => {
     const [password, setPassword] = useState();
     const [showPass, setShowPass] = useState(false);
     const [isloading, setIsLoading] = useState(false);
-    
+
     const navigate = useNavigate();
     const newUser = {
         email: email,
@@ -40,6 +41,7 @@ const NewLogIn = ({ handleLogIn }) => {
                 if (data.statusCode === 200) {
                     alert(data.message);
                     handleLogIn();
+                    navigate("/");
                     return;
                 }
                 alert(data.message);
@@ -68,22 +70,29 @@ const NewLogIn = ({ handleLogIn }) => {
                     <h1>Welcome to Paul Gold </h1>
                     <p>Admin portal</p>
                     <form onSubmit={(e) => { handleLogInData(e) }}>
-                    <div  className={style.label_and_input_field}>
-                        <input
-                            type="email"
-                            required
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                        <div  className={style.label_and_input_field}>
+                        <div className={style.label_and_input_field}>
                             <input
-                                type= {!showPass ? "password": 'text'}
+                                type="email"
+                                required
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)} />
+                        </div>
+                        <div className={style.label_and_input_field}>
+                            <input
+                                type={showPass ? "text" : "password"}
                                 required
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)} />
-                            <span onClick={() => setShowPass(!showPass)}>{showPass ? <IoIosEye /> : <IoIosEyeOff />}</span>
+                            <button className={style.background_remove_button}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setShowPass(!showPass)
+                                }
+                                }>
+                                {showPass ? <IoIosEye /> : <IoIosEyeOff />}
+                            </button>
                         </div>
                         {/* {IsPass && ( */}
                         <div className={style.remember_me_and_forgot_password}>
@@ -96,14 +105,14 @@ const NewLogIn = ({ handleLogIn }) => {
                             </p>
                         </div>
                         {/* )} */}
-                        <button type="submit" disabled={isloading}>
-                            {isloading ? 
-                            <div style={{display:'flex',justifyContent:'center'}} >
-                                <div className={style1.loader_item}>
-                                <img src='/gold-coin.png' alt='Gold loading...' />
-                            </div>
-                            </div> 
-                            : "Log In"}
+                        <button type="submit" className={style.form_conatainer_submit_button} disabled={isloading}>
+                            {isloading ?
+                                <div style={{ display: 'flex', justifyContent: 'center' }} >
+                                    <div className={style1.loader_item}>
+                                        <img src='/gold-coin.png' alt='Gold loading...' />
+                                    </div>
+                                </div>
+                                : "Log In"}
                         </button>
                     </form>
                 </div>

@@ -33,6 +33,7 @@ function SilverTransaction() {
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
 
+  // Fetching the silver transactions data from the API
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -60,12 +61,14 @@ function SilverTransaction() {
     fetchData();
   }, [token, transactionType, startDate, endDate, direction, cursors]);
 
+  // Resetting pagination when filters change
   useEffect(() => {
     setCursors('');
     setDirection('');
     setCurrentPage(1);
   }, [transactionType, startDate, endDate]);
 
+  // Handling pagination Next button click
   const handleNext = () => {
     if (nextCursor) {
       setCursors(nextCursor);
@@ -74,6 +77,7 @@ function SilverTransaction() {
     }
   };
 
+  // Handling pagination Previous button click
   const handlePrev = () => {
     if (prevCursor) {
       setCursors(prevCursor);
@@ -82,6 +86,7 @@ function SilverTransaction() {
     }
   };
 
+  // Filtering the data based on the search text and account status
   const paginatedList = pagesData?.filter((list) => {
     // const name = list?.customer_name?.toLowerCase() || '';
     const id = String(list?.customer_id || '').toLowerCase();
@@ -136,6 +141,7 @@ function SilverTransaction() {
     document.body.style.overflow = "auto";
   }
 
+  // Copy the orderId of the particular transaction
   const handleCopy = async (text) => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
@@ -168,56 +174,59 @@ function SilverTransaction() {
       console.error('Error copying text: ', err);
     }
   };
+
   return <>
     <div className={style.merchants_parent}>
 
       <div className={style.merchants_parent_subheader}>
-        <div className={style.search_input_field}>
-          <input type='text' placeholder='Search by customerId/Orderid' maxLength={20} value={searchText}
-            onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
-          <IoSearch />
-        </div>
-        <div className={style1.start_date_and_end_date}>
-          <div>
-            <DatePicker className={style1.date_input}
-              placeholderText='Select start date'
-              maxDate={new Date()}
-              selected={startDate}
-              onChange={(date) => {
-                setStartDate(date?.toLocaleDateString());
-              }}
-            />
+        <div className={style.merchants_filters_section}>
+          <div className={style.search_input_field}>
+            <input type='text' placeholder='Search by customerId/Orderid' maxLength={20} value={searchText}
+              onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
+            <IoSearch />
           </div>
-          <div>
-            <DatePicker className={style1.date_input}
-              disabled={!startDate}
-              minDate={startDate}
-              maxDate={new Date()}
-              selected={endDate}
-              onChange={(date) => setEndDate(date?.toLocaleDateString())}
-              placeholderText='Select end date' />
-          </div>
+          <div className={style1.start_date_and_end_date}>
+            <div>
+              <DatePicker className={style1.date_input}
+                placeholderText='Select start date'
+                maxDate={new Date()}
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date?.toLocaleDateString());
+                }}
+              />
+            </div>
+            <div>
+              <DatePicker className={style1.date_input}
+                disabled={!startDate}
+                minDate={startDate}
+                maxDate={new Date()}
+                selected={endDate}
+                onChange={(date) => setEndDate(date?.toLocaleDateString())}
+                placeholderText='Select end date' />
+            </div>
 
-        </div>
-        <div className={style1.transaction_type_input}>
-          <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
-            <option value="all" disabled>Select Order Type</option>
-            <option value="">All</option>
-            <option value="BUY">Buy</option>
-            <option value="SELL">Sell</option>
-            <option value="TRANSFER">Transfer</option>
-            <option value="CONVERSION">Conversion</option>
-          </select>
-        </div>
-        <div className={style1.transaction_type_input}>
-          <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)}>
-            <option value="all" disabled>Select Order Status</option>
-            <option value="">All</option>
-            <option value="COMPLETED">Completed</option>
-            <option value="PENDING">Pending</option>
-            <option value="FAILED">Failed</option>
-            <option value="Rejected">Rejected</option>
-          </select>
+          </div>
+          <div className={style1.transaction_type_input}>
+            <select value={transactionType} onChange={(e) => setTransactionType(e.target.value)}>
+              <option value="all" disabled>Select Order Type</option>
+              <option value="">All</option>
+              <option value="BUY">Buy</option>
+              <option value="SELL">Sell</option>
+              <option value="TRANSFER">Transfer</option>
+              <option value="CONVERSION">Conversion</option>
+            </select>
+          </div>
+          <div className={style1.transaction_type_input}>
+            <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)}>
+              <option value="all" disabled>Select Order Status</option>
+              <option value="">All</option>
+              <option value="COMPLETED">Completed</option>
+              <option value="PENDING">Pending</option>
+              <option value="FAILED">Failed</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
         </div>
         {/* <div className={style1.transaction_record_download}>
           <IoMdDownload title='Download Records' onClick={downloadRecords} />

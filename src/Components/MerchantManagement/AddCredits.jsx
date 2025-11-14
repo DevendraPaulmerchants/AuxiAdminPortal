@@ -69,7 +69,7 @@ function AddCredits({ close, selectedMerchant, updateList }) {
                     <div className={style.name_email_parent_container}>
                         <div className={style.name_label_input_contaner}>
                             <label>Credit points* </label>
-                            <input type='text' required placeholder='Enter credits' min={1} max={100000} maxLength={8} value={creditsPoint}
+                            <input type='text' required placeholder='Enter credit points' min={1} max={100000} maxLength={8} value={creditsPoint}
                                 onChange={(e) => handleInputChangeWithNumericValueOnly(e, setCreditsPoints)}
                             />
                         </div>

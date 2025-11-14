@@ -108,7 +108,12 @@ function ReportsDetails() {
                             <div className={styles.customer_details_label}>Status</div>
                             <div className={styles.customer_details_value}>{state?.order_status}</div>
                         </div>
-
+                        {state?.payment_failure_reason &&
+                            <div className={styles.customer_details_row}>
+                                <div className={styles.customer_details_label}>Payment Failure Reason</div>
+                                <div className={styles.customer_details_value}>{state?.payment_failure_reason}</div>
+                            </div>
+                        }
                     </div>
                 </div>
                 {/* ---------------- Metal Details -------------- */}

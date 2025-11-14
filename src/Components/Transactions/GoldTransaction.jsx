@@ -34,6 +34,7 @@ function GoldTransaction() {
   const [nextCursor, setNextCursor] = useState('');
   const [prevCursor, setPrevCursor] = useState('');
 
+  // Fetching the gold transactions data from the API
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -60,12 +61,14 @@ function GoldTransaction() {
     fetchData();
   }, [token, transactionType, startDate, endDate, cursors, direction]);
 
+   // Resetting pagination when filters change
   useEffect(() => {
     setCursors('');
     setDirection('');
     setCurrentPage(1);
   }, [transactionType, startDate, endDate]);
 
+  // Handling pagination Next button click
   const handleNext = () => {
     if (nextCursor) {
       setCursors(nextCursor);
@@ -74,6 +77,7 @@ function GoldTransaction() {
     }
   };
 
+  // Handling pagination Next button click
   const handlePrev = () => {
     if (prevCursor) {
       setCursors(prevCursor);
@@ -82,6 +86,7 @@ function GoldTransaction() {
     }
   };
 
+  // Filtering the paginated list based on search text and account status
   const paginatedList = pagesData?.filter((list) => {
     // const name = list?.customer_name?.toLowerCase() || '';
     const orderId = String(list?.order_id || '').toLowerCase();
@@ -106,6 +111,7 @@ function GoldTransaction() {
     document.body.style.overflow = "auto";
   }
 
+  // Copy the orderId of the particular transaction
   const handleCopy = async (text) => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
@@ -174,8 +180,8 @@ function GoldTransaction() {
 
   return <>
     <div className={style.merchants_parent}>
-
       <div className={style.merchants_parent_subheader}>
+        <div className={style.merchants_filters_section}>
         <div className={style.search_input_field}>
           <input type='text' placeholder='Search by customerId/OrderId' maxLength={20} value={searchText}
             onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
@@ -222,6 +228,7 @@ function GoldTransaction() {
             <option value="FAILED">Failed</option>
             <option value="Rejected">Rejected</option>
           </select>
+        </div>
         </div>
         {/* <div className={style1.transaction_record_download}>
           <IoMdDownload title='Download Records' onClick={downloadRecords} />

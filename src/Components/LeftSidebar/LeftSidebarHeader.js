@@ -7,7 +7,7 @@ import { GiGoldBar, GiMetalBar, GiSilverBullet } from "react-icons/gi";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { HiOutlineBuildingOffice, HiOutlineUserGroup, HiOutlineUsers } from "react-icons/hi2";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdOutlineAccountBalanceWallet, MdOutlineCreditScore, MdOutlineLockPerson, MdOutlineSettingsSystemDaydream, MdPayment } from "react-icons/md";
+import { MdInventory2, MdOutlineAccountBalanceWallet, MdOutlineCreditScore, MdOutlineLockPerson, MdOutlineSettingsSystemDaydream, MdPayment } from "react-icons/md";
 import { PiSealPercent } from "react-icons/pi";
 import { RiPercentLine, RiShieldUserLine, RiUserSearchLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
@@ -49,16 +49,9 @@ export const sidebarItems = [
         icon: <GiMetalBar title='Metal Inventory' />,
         subItems: [
             { name: "Metal", path: "/metal", icon: <GiMetalBar title='Metal Vault List' /> },
-            // { name: "Metal logs", path: "/metal_logs", icon: <MdInventory2 title='Metals log List' /> }
+            { name: "Metal logs", path: "/metal_logs", icon: <MdInventory2 title='Metals log List' /> }
         ]
     },
-    // {
-    //     name: "Beneficiary Accounts", path: '--', icon: <BiSolidBank title='Accounts' />,
-    //     subItems: [
-    //         { name: "Bank", path: "/bank_list", icon: <FaRegCreditCard title='Bank List' /> },
-    //         { name: "UPI", path: "/upi_list", icon: <MdPayment title='UPI List' /> }
-    //     ]
-    // },
     {
         name: "Exchange & Rates", path: '--', icon: <MdOutlineAccountBalanceWallet title='Exchange & Rates' />,
         subItems: [
@@ -97,11 +90,6 @@ export const sidebarItems = [
         ]
     },
     { name: "Portal Users", path: '/user_list', icon: <HiOutlineUsers title='Portal Users' /> },
-    // {
-    //     name: "Env Setup",
-    //     path: "/refresh_rate",
-    //     icon: <MdOutlineSettingsSystemDaydream title='Environment Setting' />,
-    // },
     {
         name: "Settings", path: '--', icon: <IoSettingsOutline title='Settings' />,
         subItems: [

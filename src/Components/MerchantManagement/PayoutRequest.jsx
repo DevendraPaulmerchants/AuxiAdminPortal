@@ -18,7 +18,7 @@ import { capitalizeWord } from '../InputValidation/InputValidation';
 
 
 function PayoutRequest() {
-    const { token,merchantList } = useContextData();
+    const { token, merchantList } = useContextData();
     const { state } = useLocation();
     const [customer, setCustomer] = useState([]);
     const [searchText, setSearchText] = useState("");
@@ -88,7 +88,7 @@ function PayoutRequest() {
     const filteredList = customer?.filter((list) => {
         const name = list?.first_name?.toLowerCase() || '';
         const id = String(list?.customer_id || '').toLowerCase();
-        const orderId= String(list?.order_id || '').toLowerCase();
+        const orderId = String(list?.order_id || '').toLowerCase();
         return name.includes(searchText.toLowerCase()) || id.includes(searchText.toLowerCase()) || orderId.includes(searchText.toLowerCase());
     }) || [];
 
@@ -154,59 +154,61 @@ function PayoutRequest() {
     return (
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                <div className={style.search_input_field}>
-                    <input
-                        type="text"
-                        placeholder="Search by OrderId/customerId"
-                        maxLength={12}
-                        value={searchText}
-                        onChange={(e) => {
-                            setSearchText(e.target.value);
-                            setCurrentPage(1);
-                        }}
-                    />
-                    <IoSearch />
-                </div>
-                <div className={style2.start_date_and_end_date}>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            placeholderText='Select start date'
-                            maxDate={new Date()}
-                            selected={startDate}
-                            onChange={(date) => {
-                                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
+                <div className={style.merchants_filters_section}>
+                    <div className={style.search_input_field}>
+                        <input
+                            type="text"
+                            placeholder="Search by OrderId/customerId"
+                            maxLength={12}
+                            value={searchText}
+                            onChange={(e) => {
+                                setSearchText(e.target.value);
+                                setCurrentPage(1);
                             }}
                         />
+                        <IoSearch />
                     </div>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            disabled={!startDate}
-                            minDate={startDate}
-                            maxDate={new Date()}
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
-                            placeholderText='Select end date'
-                        />
+                    <div className={style2.start_date_and_end_date}>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                placeholderText='Select start date'
+                                maxDate={new Date()}
+                                selected={startDate}
+                                onChange={(date) => {
+                                    setStartDate(date?.toLocaleDateString()?.split("T")[0]);
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                disabled={!startDate}
+                                minDate={startDate}
+                                maxDate={new Date()}
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
+                                placeholderText='Select end date'
+                            />
+                        </div>
                     </div>
-                </div>
-                <div className={style.date_filter_container}>
-                    <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
-                        <option value="all" disabled>Select Merchant</option>
-                        <option value="">All</option>
-                        {merchantList?.map((merchant) => (
-                            <option key={merchant.id} value={merchant.id}>
-                                {merchant.merchant_name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className={style.date_filter_container}>
-                    <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)} className={style.select_input}>
-                        <option value="all" disabled>Select A/C Status</option>
-                        <option value="">All</option>
-                        <option value="ACTIVE">Active</option>
-                        <option value="INACTIVE">Inactive</option>
-                    </select>
+                    <div className={style.date_filter_container}>
+                        <select onChange={(e) => setSelectedMerchant(e.target.value)} className={style.select_input} value={selectedMerchant}>
+                            <option value="all" disabled>Select Merchant</option>
+                            <option value="">All</option>
+                            {merchantList?.map((merchant) => (
+                                <option key={merchant.id} value={merchant.id}>
+                                    {merchant.merchant_name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className={style.date_filter_container}>
+                        <select value={accountStatus} onChange={(e) => setAccountStatus(e.target.value)} className={style.select_input}>
+                            <option value="all" disabled>Select A/C Status</option>
+                            <option value="">All</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">Inactive</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             {isLoading ? <div className={style1.loader_container}>
@@ -249,7 +251,7 @@ function PayoutRequest() {
                                                         if (val.status === "PENDING") {
                                                             openDPage(val.order_id);
                                                         }
-                                                        else { 
+                                                        else {
                                                             alert("You can only process pending requests.");
                                                         }
                                                     }}

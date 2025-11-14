@@ -31,7 +31,7 @@ function Support() {
 
   const getSupportRequest = useCallback(() => {
     // const url=`${APIPATH}/api/v1/admin/ticket`;
-    const url=`http://103.171.97.105:8070/ticket-service/tickets?requestingUserType=AGENT&page=0&size=10&sortBy=createdAt&sortDir=desc`
+    const url=`${APIPATH}/api/v1/admin/ticket`
     fetch(url, {
       headers: {
         "Authorization": `Bearer ${token}`,

@@ -53,7 +53,7 @@ const SupportDetails = lazy(() => import('./Components/SupportManagement/Support
 
 function App() {
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -74,9 +74,7 @@ function App() {
         <Router>
           <Suspense fallback={<Loader />}>
             <Routes>
-              {!isAuthenticated ? (
-                <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
-              ) : (
+              {isAuthenticated ? (
                 <Route element={<Layout  />}>
                   <Route path="/" element={<NewHome />} />
                   {/* Merchant Services */}
@@ -124,6 +122,8 @@ function App() {
                   <Route path='/support/:id' element={<SupportDetails />} />
                   <Route path="*" element={<Navigate replace to="/" />} />
                 </Route>
+              ) : (
+                <Route path="*" element={<NewLogIn handleLogIn={handleLogIn} />} />
               )}
             </Routes>
           </Suspense>

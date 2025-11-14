@@ -13,14 +13,6 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 function MetalLogs() {
-    useEffect(() => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    }, [])
-
     const { token } = useContextData();
     const { state } = useLocation();
     console.log(state)
@@ -64,8 +56,8 @@ function MetalLogs() {
     }, [transactionType, startDate, endDate, metalType]);
 
     const filteredList = metalList?.filter((list) => list.order_id?.toLowerCase().includes(searchText.toLowerCase())
-   && (transactionType === "" || list?.transaction_type === transactionType)
-);
+        && (transactionType === "" || list?.transaction_type === transactionType)
+    );
 
     const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
@@ -87,56 +79,54 @@ function MetalLogs() {
     return <>
         <div className={style.merchants_parent}>
             <div className={style.merchants_parent_subheader}>
-                <div className={style.search_input_field}>
-                    <input type='text' placeholder='Search by order id...' maxLength={40} value={searchText}
-                        onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
-                    <IoSearch />
-                </div>
-                <div className={style2.start_date_and_end_date}>
-                    <div>
-                        <p>Filter:</p>
+                <div className={style.merchants_filters_section}>
+                    <div className={style.search_input_field}>
+                        <input type='text' placeholder='Search by orderId/CustomerId' maxLength={40} value={searchText}
+                            onChange={(e) => { setSearchText(e.target.value); setCurrentPage(1) }} />
+                        <IoSearch />
                     </div>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            placeholderText='Select start date'
-                            maxDate={new Date()}
-                            selected={startDate}
-                            onChange={(date) => {
-                                setStartDate(date?.toLocaleDateString()?.split("T")[0]);
-                            }}
-                        />
+                    <div className={style2.start_date_and_end_date}>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                placeholderText='Select start date'
+                                maxDate={new Date()}
+                                selected={startDate}
+                                onChange={(date) => {
+                                    setStartDate(date?.toLocaleDateString()?.split("T")[0]);
+                                }}
+                            />
+                        </div>
+                        <div>
+                            <DatePicker className={style2.date_input}
+                                disabled={!startDate}
+                                minDate={startDate}
+                                maxDate={new Date()}
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
+                                placeholderText='Select end date'
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <DatePicker className={style2.date_input}
-                            disabled={!startDate}
-                            minDate={startDate}
-                            maxDate={new Date()}
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date?.toLocaleDateString()?.split("T")[0])}
-                            placeholderText='Select end date'
-                        />
+                    <div className={style2.transaction_type_input}>
+                        <select value={metalType}
+                            onChange={(e) => setMetalType(e.target.value)} >
+                            <option value="" disabled>Select Metal</option>
+                            <option value="ALL">All</option>
+                            <option value="GOLD">GOLD</option>
+                            <option value="SILVER">SILVER</option>
+                        </select>
                     </div>
-                </div>
-                <div className={style2.transaction_type_input}>
-                    <select value={metalType}
-                        onChange={(e) => setMetalType(e.target.value)} >
-                        <option value="" disabled>Select Metal</option>
-                        <option value="ALL">All</option>
-                        <option value="GOLD">GOLD</option>
-                        <option value="SILVER">SILVER</option>
-                        <option value="PLATINUM">PLATINUM</option>
-                    </select>
-                </div>
-                <div className={style2.transaction_type_input}>
-                    <select value={transactionType}
-                        onChange={(e) => setTransactionType(e.target.value)} >
-                        <option value="all" disabled>Select Transaction Type</option>
-                        <option value="">All</option>
-                        <option value="DEBIT">Debit</option>
-                        <option value="CREDIT">Credit</option>
-                        {/* <option value="TRANSFER">Transfer</option>
-                        <option value="CONVERSION">Conversion</option> */}
-                    </select>
+                    <div className={style2.transaction_type_input}>
+                        <select value={transactionType}
+                            onChange={(e) => setTransactionType(e.target.value)} >
+                            <option value="all" disabled>Select Transaction Type</option>
+                            <option value="">All</option>
+                            <option value="DEBIT">Debit</option>
+                            <option value="CREDIT">Credit</option>
+                            <option value="TRANSFER">Transfer</option>
+                            <option value="CONVERSION">Conversion</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             {isLoading ? <div className={style1.loader_container}>
@@ -150,8 +140,7 @@ function MetalLogs() {
                             <thead>
                                 <tr>
                                     <th>Order Id</th>
-                                    <th>Merchant Id</th>
-                                    <th>Agent Id</th>
+                                    <th>Merchant Name</th>
                                     <th>Customer Id</th>
                                     <th>Metal Type</th>
                                     <th>Weight(g)</th>
@@ -169,30 +158,23 @@ function MetalLogs() {
                                                 {val.order_id ? `XXXX${val.order_id.slice(-4)}` : ""}
                                             </td>
                                             <td>
-                                                {val.merchant_id ? `XXXX${val.merchant_id.slice(-4)}` : ""}
-                                            </td>
-                                            <td>
-                                                {val.merchant_agent_id ? `XXXX${val.merchant_agent_id.slice(-4)}` : ""}
+                                                {val.merchant_name}
                                             </td>
                                             <td>
                                                 {val.customer_id ? `XXXX${val.customer_id.slice(-4)}` : ""}
                                             </td>
                                             <td>{val?.source_metal_type}</td>
-
                                             <td>
                                                 {val.source_weight}
                                             </td>
                                             <td>{val.amount}</td>
                                             <td>
-                                                {/* {val.action_type} */}
                                                 {capitalizeWord(val.transaction_type)}
                                             </td>
                                             <td>{val?.transaction_status || val?.status}</td>
                                             <td>
-                                                <p style={{ cursor: "pointer", fontSize: "16px" }}
-                                                    onClick={(e) => {
-                                                        setSelectedMetal(val);
-                                                    }}
+                                                <p className={style1.action_button}
+                                                    onClick={() => { setSelectedMetal(val); }}
                                                 >
                                                     <IoEye />
                                                 </p>
@@ -200,7 +182,7 @@ function MetalLogs() {
                                         </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="10" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="9" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>
