@@ -3,7 +3,7 @@ import { IoEye, IoSearch } from "react-icons/io5";
 import style from "../Admin/Admin.module.css";
 import style1 from "../MerchantManagement/Merchants.module.css";
 import style2 from "../Transactions/Transaction.module.css";
-import styles from './Metal.module.css'
+// import styles from './Metal.module.css'
 import { APIPATH } from '../apiPath/apipath';
 import { useContextData } from '../Context/Context';
 import MetalLogsDetails from './MetalLogsDetails';
@@ -11,6 +11,8 @@ import { useLocation } from 'react-router-dom';
 import { capitalizeWord } from '../InputValidation/InputValidation';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { dateAndTimeFormat } from '../../helperFunction/helper';
+import { FcCancel, FcClock, FcOk, FcSportsMode } from 'react-icons/fc';
 
 function MetalLogs() {
     const { token } = useContextData();
@@ -30,7 +32,7 @@ function MetalLogs() {
 
     const getmetalLogs = () => {
         setIsLoading(true);
-        fetch(`https://uat.magicalvacation.com/api/v1/admin/transactions/storage?order_type=${transactionType}&metal_type=${metalType}&start_date=${startDate}&end_date=${endDate}`, {
+        fetch(`${APIPATH}/api/v1/admin/storages/metal/logs`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'Application/json'
@@ -140,45 +142,61 @@ function MetalLogs() {
                             <thead>
                                 <tr>
                                     <th>Order Id</th>
-                                    <th>Merchant Name</th>
+                                    {/* <th>Merchant Name</th> */}
                                     <th>Customer Id</th>
                                     <th>Metal Type</th>
                                     <th>Weight(g)</th>
-                                    <th>Amount</th>
+                                    <th>(W.A.C) before Trans.(₹)</th>
+                                    <th>Amount(₹)</th>
+                                    <th>(W.A.C) After Trans.(₹)</th>
                                     <th>Trans. Type</th>
-                                    <th>Trans. status</th>
-                                    <th>Action</th>
+                                    <th>Remaining Stock Weight</th>
+                                    <th>Requested at</th>
+                                    <th>Updated at</th>
+                                    <th>Transaction status</th>
+                                    {/* <th>Action</th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {paginatedList?.length > 0 ? (
                                     paginatedList?.map((val, id) => {
-                                        return <tr key={id}>
+                                        return <tr key={val.id}>
                                             <td>
                                                 {val.order_id ? `XXXX${val.order_id.slice(-4)}` : ""}
                                             </td>
-                                            <td>
+                                            {/* <td>
                                                 {val.merchant_name}
-                                            </td>
+                                            </td> */}
                                             <td>
-                                                {val.customer_id ? `XXXX${val.customer_id.slice(-4)}` : ""}
+                                                {val.customer_id}
                                             </td>
-                                            <td>{val?.source_metal_type}</td>
+                                            <td>{val?.metal_type}</td>
+
                                             <td>
-                                                {val.source_weight}
+                                                {Number.parseFloat(val.weight).toFixed(6)}
                                             </td>
-                                            <td>{val.amount}</td>
+                                            <td>{val.wac_before}</td>
+                                            <td>{val.total_value}</td>
+                                            <td>{val.wac_after}</td>
                                             <td>
-                                                {capitalizeWord(val.transaction_type)}
+                                                {capitalizeWord(val.action_type)}
                                             </td>
-                                            <td>{val?.transaction_status || val?.status}</td>
-                                            <td>
+                                            <td>{Number.parseFloat(val.remaining_stock_weight).toFixed(6)}</td>
+                                            <td>{dateAndTimeFormat(val.created_at)}</td>
+                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
+                                            <td title={capitalizeWord(val.transaction_status)} >
+                                                {val.transaction_status === "COMPLETED" && <FcOk fontSize={24} />}
+                                                {val.transaction_status === 'PROCESSING' && <FcSportsMode fontSize={24} />}
+                                                {val.transaction_status === "PENDING" && <FcClock fontSize={24} />}
+                                                {val.transaction_status === "FAILED" && <FcCancel fontSize={24} />}
+                                            </td>
+                                            {/* <td>
                                                 <p className={style1.action_button}
                                                     onClick={() => { setSelectedMetal(val); }}
                                                 >
                                                     <IoEye />
                                                 </p>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     })
                                 ) : <tr>

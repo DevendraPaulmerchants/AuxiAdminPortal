@@ -112,6 +112,7 @@ function Metal() {
                                     <th>Location</th>
                                     <th>Insured</th>
                                     <th>Insurance Provider</th>
+                                    <th>Insurance Policy Number</th>
                                     <th>Custodian Details</th>
                                     <th>Security Features</th>
                                     {/* <th>Action</th> */}
@@ -121,37 +122,38 @@ function Metal() {
                                 {paginatedList?.length > 0 ? (
                                     paginatedList?.map((val) => {
                                         return <tr key={val.id}>
-                                                <td>{val?.metal_type}</td>
-                                                <td>{val.purity}</td>
-                                                <td>{Number.parseFloat(val.total_physical_weight).toFixed(6)}</td>
-                                                <td>{Number.parseFloat(val.digital_equivalent_weight).toFixed(6)}</td>
-                                                <td>{Number.parseFloat(val.available_weight).toFixed(6)}</td>
-                                                <td>{Number.parseFloat(val.total_cost_value).toFixed(2)}</td>
-                                                <td>{Number.parseFloat(val.weighted_avg_cost).toFixed(2)}</td>
-                                                <td>{dateFormat(val.created_at)}</td>
-                                                <td>{Number.parseFloat(val.allocated_to_customers).toFixed(6)}</td>
-                                                <td>{dateAndTimeFormat(val.updated_at)}</td>
-                                                <td>{val?.vault_provider}</td>
-                                                <td>{val?.storage_location}</td>
-                                                <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
-                                                <td>{val.insurance_provider}</td>
-                                                <td>{val.custodian_details}</td>
-                                                <td>
-                                                    {val.security_features?.map((val)=>(
-                                                        <p key={val}>{val}</p>
-                                                    ))}
-                                                    </td>
-                                                {/* <td>
+                                            <td>{val?.metal_type}</td>
+                                            <td>{val.purity}</td>
+                                            <td>{Number.parseFloat(val.total_physical_weight).toFixed(6)}</td>
+                                            <td>{Number.parseFloat(val.digital_equivalent_weight).toFixed(6)}</td>
+                                            <td>{Number.parseFloat(val.available_weight).toFixed(6)}</td>
+                                            <td>{Number.parseFloat(val.total_cost_value).toFixed(2)}</td>
+                                            <td>{Number.parseFloat(val.weighted_avg_cost).toFixed(2)}</td>
+                                            <td>{dateFormat(val.created_at)}</td>
+                                            <td>{Number.parseFloat(val.allocated_to_customers).toFixed(6)}</td>
+                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
+                                            <td>{val?.vault_provider}</td>
+                                            <td>{val?.storage_location}</td>
+                                            <td>{val?.is_active ? <p>✅</p> : <p>❌</p>}</td>
+                                            <td>{val.insurance_provider}</td>
+                                            <td>{val.insurance_policy_number}</td>
+                                            <td>{val.custodian_details}</td>
+                                            <td>
+                                                {val.security_features?.map((val) => (
+                                                    <p key={val}>{val}</p>
+                                                ))}
+                                            </td>
+                                            {/* <td>
                                                     <p className={style1.action_button}
                                                         onClick={(e) => { openCreditMenu(e); setSelectedMetal(val) }}
                                                     >
                                                         <IoEye />
                                                     </p>
                                                 </td> */}
-                                            </tr>
+                                        </tr>
                                     })
                                 ) : <tr>
-                                    <td colSpan="9" style={{ textAlign: "center" }}>No Data Found</td>
+                                    <td colSpan="15" style={{ textAlign: "center" }}>No Data Found</td>
                                 </tr>
                                 }
                             </tbody>

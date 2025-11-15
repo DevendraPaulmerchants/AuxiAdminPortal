@@ -12,35 +12,17 @@ import { useNavigate } from 'react-router-dom';
 const NewHome = () => {
     const { token,merchantList } = useContextData();
     const [report, setReport] = useState(null);
-    const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
+    const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [selectedmerchant, setSelectedMerchant] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
 
+    // Fetch data that will be use on the dashboard and whenever filter changes
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setIsLoading(true);
-
-                let url = `${APIPATH}/api/v1/admin/dashboard/summary`;
-                const queryParams = [];
-
-                if (selectedmerchant) {
-                    queryParams.push(`merchant_id=${selectedmerchant}`);
-                }
-                if (startDate) {
-                    queryParams.push(`start_date=${startDate}`);
-                }
-                if (endDate) {
-                    queryParams.push(`end_date=${endDate}`);
-                }
-
-                if (queryParams.length > 0) {
-                    url += `?${queryParams.join('&')}`;
-                }
-
-                const response = await fetch(url, {
+                const response = await fetch(`${APIPATH}/api/v1/admin/dashboard/summary?start_date=${startDate?startDate:''}&end_date=${endDate?endDate:''}&merchant_id=${selectedmerchant?selectedmerchant:''}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -61,7 +43,7 @@ const NewHome = () => {
 
                 setReport(result.data);
             } catch (err) {
-                setError(err.message);
+                console.error('Error fetching data:', err);
             } finally {
                 setIsLoading(false);
             }
