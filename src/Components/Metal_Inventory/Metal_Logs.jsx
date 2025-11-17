@@ -27,55 +27,89 @@ function MetalLogs() {
     const [transactionType, setTransactionType] = useState(state || "");
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 8;
+    const [pagesData, setPagesData] = useState(null);
+    const [direction, setDirection] = useState('');
+    const [cursors, setCursors] = useState('');
+    const [nextCursor, setNextCursor] = useState('');
+    const [prevCursor, setPrevCursor] = useState('');
 
-
-    const getmetalLogs = () => {
-        setIsLoading(true);
-        fetch(`${APIPATH}/api/v1/admin/storages/metal/logs`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'Application/json'
-            },
-            method: "GET",
-            mode: "cors"
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data.data);
-                setmetalList(data.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
-
+    // Fetching metal logs data from API
     useEffect(() => {
-        getmetalLogs();
-    }, [transactionType, startDate, endDate, metalType]);
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const url = `${APIPATH}/api/v1/admin/storages/metal/logs?order_type=${transactionType ? transactionType : ''}&metal_type=${metalType ? metalType : ''}&start_date=${startDate ? startDate : ''}&end_date=${endDate ? endDate : ''}`;
+                const res = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'Application/json'
+                    },
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                const data = await res.json();
+                setPagesData(data.data || []);
+                setNextCursor(data.hasNextPage ? data.nextCursor : '');
+                setPrevCursor(data.hasPrevPage ? data.prevCursor : '');
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchData();
+    }, [token, transactionType, startDate, endDate, cursors, direction, metalType]);
 
-    const filteredList = metalList?.filter((list) => list.order_id?.toLowerCase().includes(searchText.toLowerCase())
-        && (transactionType === "" || list?.transaction_type === transactionType)
-    );
 
-    const totalPages = Math.ceil(filteredList?.length / rowsPerPage);
-    const startIndex = (currentPage - 1) * rowsPerPage;
-    const paginatedList = filteredList?.slice(startIndex, startIndex + rowsPerPage);
+    // Resetting pagination when filters change
+    useEffect(() => {
+        setCursors('');
+        setDirection('');
+        setCurrentPage(1);
+    }, [transactionType, startDate, endDate]);
 
-    const handlePrev = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
-
+    // Handling pagination Next button click
     const handleNext = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+        if (nextCursor) {
+            setCursors(nextCursor);
+            setDirection('next');
+            setCurrentPage(prev => prev + 1);
+        }
     };
+
+    // Handling pagination Next button click
+    const handlePrev = () => {
+        if (prevCursor) {
+            setCursors(prevCursor);
+            setDirection('prev');
+            setCurrentPage(prev => prev - 1);
+        }
+    };
+
+    // Filtering the paginated list based on search text and account status
+    const paginatedList = pagesData?.filter((list) => {
+        // const name = list?.customer_name?.toLowerCase() || '';
+        const orderId = String(list?.order_id || '').toLowerCase();
+        const id = String(list?.customer_id || '').toLowerCase();
+        const mType = list?.metal_type?.toLowerCase() || '';
+        const trType = list?.action_type?.toLowerCase() || '';
+
+        const matchesSearch =
+            orderId.includes(searchText.toLowerCase()) ||
+            id.includes(searchText.toLowerCase());
+
+        const matchesMetalType =
+            !metalType || mType === metalType.toLowerCase();
+        const matchesTransactionType =
+            !transactionType || trType === transactionType.toLowerCase();
+
+        return matchesSearch && matchesTransactionType && matchesMetalType;
+    }) || [];
+
 
     const closeSelectedPage = () => {
         setSelectedMetal(null);
-        document.body.style.overflow = 'auto'
+        // document.body.style.overflow = 'auto';
     }
 
     return <>
@@ -112,8 +146,8 @@ function MetalLogs() {
                     <div className={style2.transaction_type_input}>
                         <select value={metalType}
                             onChange={(e) => setMetalType(e.target.value)} >
-                            <option value="" disabled>Select Metal</option>
-                            <option value="ALL">All</option>
+                            <option value="all" disabled>Select Metal</option>
+                            <option value="">All</option>
                             <option value="GOLD">GOLD</option>
                             <option value="SILVER">SILVER</option>
                         </select>
@@ -123,8 +157,8 @@ function MetalLogs() {
                             onChange={(e) => setTransactionType(e.target.value)} >
                             <option value="all" disabled>Select Transaction Type</option>
                             <option value="">All</option>
-                            <option value="DEBIT">Debit</option>
-                            <option value="CREDIT">Credit</option>
+                            <option value="SELL">Sell</option>
+                            <option value="BUY">Buy</option>
                             <option value="TRANSFER">Transfer</option>
                             <option value="CONVERSION">Conversion</option>
                         </select>
@@ -206,13 +240,11 @@ function MetalLogs() {
                             </tbody>
                         </table>
                     </div>
-                    {metalList?.length > rowsPerPage &&
-                        <div className={style.pagination_parent}>
-                            <button onClick={handlePrev} disabled={currentPage === 1}>&lt;</button>
-                            <span className={style.pagination_parent_pageno}>{currentPage}</span>
-                            <button onClick={handleNext} disabled={currentPage === totalPages}>&gt;</button>
-                        </div>
-                    }
+                    <div className={style.pagination_parent}>
+                        <button onClick={handlePrev} disabled={currentPage === 1 || !prevCursor} >&lt;</button>
+                        <span className={style.pagination_parent_pageno}>{currentPage}</span>
+                        <button onClick={handleNext} disabled={!nextCursor} >&gt;</button>
+                    </div>
                 </>
             }
         </div>
