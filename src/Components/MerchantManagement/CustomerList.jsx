@@ -231,7 +231,7 @@ function CustomerList() {
                                 {customer?.length > 0 ? (
                                     customer.map((val) => (
                                         <tr key={val.id}>
-                                            <td>XXXX{(val.customer_id || val.id).slice(-4)}<MdContentCopy
+                                            <td>{val.customer_id}{" "}<MdContentCopy
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => handleCopy(val.customer_id)}
                                                 title="Copy Customer Id"

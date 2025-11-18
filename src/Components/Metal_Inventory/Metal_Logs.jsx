@@ -148,8 +148,8 @@ function MetalLogs() {
                             onChange={(e) => setMetalType(e.target.value)} >
                             <option value="all" disabled>Select Metal</option>
                             <option value="">All</option>
-                            <option value="GOLD">GOLD</option>
-                            <option value="SILVER">SILVER</option>
+                            <option value="GOLD">Gold</option>
+                            <option value="SILVER">Silver</option>
                         </select>
                     </div>
                     <div className={style2.transaction_type_input}>
@@ -180,13 +180,14 @@ function MetalLogs() {
                                     <th>Customer Id</th>
                                     <th>Metal Type</th>
                                     <th>Weight(g)</th>
+                                    <th>Price/gm</th>
                                     <th>(W.A.C) before Trans.(₹)</th>
                                     <th>Amount(₹)</th>
                                     <th>(W.A.C) After Trans.(₹)</th>
                                     <th>Trans. Type</th>
                                     <th>Remaining Stock Weight</th>
                                     <th>Requested at</th>
-                                    <th>Updated at</th>
+                                    {/* <th>Updated at</th> */}
                                     <th>Transaction status</th>
                                     {/* <th>Action</th> */}
                                 </tr>
@@ -209,6 +210,7 @@ function MetalLogs() {
                                             <td>
                                                 {Number.parseFloat(val.weight).toFixed(6)}
                                             </td>
+                                            <td>{val.price_per_unit}</td>
                                             <td>{val.wac_before}</td>
                                             <td>{val.total_value}</td>
                                             <td>{val.wac_after}</td>
@@ -217,7 +219,7 @@ function MetalLogs() {
                                             </td>
                                             <td>{Number.parseFloat(val.remaining_stock_weight).toFixed(6)}</td>
                                             <td>{dateAndTimeFormat(val.created_at)}</td>
-                                            <td>{dateAndTimeFormat(val.updated_at)}</td>
+                                            {/* <td>{dateAndTimeFormat(val.updated_at)}</td> */}
                                             <td title={capitalizeWord(val.transaction_status)} >
                                                 {val.transaction_status === "COMPLETED" && <FcOk fontSize={24} />}
                                                 {val.transaction_status === 'PROCESSING' && <FcSportsMode fontSize={24} />}
