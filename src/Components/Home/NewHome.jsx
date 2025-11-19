@@ -207,45 +207,45 @@ const NewHome = () => {
                         <table>
                             <tbody>
                                 <tr className={styles.row_hover}
-                                // onClick={(e) => {
-                                //     navigate(`/credits_transactions`, { state: '' })
-                                // }}
+                                onClick={(e) => {
+                                    navigate(`/metal_logs`, { state: '' })
+                                }}
                                 >
                                     <td><h2 className={styles.value}>Total</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.total?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                // onClick={(e) => {
-                                //     navigate(`/credits_transactions`, { state: 'CREDIT' })
-                                // }}
+                                onClick={(e) => {
+                                    navigate(`/metal_logs`, { state: 'SELL' })
+                                }}
                                 >
                                     <td><h2 className={styles.value}>Sell</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.sell?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                // onClick={(e) => {
-                                //     navigate(`/credits_transactions`, { state: 'DEBIT' })
-                                // }}
+                                onClick={(e) => {
+                                    navigate(`/metal_logs`, { state: 'BUY' })
+                                }}
                                 >
                                     <td><h2 className={styles.value}>Buy</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.buy?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                // onClick={(e) => {
-                                //     navigate(`/metal_logs`, { state: 'TRANSFER' })
-                                // }}
+                                onClick={(e) => {
+                                    navigate(`/metal_logs`, { state: 'TRANSFER' })
+                                }}
                                 >
                                     <td><h2 className={styles.value}>Transfer</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.count}</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.transfer?.amount?.toFixed(2) || 0}</h2></td>
                                 </tr>
                                 <tr className={styles.row_hover}
-                                // onClick={(e) => {
-                                //     navigate(`/metal_logs`, { state: 'CONVERSION' })
-                                // }}
+                                onClick={(e) => {
+                                    navigate(`/metal_logs`, { state: 'CONVERSION' })
+                                }}
                                 >
                                     <td><h2 className={styles.value}>Conversion</h2></td>
                                     <td><h2 className={styles.value}>{report?.transaction_widget?.conversion?.count}</h2></td>
